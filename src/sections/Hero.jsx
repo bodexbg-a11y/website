@@ -103,7 +103,7 @@ export default function Hero() {
           <div className="hero-stats anim-up-4">
             {[
               { num: '15+', bg: 'Години опит', en: 'Years experience' },
-              { num: '5', bg: Сектори', en: 'Sectors' },
+              { num: '5', bg: 'Сектори', en: 'Sectors' },
               { num: '50+', bg: 'Вида продукти', en: 'Product types' },
               { num: 'B2B', bg: 'Само оптово', en: 'Wholesale only' },
             ].map((s) => (
