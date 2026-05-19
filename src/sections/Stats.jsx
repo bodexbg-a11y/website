@@ -2,7 +2,7 @@ import { T } from '../context/LangContext';
 
 const items = [
   { num: '15+', bg: 'Години опит', en: 'Years experience' },
-  { num: '200+', bg: 'Завършени обекта', en: 'Projects completed' },
+  { num: '5', bg: 'Сектори', en: 'Sectors' },
   { num: '50+', bg: 'Продуктови линии', en: 'Product lines' },
   { num: '100%', bg: 'B2B фокус', en: 'B2B focus' },
 ];
