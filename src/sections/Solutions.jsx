@@ -193,37 +193,22 @@ export default function Solutions() {
   const [expanded, setExpanded] = useState(null);
 
   return (
-    <section className="section solutions-section" id="solutions">
+    <section className="section" id="solutions">
       <div className="container">
-        <div className="section-header" style={{ marginBottom: '48px' }}>
-          <span className="section-label" data-reveal>—— <T bg="МАТРИЦА НА РЕШЕНИЯТА" en="SOLUTIONS MATRIX" /></span>
-          <div className="products-top">
-            <h2 data-reveal>
-              <T bg="Проблем → " en="Problem → " />
-              <span className="text-accent"><T bg="Решение" en="Solution" /></span>
-            </h2>
-            <a
-              href="/ARCAN_Injection_Matrix_BG.pdf"
-              download="ARCAN_Injection_Matrix_BG.pdf"
-              className="btn btn-outline-blue"
-              data-reveal
-              title="Изтегли пълната матрица"
-              style={{ display: 'flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                <path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>
-              </svg>
-              <T bg="Пълна Матрица PDF" en="Full Matrix PDF" />
-            </a>
-          </div>
-          <p className="section-subtitle" data-reveal style={{ maxWidth: '700px', marginTop: '16px' }}>
-            <T 
-              bg="Изберете типа проблем и вижте кои ARCAN материали са препоръчителни за неговото решаване." 
-              en="Select the problem type and see which ARCAN materials are recommended for solving it." 
-            />
-          </p>
+        <div>
+          <div className="eyebrow" data-reveal>—— <T bg="Матрица на решенията" en="Solutions Matrix" /></div>
+          <h2 className="h2" data-reveal>
+            <T bg="Проблем → " en="Problem → " />
+            <span className="accent"><T bg="Решение" en="Solution" /></span>
+          </h2>
         </div>
+
+        <p className="section-subtitle" data-reveal style={{ maxWidth: '700px', marginTop: '16px', marginBottom: '40px' }}>
+          <T 
+            bg="Изберете типа проблем и вижте кои ARCAN материали са препоръчителни за неговото решаване." 
+            en="Select the problem type and see which ARCAN materials are recommended for solving it." 
+          />
+        </p>
 
         <div className="solutions-grid">
           {problems.map((problem) => (
@@ -236,7 +221,7 @@ export default function Solutions() {
                 className="solution-card-header"
                 onClick={() => setExpanded(expanded === problem.id ? null : problem.id)}
                 role="button"
-                tabIndex={0}
+                tabIndex="0"
                 onKeyDown={(e) => e.key === 'Enter' && setExpanded(expanded === problem.id ? null : problem.id)}
                 aria-expanded={expanded === problem.id}
               >
