@@ -1,4 +1,5 @@
 import { T } from '../context/LangContext';
+import { useEffect } from 'react';
 
 const CheckIcon = () => (
   <div className="check-icon">
@@ -9,6 +10,32 @@ const CheckIcon = () => (
 );
 
 export default function Services() {
+  useEffect(() => {
+    // Add JSON-LD structured data for services
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Доставка на материали",
+          "url": "https://bodexbulgaria.com/#services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Укрепване на конструкции",
+          "url": "https://bodexbulgaria.com/#services"
+        }
+      ]
+    });
+    document.head.appendChild(script);
+    return () => script.remove();
+  }, []);
+
   return (
     <section id="services" className="section">
       <div className="container">
