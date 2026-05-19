@@ -156,18 +156,24 @@ export default function Products() {
             </button>
           ))}
         </div>
-        <div className="product-grid" id="productGrid">
-          {visible.map((p) => (
-            <div className="product-card" data-reveal key={p.name || p.nameEn}>
-              <span className="product-cat-badge">{p.badge}</span>
-              <div className="product-icon-wrap">{p.icon}</div>
-              <h3>{p.name ? p.name : <T bg={p.nameBg} en={p.nameEn} />}</h3>
-              <p><T bg={p.bg} en={p.en} /></p>
-              <a href="#contact" className="btn btn-outline-blue btn-sm">
-                <T bg="Запитване" en="Enquire" />
-              </a>
+        <div className="product-grid" id="productGrid" key={activeFilter}>
+          {visible.length > 0 ? (
+            visible.map((p, index) => (
+              <div className={`product-card${activeFilter !== 'all' ? ' revealed' : ''}`} data-reveal key={p.name || p.nameEn || index}>
+                <span className="product-cat-badge">{p.badge}</span>
+                <div className="product-icon-wrap">{p.icon}</div>
+                <h3>{p.name ? p.name : <T bg={p.nameBg} en={p.nameEn} />}</h3>
+                <p><T bg={p.bg} en={p.en} /></p>
+                <a href="#contact" className="btn btn-outline-blue btn-sm">
+                  <T bg="Запитване" en="Enquire" />
+                </a>
+              </div>
+            ))
+          ) : (
+            <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '40px', color: 'var(--muted)' }}>
+              <T bg="Няма продукти в тази категория" en="No products in this category" />
             </div>
-          ))}
+          )}
         </div>
       </div>
     </section>
