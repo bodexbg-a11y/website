@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { LangProvider } from './context/LangContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -17,6 +18,7 @@ export default function App() {
         </Routes>
         <Footer />
         <FloatCta />
+        <SpeedInsights />
       </BrowserRouter>
     </LangProvider>
   );
