@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { T } from '../context/LangContext';
 
 const FORMSPREE_URL = 'https://formspree.io/f/xredbrjz';
@@ -6,6 +6,22 @@ const FORMSPREE_URL = 'https://formspree.io/f/xredbrjz';
 export default function Contact() {
   const [activeTab, setActiveTab] = useState('materials');
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    // Add JSON-LD structured data for contact
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "ContactPoint",
+      "contactType": "Sales Support",
+      "telephone": "+359 89 980 9607",
+      "email": "bodexbg@gmail.com",
+      "availableLanguage": ["bg", "en"]
+    });
+    document.head.appendChild(script);
+    return () => script.remove();
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();

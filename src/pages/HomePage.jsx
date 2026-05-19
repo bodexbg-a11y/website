@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useReveal } from '../hooks/useReveal';
+import { updatePageMeta } from '../utils/seo';
 import Hero from '../sections/Hero';
 import Why from '../sections/Why';
 import Stats from '../sections/Stats';
@@ -11,6 +12,15 @@ import Partner from '../sections/Partner';
 import Contact from '../sections/Contact';
 
 export default function HomePage() {
+  useEffect(() => {
+    updatePageMeta(
+      'BODEX Bulgaria – Инжекционни системи за бетон | ARCAN',
+      'Официален партньор ARCAN. Укрепване на фундаменти, ремонт на пукнатини. Полимерни смоли и инжекционни материали за B2B продажби.',
+      'https://bodexbulgaria.com/og-image.jpg',
+      'https://bodexbulgaria.com'
+    );
+  }, []);
+  
   useReveal();
   return (
     <>

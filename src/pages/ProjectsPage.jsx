@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useReveal } from '../hooks/useReveal';
+import { updatePageMeta } from '../utils/seo';
 import { T } from '../context/LangContext';
 
 const projects = [
@@ -101,6 +102,15 @@ const projStats = [
 
 export default function ProjectsPage() {
   useReveal();
+
+  useEffect(() => {
+    updatePageMeta(
+      'Нашите проекти - Инжекционни системи | BODEX Bulgaria',
+      'Реални проекти на инфраструктурен мащаб: язовирни стени, хидротехнически тунели, енергийни съоръжения. Опит с ARCAN материали.',
+      'https://bodexbulgaria.com/projects-og.jpg',
+      'https://bodexbulgaria.com/projects'
+    );
+  }, []);
 
   return (
     <>
