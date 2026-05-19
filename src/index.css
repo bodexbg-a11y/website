@@ -59,9 +59,9 @@ body{background:var(--light-bg);color:var(--text);font-family:var(--font-b);font
 header{position:fixed;top:0;left:0;right:0;z-index:1000;transition:all 0.4s ease}
 header.scrolled{background:rgba(255,255,255,0.97);backdrop-filter:blur(16px);box-shadow:0 2px 24px rgba(26,42,108,0.10)}
 nav{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;max-width:1200px;margin:0 auto}
-.logo img{height:44px;width:auto;display:block}
-#navLogo img{border-radius:0}
-header:not(.scrolled) #navLogo img{background:transparent;padding:0}
+.logo img{height:50px;width:auto;display:block}
+#navLogo img{border-radius:6px}
+header:not(.scrolled) #navLogo img{background:rgba(255,255,255,0.92);border-radius:8px;padding:4px 10px}
 header.scrolled #navLogo img{background:transparent;padding:0}
 .nav-links{display:flex;align-items:center;gap:2px;list-style:none}
 .nav-links a{font-family:var(--font-h);font-size:0.8rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--white);text-decoration:none;padding:8px 14px;border-radius:6px;transition:var(--transition)}
@@ -229,7 +229,7 @@ header.scrolled .hamburger span{background:var(--text)}
 footer{background:var(--blue-dark);padding:64px 0 32px}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
 .footer-logo{margin-bottom:18px}
-.footer-logo img{height:40px;width:auto;filter:brightness(0) invert(1)}
+.footer-logo img{height:44px}
 .footer-brand p{font-size:0.88rem;color:rgba(255,255,255,0.45);line-height:1.7;max-width:280px}
 .footer-col h4{font-family:var(--font-h);font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.5);margin-bottom:18px}
 .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
@@ -329,7 +329,6 @@ footer{background:var(--blue-dark);padding:64px 0 32px}
   .section{padding:60px 0}
   .nav-links,.nav-right .btn-primary{display:none}
   .hamburger{display:flex}
-  .logo img{height:36px}
   .services-grid,.why-grid,.contact-wrap{grid-template-columns:1fr}
   .hero-stats{flex-direction:column}
   .hero-stat{border-right:none;border-bottom:1px solid rgba(255,255,255,0.12)}
