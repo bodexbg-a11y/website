@@ -86,6 +86,70 @@ const products = [
     en: 'Metal and specialized packers for various diameters and pressures. For concrete, masonry and tunnels.',
     icon: <svg width="28" height="28" viewBox="0 0 28 28"><line x1="14" y1="3" x2="14" y2="25" stroke="rgba(255,255,255,0.9)" strokeWidth="3" strokeLinecap="round"/><rect x="10" y="10" width="8" height="8" rx="2" fill="rgba(255,255,255,0.25)" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5"/><circle cx="14" cy="8" r="2" fill="rgba(255,255,255,0.6)"/><circle cx="14" cy="20" r="2" fill="rgba(255,255,255,0.6)"/></svg>,
   },
+
+  // Foams & Gels — new additions
+  {
+    cat: 'foam', badge: 'GEL', name: 'HydroBloc Gel 530',
+    bg: 'Еднокомпонентен акрилатен гел за запечатване на фуги и пукнатини. Постоянна еластичност, работи в натоварени и вибриращи конструкции.',
+    en: 'Single-component acrylate gel for sealing joints and cracks. Permanent elasticity, suitable for loaded and vibrating structures.',
+    icon: <svg width="28" height="28" viewBox="0 0 28 28"><ellipse cx="14" cy="16" rx="9" ry="7" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/><ellipse cx="14" cy="14" rx="5" ry="4" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.5)" strokeWidth="1.2"/><line x1="14" y1="7" x2="14" y2="10" stroke="rgba(255,255,255,0.7)" strokeWidth="2" strokeLinecap="round"/></svg>,
+  },
+  {
+    cat: 'foam', badge: 'ADDITIVE', name: 'HydroBloc Add 540',
+    bg: 'Добавка-ускорител за акрилатни гелове. Регулира времето на реакция при различни температури и концентрации на течове.',
+    en: 'Accelerator additive for acrylate gels. Controls reaction time at varying temperatures and leak concentrations.',
+    icon: <svg width="28" height="28" viewBox="0 0 28 28"><circle cx="14" cy="14" r="9" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/><line x1="14" y1="7" x2="14" y2="21" stroke="rgba(255,255,255,0.8)" strokeWidth="2" strokeLinecap="round"/><line x1="7" y1="14" x2="21" y2="14" stroke="rgba(255,255,255,0.8)" strokeWidth="2" strokeLinecap="round"/></svg>,
+  },
+  {
+    cat: 'foam', badge: 'WATER · FAST', name: 'HydroBloc Schaum 516',
+    bg: 'Двукомпонентна бързореагираща PU пяна за аварийно спиране на силни течове. Изключително висок обем пяна, бърдо втвърдяване.',
+    en: '2-component fast-reacting PU foam for emergency stopping of heavy leaks. Extremely high foam volume, rapid hardening.',
+    icon: <svg width="28" height="28" viewBox="0 0 28 28"><circle cx="14" cy="17" r="8" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/><circle cx="10" cy="12" r="4" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.65)" strokeWidth="1.5"/><circle cx="19" cy="10" r="3" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.55)" strokeWidth="1.5"/><text x="11.5" y="20" fontSize="9" fill="rgba(255,255,255,0.85)" fontWeight="bold">2K</text></svg>,
+  },
+
+  // Resins — new addition
+  {
+    cat: 'resins', badge: 'STRUCTURAL', name: 'HydroBloc EP 811',
+    bg: 'Свръхнисковискозна епоксидна смола за инжектиране при мокри условия. Структурно залепване и консолидация на пукнатини в мокър бетон.',
+    en: 'Super low viscosity epoxy resin for injection in wet conditions. Structural bonding and consolidation of cracks in wet concrete.',
+    icon: <svg width="28" height="28" viewBox="0 0 28 28"><path d="M14 4 C14 4 6 13 6 18 C6 22.4 9.6 26 14 26 C18.4 26 22 22.4 22 18 C22 13 14 4 14 4Z" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/><text x="9.5" y="20" fontSize="8" fill="rgba(255,255,255,0.9)" fontWeight="bold">EP</text></svg>,
+  },
+
+  // Mortars — new addition
+  {
+    cat: 'mortar', badge: 'LIFTING', name: 'Planfloor 595',
+    bg: 'Двукомпонентна PU пяна с висока твърдост за вдигане и стабилизация на плочи. Мин. инвазивно решение без разкопаване.',
+    en: '2-component rigid PU foam for slab lifting and stabilisation. Minimally invasive solution without excavation.',
+    icon: <svg width="28" height="28" viewBox="0 0 28 28"><rect x="4" y="17" width="20" height="5" rx="2" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.5)" strokeWidth="1"/><rect x="4" y="10" width="20" height="5" rx="1.5" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5"/><polyline points="10,10 14,5 18,10" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  },
+
+  // Coatings — new category
+  {
+    cat: 'coating', badge: 'MEMBRANE', name: 'Cembond 863',
+    bg: 'Циментова хидроизолационна шлам-мембрана. Нанася се четка или машинно, адхезия дори върху мокри повърхности. За резервоари, тунели и фундаменти.',
+    en: 'Cementitious waterproof slurry membrane. Applied by brush or machine, adhesion even on wet surfaces. For tanks, tunnels and foundations.',
+    icon: <svg width="28" height="28" viewBox="0 0 28 28"><rect x="4" y="6" width="20" height="16" rx="3" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/><rect x="4" y="6" width="20" height="5" rx="2" fill="rgba(255,255,255,0.3)"/><line x1="4" y1="15" x2="24" y2="15" stroke="rgba(255,255,255,0.4)" strokeWidth="1" strokeDasharray="3,2"/></svg>,
+  },
+  {
+    cat: 'coating', badge: 'WATERPROOF', name: 'HydroCoat 750',
+    bg: 'Еластична полимерна хидроизолационна боя. За хидроизолация на тераси, покриви и цокли. Стабилна при UV и температурни промени.',
+    en: 'Elastic polymer waterproof paint. For waterproofing terraces, roofs and plinths. Stable under UV and temperature changes.',
+    icon: <svg width="28" height="28" viewBox="0 0 28 28"><rect x="6" y="4" width="4" height="16" rx="2" fill="rgba(255,255,255,0.85)"/><rect x="4" y="20" width="8" height="3" rx="1" fill="rgba(255,255,255,0.5)"/><path d="M10 8 Q18 6 22 14 Q18 22 10 20" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5"/></svg>,
+  },
+
+  // Barrier — new category
+  {
+    cat: 'barrier', badge: 'BARRIER', name: 'Remafix 709',
+    bg: 'Течен препарат за хоризонтална преградна инжекция срещу капилярна влага в зидария. Дълготрайна защита без разрушаване.',
+    en: 'Liquid product for horizontal barrier injection against capillary moisture in masonry. Long-lasting protection without demolition.',
+    icon: <svg width="28" height="28" viewBox="0 0 28 28"><rect x="4" y="12" width="20" height="3" rx="1.5" fill="rgba(255,255,255,0.9)"/><path d="M6 15 Q8 20 10 22 M12 15 Q14 20 16 22 M18 15 Q20 20 22 22" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" fill="none"/><path d="M6 12 Q8 7 10 5 M12 12 Q14 7 16 5 M18 12 Q20 7 22 5" stroke="rgba(255,255,255,0.25)" strokeWidth="1" strokeLinecap="round" strokeDasharray="2,2" fill="none"/></svg>,
+  },
+  {
+    cat: 'barrier', badge: 'BARRIER', name: 'Remafix 715',
+    bg: 'Крем за хоризонтална преградна инжекция срещу капилярна влага. Вкарва се в предварително пробити отвори. Подходящ за стари зидани сгради.',
+    en: 'Cream for horizontal barrier injection against capillary moisture. Injected into pre-drilled holes. Ideal for old masonry buildings.',
+    icon: <svg width="28" height="28" viewBox="0 0 28 28"><rect x="4" y="12" width="20" height="3" rx="1.5" fill="rgba(255,255,255,0.9)"/><path d="M6 15 Q8 20 10 22 M12 15 Q14 20 16 22 M18 15 Q20 20 22 22" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" fill="none"/><circle cx="8" cy="12" r="2" fill="rgba(255,255,255,0.4)" stroke="rgba(255,255,255,0.7)" strokeWidth="1"/><circle cx="14" cy="12" r="2" fill="rgba(255,255,255,0.4)" stroke="rgba(255,255,255,0.7)" strokeWidth="1"/><circle cx="20" cy="12" r="2" fill="rgba(255,255,255,0.4)" stroke="rgba(255,255,255,0.7)" strokeWidth="1"/></svg>,
+  },
 ];
 
 const filters = [
@@ -94,6 +158,8 @@ const filters = [
   { key: 'foam', bg: 'Пени & Гелове', en: 'Foams & Gels' },
   { key: 'mortar', bg: 'Разтвори', en: 'Mortars' },
   { key: 'seal', bg: 'Уплътнители', en: 'Sealants' },
+  { key: 'coating', bg: 'Покрития', en: 'Coatings' },
+  { key: 'barrier', bg: 'Хоризонтална Бариера', en: 'Horizontal Barrier' },
   { key: 'equip', bg: 'Оборудване', en: 'Equipment' },
 ];
 
