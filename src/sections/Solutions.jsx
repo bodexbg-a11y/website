@@ -213,9 +213,8 @@ export default function Solutions() {
         <div className="solutions-grid">
           {problems.map((problem) => (
             <div 
-              className={`solution-card ${expanded === problem.id ? 'expanded' : ''}`} 
+              className={`solution-card revealed ${expanded === problem.id ? 'expanded' : ''}`} 
               key={problem.id}
-              data-reveal
             >
               <div 
                 className="solution-card-header"
