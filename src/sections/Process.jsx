@@ -8,6 +8,37 @@ const steps = [
   { num: '05', titleBg: 'Поддръжка', titleEn: 'Support', descBg: 'Техническа поддръжка по време и след проекта', descEn: 'Technical support during and after completion' },
 ];
 
+const injectionSteps = [
+  {
+    img: '/injection-step-drilling.jpg',
+    titleBg: 'Пробиване към пукнатината',
+    titleEn: 'Drilling toward the crack',
+    descBg: 'Отворите се пробиват под ъгъл, така че да пресекат пукнатината в дълбочина.',
+    descEn: 'Holes are drilled at an angle so they intersect the crack through the concrete depth.',
+  },
+  {
+    img: '/injection-step-packers.jpg',
+    titleBg: 'Монтаж на пакери',
+    titleEn: 'Installing packers',
+    descBg: 'Пакерите се фиксират плътно в отворите и създават контролирана точка за подаване.',
+    descEn: 'Packers are fixed tightly in the holes and create controlled injection points.',
+  },
+  {
+    img: '/injection-step-pumping.jpg',
+    titleBg: 'Инжектиране на материал',
+    titleEn: 'Injecting the material',
+    descBg: 'Смолата се подава под налягане и запълва пукнатината отдолу нагоре.',
+    descEn: 'Resin is pumped under pressure and fills the crack from bottom to top.',
+  },
+  {
+    img: '/injection-step-sealed.jpg',
+    titleBg: 'Запълване и запечатване',
+    titleEn: 'Filling and sealing',
+    descBg: 'След втвърдяване пукнатината е запълнена, а отворите се затварят чисто.',
+    descEn: 'After curing, the crack is filled and the drilled holes are neatly sealed.',
+  },
+];
+
 export default function Process() {
   return (
     <section id="process" className="section">
@@ -26,6 +57,38 @@ export default function Process() {
               <p><T bg={s.descBg} en={s.descEn} /></p>
             </div>
           ))}
+        </div>
+
+        <div className="injection-process" data-reveal>
+          <div className="injection-process-head">
+            <div>
+              <div className="eyebrow"><T bg="Технология" en="Technology" /></div>
+              <h3>
+                <T bg={<>Как работи <span className="accent">инжектирането през пакери</span></>} en={<>How <span className="accent">packer injection</span> works</>} />
+              </h3>
+            </div>
+            <p>
+              <T
+                bg="Материалът се подава под контролирано налягане директно в пукнатината, за да възстанови водоплътността и целостта на бетона."
+                en="Material is injected under controlled pressure directly into the crack to restore watertightness and concrete integrity."
+              />
+            </p>
+          </div>
+
+          <div className="injection-grid">
+            {injectionSteps.map((step, index) => (
+              <article className="injection-card" data-reveal data-d={index > 0 ? String(index) : undefined} key={step.img}>
+                <div className="injection-img">
+                  <img src={step.img} alt="" loading="lazy" />
+                </div>
+                <div className="injection-card-body">
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <h4><T bg={step.titleBg} en={step.titleEn} /></h4>
+                  <p><T bg={step.descBg} en={step.descEn} /></p>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>
