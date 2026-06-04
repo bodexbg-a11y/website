@@ -1,6 +1,8 @@
 import { T } from '../context/LangContext';
 
 export default function Partner() {
+  const arcanUrl = 'https://www.arcan-waterproofing.com/';
+
   return (
     <section id="partner" className="section-sm">
       <div className="container">
@@ -17,10 +19,16 @@ export default function Partner() {
               />
             </p>
           </div>
-          <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }} data-reveal data-d="1">
-            <div className="partner-logo-box">
-              ARCAN<span>Waterproofing · Germany</span>
-            </div>
+          <div className="partner-logos" data-reveal data-d="1">
+            <a
+              className="partner-logo-box"
+              href={arcanUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="ARCAN Waterproofing"
+            >
+              <img src="/arcan-logo-w-sub.png" alt="ARCAN Construction Products" />
+            </a>
           </div>
         </div>
       </div>

@@ -3,6 +3,8 @@ import { T } from '../context/LangContext';
 import logoSrc from '../assets/logo.svg';
 
 export default function Footer() {
+  const arcanUrl = 'https://www.arcan-waterproofing.com/';
+
   return (
     <footer>
       <div className="container">
@@ -45,7 +47,10 @@ export default function Footer() {
         </div>
         <div className="footer-bottom">
           <p>© 2025 BODEX Bulgaria. <T bg="Всички права запазени." en="All rights reserved." /></p>
-          <p><T bg="Официален партньор на" en="Official partner of" /> <strong style={{ color: '#93a8f5' }}>ARCAN Waterproofing</strong></p>
+          <p>
+            <T bg="Официален партньор на" en="Official partner of" />{' '}
+            <a href={arcanUrl} target="_blank" rel="noreferrer">ARCAN Waterproofing</a>
+          </p>
         </div>
       </div>
     </footer>
