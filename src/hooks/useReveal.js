@@ -15,5 +15,5 @@ export function useReveal() {
     );
     document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  });
+  }, []);
 }
