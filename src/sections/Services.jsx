@@ -56,7 +56,7 @@ export default function Services() {
                 </svg>
               </div>
               <h3><T bg="Доставка на Инжекционни Материали" en="Injection Materials Supply" /></h3>
-              <p><T bg="Оптова доставка на полимерни смоли, пени, гелове и минерални инжекции от ARCAN Waterproofing (Германия)." en="Wholesale supply of polymer resins, foams, gels and mineral injections from ARCAN Waterproofing (Germany)." /></p>
+              <p><T bg="Доставка на едро на полимерни смоли, пени, гелове и минерални инжекции от ARCAN Waterproofing (Германия)." en="Wholesale supply of polymer resins, foams, gels and mineral injections from ARCAN Waterproofing (Germany)." /></p>
             </div>
             <div className="service-card-body">
               <ul className="service-list">

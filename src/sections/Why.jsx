@@ -54,7 +54,7 @@ const cards = [
       </svg>
     ),
     titleBg: 'Гъвкави условия', titleEn: 'Flexible Terms',
-    textBg: 'Оптови цени, гъвкави обеми и срокове. Дългосрочни партньорства с изгодни условия за редовни клиенти.',
+    textBg: 'Цени на едро, гъвкави обеми и срокове. Дългосрочни партньорства с изгодни условия за редовни клиенти.',
     textEn: 'Wholesale prices, flexible quantities and timelines. Long-term partnerships with favorable terms for regular clients.',
   },
 ];

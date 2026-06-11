@@ -11,7 +11,7 @@ export default function Hero() {
           <div className="hero-content">
             <div className="hero-badge anim-up">
               <span className="hero-badge-dot" />
-              <T bg="B2B · Само оптови продажби · Официален партньор ARCAN" en="B2B Wholesale Only · Authorized ARCAN Partner" />
+              <T bg="B2B · Продажби само на едро · Официален партньор ARCAN" en="B2B Wholesale Only · Authorized ARCAN Partner" />
             </div>
             <h1 className="hero-title anim-up-1">
               <T
@@ -41,7 +41,7 @@ export default function Hero() {
                 { num: '15+', bg: 'Години опит', en: 'Years experience' },
                 { num: '5', bg: 'Сектори', en: 'Sectors' },
                 { num: '50+', bg: 'Вида продукти', en: 'Product types' },
-                { num: 'B2B', bg: 'Само оптово', en: 'Wholesale only' },
+                { num: 'B2B', bg: 'Само на едро', en: 'Wholesale only' },
               ].map((s) => (
                 <div className="hero-stat" key={s.num}>
                   <div className="hero-stat-num">{s.num}</div>
