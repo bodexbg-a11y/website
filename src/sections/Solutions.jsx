@@ -243,7 +243,6 @@ const problems = [
 
 export default function Solutions() {
   const [selectedId, setSelectedId] = useState(problems[0].id);
-  const [activeTab, setActiveTab] = useState('visual');
 
   const activeProblem = problems.find((p) => p.id === selectedId) || problems[0];
 
@@ -307,190 +306,43 @@ export default function Solutions() {
           </h2>
           <p className="lead" style={{ maxWidth: '650px', marginTop: '16px' }} data-reveal>
             <T 
-              bg="Използвайте нашия визуален 3D-инспектор или списъка, за да локализирате проблема и веднага да откриете препоръчаните немски материали и техните параметри."
-              en="Use our visual building inspector or the list view to locate the problem, inspect engineering parameters, and find recommended German materials."
+              bg="Изберете вид проблем от списъка, за да видите подробно техническо решение, препоръчани немски материали и техните параметри."
+              en="Select a problem from the list to see detailed technical solution, recommended German materials, and their parameters."
             />
           </p>
         </div>
 
-        {/* Dashboard Nav Tabs */}
-        <div className="solutions-tabs-header" data-reveal>
-          <button 
-            className={`sol-tab-btn ${activeTab === 'visual' ? 'active' : ''}`}
-            onClick={() => setActiveTab('visual')}
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-              <circle cx="12" cy="12" r="3"/>
-            </svg>
-            <T bg="Визуален Инспектор" en="Visual Inspector" />
-          </button>
-          <button 
-            className={`sol-tab-btn ${activeTab === 'list' ? 'active' : ''}`}
-            onClick={() => setActiveTab('list')}
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="8" y1="6" x2="21" y2="6"/>
-              <line x1="8" y1="12" x2="21" y2="12"/>
-              <line x1="8" y1="18" x2="21" y2="18"/>
-              <line x1="3" y1="6" x2="3.01" y2="6"/>
-              <line x1="3" y1="12" x2="3.01" y2="12"/>
-              <line x1="3" y1="18" x2="3.01" y2="18"/>
-            </svg>
-            <T bg="Списък с Проблеми" en="Problem List" />
-          </button>
-        </div>
-
         <div className="solutions-dashboard-layout">
           
-          {/* Left panel - Visual inspector or List Selector */}
+          {/* Left panel - List Selector */}
           <div className="solutions-left-pane">
-            
-            {activeTab === 'visual' ? (
-              <div className="blueprint-inspection-card" data-reveal>
-                <div className="blueprint-overlay-grid"></div>
-                <div className="blueprint-title-tag">SYSTEM_CROSS_SECTION_SCANNER.sys</div>
-                
-                {/* SVG Interactive Blueprint */}
-                <svg className="blueprint-svg" viewBox="0 0 420 340" width="100%" height="100%">
-                  {/* Grid Dots */}
-                  <pattern id="dotGrid" width="20" height="20" patternUnits="userSpaceOnUse">
-                    <circle cx="2" cy="2" r="1" fill="rgba(30,64,175,0.06)" />
-                  </pattern>
-                  <rect width="100%" height="100%" fill="url(#dotGrid)" />
-
-                  {/* Ground Level */}
-                  <line x1="10" y1="110" x2="410" y2="110" stroke="rgba(15,23,42,0.15)" strokeWidth="1.5" strokeDasharray="4,4" />
-                  
-                  {/* Soils hatching */}
-                  <rect x="10" y="110" width="70" height="220" fill="rgba(15,23,42,0.02)" />
-                  <rect x="340" y="110" width="70" height="220" fill="rgba(15,23,42,0.02)" />
-
-                  {/* Concrete structure base */}
-                  {/* Left wall, right wall, slab foundation floor */}
-                  <rect x="80" y="100" width="260" height="190" fill="none" stroke="var(--primary)" strokeWidth="4" strokeLinejoin="round" />
-                  <rect x="80" y="270" width="260" height="20" fill="rgba(30,64,175,0.05)" stroke="var(--primary)" strokeWidth="3" />
-
-                  {/* Columns */}
-                  <line x1="210" y1="100" x2="210" y2="270" stroke="var(--primary)" strokeWidth="3" />
-                  <rect x="200" y="270" width="20" height="6" fill="var(--primary)" />
-
-                  {/* Pipe penetration */}
-                  <rect x="70" y="170" width="20" height="14" fill="rgba(15,23,42,0.1)" stroke="var(--dim)" strokeWidth="1.5" />
-                  <line x1="60" y1="177" x2="95" y2="177" stroke="var(--dim)" strokeWidth="2" />
-
-                  {/* Brick wall on Ground (right side) */}
-                  <g stroke="rgba(15,23,42,0.3)" strokeWidth="1.5" fill="none">
-                    <rect x="270" y="30" width="60" height="70" fill="rgba(15,23,42,0.03)" />
-                    <line x1="270" y1="47" x2="330" y2="47" />
-                    <line x1="270" y1="64" x2="330" y2="64" />
-                    <line x1="270" y1="81" x2="330" y2="81" />
-                    <line x1="290" y1="30" x2="290" y2="47" />
-                    <line x1="310" y1="30" x2="310" y2="47" />
-                    <line x1="280" y1="47" x2="280" y2="64" />
-                    <line x1="300" y1="47" x2="300" y2="64" />
-                    <line x1="320" y1="47" x2="320" y2="64" />
-                  </g>
-
-                  {/* Ground Label texts */}
-                  <text x="25" y="130" fill="var(--dim)" fontSize="8" fontWeight="bold" opacity="0.6">SOIL / ПОЧВА</text>
-                  <text x="355" y="130" fill="var(--dim)" fontSize="8" fontWeight="bold" opacity="0.6">SOIL</text>
-                  <text x="145" y="150" fill="var(--primary)" fontSize="9" fontWeight="800" opacity="0.4" letterSpacing="1">BASEMENT / МАЗЕ</text>
-                  <text x="280" y="20" fill="var(--muted)" fontSize="8" fontWeight="bold" opacity="0.6">MASONRY</text>
-
-                  {/* INTERACTIVE HOTSPOTS */}
-                  
-                  {/* 1. Curtain behind wall (curtain) */}
-                  <g className={`hotspot-group ${selectedId === 'curtain' ? 'active' : ''}`} onClick={() => setSelectedId('curtain')}>
-                    <circle cx="60" cy="210" r="14" className="hotspot-trigger" />
-                    <circle cx="60" cy="210" r="4" className="hotspot-dot" />
-                    <circle cx="60" cy="210" r="8" className="hotspot-pulse" />
-                  </g>
-
-                  {/* 2. Construction joint floor-wall (joints) */}
-                  <g className={`hotspot-group ${selectedId === 'joints' ? 'active' : ''}`} onClick={() => setSelectedId('joints')}>
-                    <circle cx="80" cy="270" r="14" className="hotspot-trigger" />
-                    <circle cx="80" cy="270" r="4" className="hotspot-dot" />
-                    <circle cx="80" cy="270" r="8" className="hotspot-pulse" />
-                  </g>
-
-                  {/* 3. Waterstop active wet leaks (waterstop) */}
-                  <g className={`hotspot-group ${selectedId === 'waterstop' ? 'active' : ''}`} onClick={() => setSelectedId('waterstop')}>
-                    <circle cx="80" cy="135" r="14" className="hotspot-trigger" />
-                    <circle cx="80" cy="135" r="4" className="hotspot-dot" />
-                    <circle cx="80" cy="135" r="8" className="hotspot-pulse" />
-                  </g>
-
-                  {/* 4. Moving joint slab (expansion) */}
-                  <g className={`hotspot-group ${selectedId === 'expansion' ? 'active' : ''}`} onClick={() => setSelectedId('expansion')}>
-                    <circle cx="160" cy="280" r="14" className="hotspot-trigger" />
-                    <circle cx="160" cy="280" r="4" className="hotspot-dot" />
-                    <circle cx="160" cy="280" r="8" className="hotspot-pulse" />
-                  </g>
-
-                  {/* 5. Under-slab cavity (cavity) */}
-                  <g className={`hotspot-group ${selectedId === 'cavity' ? 'active' : ''}`} onClick={() => setSelectedId('cavity')}>
-                    <circle cx="210" cy="300" r="14" className="hotspot-trigger" />
-                    <circle cx="210" cy="300" r="4" className="hotspot-dot" />
-                    <circle cx="210" cy="300" r="8" className="hotspot-pulse" />
-                  </g>
-
-                  {/* 6. Structural columns beam (structural) */}
-                  <g className={`hotspot-group ${selectedId === 'structural' ? 'active' : ''}`} onClick={() => setSelectedId('structural')}>
-                    <circle cx="210" cy="100" r="14" className="hotspot-trigger" />
-                    <circle cx="210" cy="100" r="4" className="hotspot-dot" />
-                    <circle cx="210" cy="100" r="8" className="hotspot-pulse" />
-                  </g>
-
-                  {/* 7. Pipes penetration (pipes) */}
-                  <g className={`hotspot-group ${selectedId === 'pipes' ? 'active' : ''}`} onClick={() => setSelectedId('pipes')}>
-                    <circle cx="80" cy="177" r="14" className="hotspot-trigger" />
-                    <circle cx="80" cy="177" r="4" className="hotspot-dot" />
-                    <circle cx="80" cy="177" r="8" className="hotspot-pulse" />
-                  </g>
-
-                  {/* 8. Masonry wall rising damp (barrier) */}
-                  <g className={`hotspot-group ${selectedId === 'barrier' ? 'active' : ''}`} onClick={() => setSelectedId('barrier')}>
-                    <circle cx="300" cy="70" r="14" className="hotspot-trigger" />
-                    <circle cx="300" cy="70" r="4" className="hotspot-dot" />
-                    <circle cx="300" cy="70" r="8" className="hotspot-pulse" />
-                  </g>
-
-                </svg>
-
-                <div className="blueprint-legend">
-                  <div className="legend-item"><span className="legend-dot"></span><T bg="Кликнете върху пулсираща точка за диагноза" en="Click on any pulsing hotspot for diagnosis" /></div>
-                </div>
-              </div>
-            ) : (
-              <div className="problems-list" data-reveal>
-                {problems.map((problem) => {
-                  const isActive = problem.id === selectedId;
-                  return (
-                    <button
-                      key={problem.id}
-                      className={`problem-selector-item ${isActive ? 'active' : ''}`}
-                      onClick={() => handleSelectProblem(problem.id)}
-                      aria-selected={isActive}
-                      role="tab"
-                    >
-                      <div className="selector-icon-wrap">{problem.icon}</div>
-                      <div className="selector-text-wrap">
-                        <h4><T bg={problem.titleBg} en={problem.titleEn} /></h4>
-                        <p className="selector-subtitle">
-                          <T bg={problem.descBg.substring(0, 50) + '...'} en={problem.descEn.substring(0, 50) + '...'} />
-                        </p>
-                      </div>
-                      <div className="selector-chevron">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                          <polyline points="9 18 15 12 9 6" />
-                        </svg>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            )}
+            <div className="problems-list" data-reveal>
+              {problems.map((problem) => {
+                const isActive = problem.id === selectedId;
+                return (
+                  <button
+                    key={problem.id}
+                    className={`problem-selector-item ${isActive ? 'active' : ''}`}
+                    onClick={() => handleSelectProblem(problem.id)}
+                    aria-selected={isActive}
+                    role="tab"
+                  >
+                    <div className="selector-icon-wrap">{problem.icon}</div>
+                    <div className="selector-text-wrap">
+                      <h4><T bg={problem.titleBg} en={problem.titleEn} /></h4>
+                      <p className="selector-subtitle">
+                        <T bg={problem.descBg.substring(0, 50) + '...'} en={problem.descEn.substring(0, 50) + '...'} />
+                      </p>
+                    </div>
+                    <div className="selector-chevron">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="9 18 15 12 9 6" />
+                      </svg>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Right panel - Solution dynamic details card */}

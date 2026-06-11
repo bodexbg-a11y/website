@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { T } from '../context/LangContext';
+import { useState, useEffect } from 'react';
+import { useLang, T } from '../context/LangContext';
 
 const products = [
   {
@@ -201,8 +201,37 @@ const filters = [
 
 export default function Products() {
   const [activeFilter, setActiveFilter] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const { lang } = useLang();
 
-  const visible = products.filter((p) => activeFilter === 'all' || p.cat === activeFilter);
+  useEffect(() => {
+    const handleFilterChange = (e) => {
+      if (e.detail && e.detail.filter) {
+        setActiveFilter(e.detail.filter);
+        setSearchQuery('');
+        const gridEl = document.getElementById('products');
+        if (gridEl) {
+          gridEl.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+    window.addEventListener('setProductFilter', handleFilterChange);
+    return () => window.removeEventListener('setProductFilter', handleFilterChange);
+  }, []);
+
+  const getCategoryCount = (catKey) => {
+    if (catKey === 'all') return products.length;
+    return products.filter((p) => p.cat === catKey).length;
+  };
+
+  const visible = products.filter((p) => {
+    const matchesCat = activeFilter === 'all' || p.cat === activeFilter;
+    const nameStr = p.name ? p.name : (lang === 'bg' ? p.nameBg : p.nameEn);
+    const descStr = lang === 'bg' ? p.bg : p.en;
+    const nameMatch = (nameStr || '').toLowerCase().includes(searchQuery.toLowerCase());
+    const descMatch = (descStr || '').toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCat && (nameMatch || descMatch);
+  });
 
   return (
     <section id="products" className="section">
@@ -247,21 +276,44 @@ export default function Products() {
             </a>
           </div>
         </div>
-        <div className="filter-bar">
+
+        {/* Dynamic Search Bar */}
+        <div className="search-bar-wrap" data-reveal>
+          <div className="search-input-container">
+            <svg className="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input 
+              type="text" 
+              placeholder={lang === 'bg' ? 'Търсене на продукти (напр. смола, помпа, лента)...' : 'Search products (e.g. resin, pump, tape)...'} 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="search-input"
+            />
+            {searchQuery && (
+              <button className="search-clear-btn" onClick={() => setSearchQuery('')} aria-label="Clear search">✕</button>
+            )}
+          </div>
+        </div>
+
+        <div className="filter-bar" data-reveal>
           {filters.map((f) => (
             <button
               key={f.key}
-              className={`filter-btn${activeFilter === f.key ? ' active' : ''}`}
-              onClick={() => setActiveFilter(f.key)}
+              className={`filter-btn${activeFilter === f.key && !searchQuery ? ' active' : ''}`}
+              onClick={() => { setActiveFilter(f.key); setSearchQuery(''); }}
             >
               <T bg={f.bg} en={f.en} />
+              <span className="filter-count">{getCategoryCount(f.key)}</span>
             </button>
           ))}
         </div>
-        <div className="product-grid" id="productGrid" key={activeFilter}>
+
+        <div className="product-grid" id="productGrid" key={activeFilter + searchQuery}>
           {visible.length > 0 ? (
             visible.map((p, index) => (
-              <div className={`product-card${activeFilter !== 'all' ? ' revealed' : ''}`} data-reveal key={p.name || p.nameEn || index}>
+              <div className={`product-card revealed`} data-reveal key={p.name || p.nameEn || index}>
                 <span className="product-cat-badge">{p.badge}</span>
                 <div className="product-icon-wrap">{p.icon}</div>
                 <h3>{p.name ? p.name : <T bg={p.nameBg} en={p.nameEn} />}</h3>
@@ -283,8 +335,8 @@ export default function Products() {
               </div>
             ))
           ) : (
-            <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '40px', color: 'var(--muted)' }}>
-              <T bg="Няма продукти в тази категория" en="No products in this category" />
+            <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '60px 40px', color: 'var(--muted)' }}>
+              <T bg="Няма намерени продукти за вашето търсене" en="No products found matching your search" />
             </div>
           )}
         </div>
