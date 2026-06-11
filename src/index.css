@@ -624,7 +624,7 @@ header.scrolled #navLogo img {
   border-color: var(--border-hover);
 }
 
-/* WHY US SECTION */
+/* BENTO GRID SYSTEM (WHY US) */
 #why {
   background: var(--bg-base);
 }
@@ -635,56 +635,202 @@ header.scrolled #navLogo img {
   align-items: center;
   margin-bottom: 72px;
 }
-.why-grid {
+.bento-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 28px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(220px, auto);
+  gap: 24px;
 }
-.why-card {
+.bento-card {
   background: var(--light-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 40px;
-  transition: var(--transition);
+  padding: 36px;
   position: relative;
   overflow: hidden;
-}
-.why-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary), var(--accent-cyan));
-  transform: scaleX(0);
   transition: var(--transition);
-  transform-origin: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.why-card:hover {
+.bento-card:hover {
   background: var(--bg-surface);
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-5px);
   border-color: var(--border-hover);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
 }
-.why-card:hover::after {
-  transform: scaleX(1);
+.bento-card-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 100% 0%, rgba(37, 99, 235, 0.03) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
 }
-.why-icon {
-  margin-bottom: 24px;
+.bento-card:hover .bento-card-glow {
+  background: radial-gradient(circle at 100% 0%, rgba(37, 99, 235, 0.06) 0%, transparent 70%);
 }
-.why-card h3 {
+.bento-card-content {
+  position: relative;
+  z-index: 2;
+}
+.bento-card-tag {
+  align-self: flex-start;
   font-family: var(--font-h);
-  font-size: 1.2rem;
+  font-size: 0.65rem;
   font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: rgba(30, 64, 175, 0.06);
+  padding: 3px 10px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  width: fit-content;
+}
+.bento-card h3 {
+  font-family: var(--font-h);
+  font-size: 1.4rem;
+  font-weight: 800;
   color: var(--text);
   margin-bottom: 12px;
+  line-height: 1.3;
 }
-.why-card p {
-  font-size: 0.95rem;
-  line-height: 1.75;
+.bento-card p {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.bento-card-large {
+  grid-column: span 2;
+  grid-row: span 2;
+  justify-content: flex-end;
+  background: linear-gradient(135deg, var(--light-bg) 0%, rgba(30, 64, 175, 0.02) 100%);
+}
+.bento-card-medium {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+.bento-card-small {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+.bento-blueprint-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(30, 64, 175, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+.bento-gauge-wrap {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+}
+.bento-gauge-wrap svg {
+  transform: rotate(-90deg);
+}
+.gauge-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-h);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+.bento-shield-wrap {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(30, 64, 175, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  position: relative;
+  border: 1px dashed rgba(30, 64, 175, 0.2);
+}
+.bento-shield-wrap svg {
+  color: var(--primary);
+}
+.certified-text {
+  position: absolute;
+  bottom: 0px;
+  background: var(--primary);
+  color: var(--white);
+  font-family: var(--font-h);
+  font-size: 0.6rem;
+  font-weight: 900;
+  padding: 1px 6px;
+  border-radius: 10px;
+}
+.bento-card-number {
+  font-family: var(--font-h);
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1;
+  margin-bottom: 12px;
+  display: block;
+}
+.bento-card h4 {
+  font-family: var(--font-h);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.bento-progress-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 14px;
+}
+.mini-bar {
+  height: 4px;
+  background: rgba(15, 23, 42, 0.05);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.mini-bar .fill {
+  height: 100%;
+  background: var(--accent-cyan);
+  border-radius: 2px;
+}
+.bento-cert-stamps {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+.cert-stamp {
+  font-family: var(--font-h);
+  font-size: 0.65rem;
+  font-weight: 700;
+  border: 1.5px solid var(--border);
+  padding: 2px 8px;
+  border-radius: 6px;
   color: var(--muted);
 }
+.flex-row-align {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.bento-truck-icon {
+  width: 46px;
+  height: 46px;
+  background: rgba(30, 64, 175, 0.05);
+  color: var(--primary);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mt-12 { margin-top: 12px; }
+.mt-16 { margin-top: 16px; }
 
 /* SERVICES SECTION */
 #services {
@@ -1461,50 +1607,246 @@ header.scrolled #navLogo img {
   transition: var(--transition);
 }
 
-/* STATS SECTION (SPOTLIGHT DARK) */
-#stats {
-  background: linear-gradient(135deg, #090d1a 0%, #111827 100%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  position: relative;
-  overflow: hidden;
-}
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* HERO TERMINAL SIMULATOR STYLE */
+.hero-terminal-container {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hover);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(30, 64, 175, 0.05);
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
-.stat-item {
-  padding: 56px 36px;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-  text-align: center;
+.terminal-header {
+  background: #0f172a;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.terminal-dots {
+  display: flex;
+  gap: 8px;
+}
+.terminal-dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.terminal-dots .dot.red { background: #red; background-color: #ef4444; }
+.terminal-dots .dot.yellow { background: #yellow; background-color: #f59e0b; }
+.terminal-dots .dot.green { background: #green; background-color: #10b981; }
+.terminal-title {
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.05em;
+}
+.terminal-status {
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.12);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  animation: blink 2s infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+.terminal-body {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  aspect-ratio: 1 / 1;
+  background: #020617;
+}
+.hero-render-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.95;
+  transition: transform 0.8s var(--transition);
+}
+.hero-terminal-container:hover .hero-render-img {
+  transform: scale(1.04);
+}
+.scanner-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-cyan), var(--white), var(--accent-cyan), transparent);
+  box-shadow: 0 0 12px 1px var(--accent-cyan);
+  z-index: 5;
+  pointer-events: none;
+  animation: scan 4s linear infinite;
+}
+@keyframes scan {
+  0% { top: 0%; }
+  50% { top: 100%; }
+  100% { top: 0%; }
+}
+.scan-overlay-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(30, 64, 175, 0.08) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: 2;
+}
+.tech-badge {
+  position: absolute;
+  font-family: monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(2, 132, 199, 0.3);
+  padding: 4px 10px;
+  border-radius: 4px;
+  z-index: 4;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+}
+.tech-badge.top-left { top: 16px; left: 16px; }
+.tech-badge.top-right { top: 16px; right: 16px; }
+.tech-badge.bottom-left { bottom: 16px; left: 16px; }
+.tech-badge.bottom-right { bottom: 16px; right: 16px; }
+
+/* SOLUTIONS TABS HEADER */
+.solutions-tabs-header {
+  display: flex;
+  gap: 10px;
+  background: rgba(15, 23, 42, 0.03);
+  padding: 6px;
+  border-radius: var(--radius);
+  width: fit-content;
+  border: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+.sol-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-h);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
   transition: var(--transition);
 }
-.stat-item:last-child {
-  border-right: none;
+.sol-tab-btn:hover {
+  color: var(--primary);
 }
-.stat-item:hover {
-  background: rgba(255, 255, 255, 0.03);
+.sol-tab-btn.active {
+  background: var(--bg-surface);
+  color: var(--primary);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
 }
-.stat-num {
-  font-family: var(--font-h);
-  font-size: 3.5rem;
-  font-weight: 900;
-  color: var(--white);
-  line-height: 1;
-  margin-bottom: 10px;
-  text-shadow: 0 0 30px rgba(37, 99, 235, 0.2);
+
+/* BLUEPRINT CARD */
+.blueprint-inspection-card {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.stat-label {
-  font-family: var(--font-h);
-  font-size: 0.8rem;
+.blueprint-overlay-grid {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(30, 64, 175, 0.04);
+  pointer-events: none;
+}
+.blueprint-title-tag {
+  position: absolute;
+  top: 12px;
+  left: 20px;
+  font-family: monospace;
+  font-size: 0.65rem;
+  color: var(--dim);
+  letter-spacing: 0.05em;
+}
+.blueprint-svg {
+  position: relative;
+  z-index: 2;
+  overflow: visible;
+}
+
+/* HOTSPOTS ANIMATIONS */
+.hotspot-group {
+  cursor: pointer;
+}
+.hotspot-trigger {
+  fill: transparent;
+}
+.hotspot-dot {
+  fill: var(--primary);
+  transition: fill 0.3s var(--transition);
+}
+.hotspot-pulse {
+  fill: transparent;
+  stroke: var(--primary);
+  stroke-width: 1.5px;
+  transform-origin: center;
+  animation: pulseGrad 2s infinite ease-out;
+  pointer-events: none;
+}
+@keyframes pulseGrad {
+  0% { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+
+/* Hover and Active Hotspot Styling */
+.hotspot-group:hover .hotspot-dot,
+.hotspot-group.active .hotspot-dot {
+  fill: var(--accent-cyan);
+}
+.hotspot-group:hover .hotspot-pulse,
+.hotspot-group.active .hotspot-pulse {
+  stroke: var(--accent-cyan);
+}
+
+.blueprint-legend {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  z-index: 2;
+  position: relative;
+}
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: var(--dim);
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.6);
+}
+.legend-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent-cyan);
+  border-radius: 50%;
+  animation: pulseGrad 1.5s infinite;
 }
 
 /* CONTACT SECTION */
@@ -2253,6 +2595,23 @@ footer {
   .proj-stats { grid-template-columns: 1fr 1fr; }
   .matrix-grid { grid-template-columns: 1fr; gap: 32px; }
 
+  /* Bento Grid Tablet Layout */
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .bento-card-large {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .bento-card-medium {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  .bento-card-small {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
   /* Solutions dashboard responsive */
   .solutions-dashboard-layout {
     grid-template-columns: 1fr;
@@ -2313,6 +2672,24 @@ footer {
   .sectors-grid { grid-template-columns: 1fr 1fr; }
   .sector-item:nth-child(2n) { border-right: none; }
   .process-timeline { grid-template-columns: 1fr; gap: 40px; }
+
+  /* Bento Grid Mobile Layout */
+  .bento-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    gap: 16px;
+  }
+  .bento-card-large,
+  .bento-card-medium,
+  .bento-card-small {
+    grid-column: span 1;
+    grid-row: span 1;
+    min-height: auto;
+    padding: 24px;
+  }
+  .blueprint-inspection-card {
+    padding: 20px 12px;
+  }
 }
 
 @media (max-width: 480px) {
