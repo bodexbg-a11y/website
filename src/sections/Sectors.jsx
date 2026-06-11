@@ -91,7 +91,7 @@ export default function Sectors() {
             <T bg="Обекти" en="Sectors" />
           </div>
           <h2 className="h2" data-reveal style={{ color: '#fff' }}>
-            <T bg={<>С Какво <span style={{ color: '#93a8f5' }}>Работим</span></>} en={<>What We <span style={{ color: '#93a8f5' }}>Work With</span></>} />
+            <T bg={<>С Какво <span className="accent-light">Работим</span></>} en={<>What We <span className="accent-light">Work With</span></>} />
           </h2>
           <p className="lead" data-reveal style={{ color: 'rgba(255,255,255,0.6)', margin: '16px auto 0', maxWidth: 560 }}>
             <T

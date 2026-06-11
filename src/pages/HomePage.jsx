@@ -6,6 +6,7 @@ import Why from '../sections/Why';
 import Stats from '../sections/Stats';
 import Services from '../sections/Services';
 import Products from '../sections/Products';
+import InteractiveMatrix from '../sections/InteractiveMatrix';
 import Solutions from '../sections/Solutions';
 import Sectors from '../sections/Sectors';
 import Process from '../sections/Process';
@@ -30,6 +31,7 @@ export default function HomePage() {
       <Stats />
       <Services />
       <Products />
+      <InteractiveMatrix />
       <Solutions />
       <Sectors />
       <Process />

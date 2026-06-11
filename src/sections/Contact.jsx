@@ -6,6 +6,25 @@ const FORMSPREE_URL = 'https://formspree.io/f/xredbrjz';
 export default function Contact() {
   const [activeTab, setActiveTab] = useState('materials');
   const [submitted, setSubmitted] = useState(false);
+  const [selectedMaterial, setSelectedMaterial] = useState('');
+
+  useEffect(() => {
+    function handlePrefill() {
+      const material = localStorage.getItem('prefilledMaterialType');
+      const tab = localStorage.getItem('prefilledTab');
+      if (material) {
+        setSelectedMaterial(material);
+        localStorage.removeItem('prefilledMaterialType');
+      }
+      if (tab) {
+        setActiveTab(tab);
+        localStorage.removeItem('prefilledTab');
+      }
+    }
+    window.addEventListener('prefillContactForm', handlePrefill);
+    handlePrefill(); // Run on mount in case it is set
+    return () => window.removeEventListener('prefillContactForm', handlePrefill);
+  }, []);
 
   useEffect(() => {
     // Add JSON-LD structured data for contact
@@ -131,15 +150,20 @@ export default function Contact() {
                       </div>
                       <div className="form-group">
                         <label><T bg="Вид материал" en="Material type" /></label>
-                        <select name="material_type">
-                          <option value="" disabled defaultValue>—</option>
-                          <option>Полиуретанова смола / PU Resin</option>
-                          <option>Епоксидна смола / Epoxy Resin</option>
-                          <option>Инжекционна пяна / Injection Foam</option>
-                          <option>Инжекционен гел / Injection Gel</option>
-                          <option>Минерален разтвор / Mineral Mortar</option>
-                          <option>Набъбваща лента / Swellable Tape</option>
-                          <option>Оборудване / Equipment</option>
+                        <select 
+                          name="material_type" 
+                          value={selectedMaterial} 
+                          onChange={(e) => setSelectedMaterial(e.target.value)}
+                        >
+                          <option value="" disabled>—</option>
+                          <option value="Полиуретанова смола / PU Resin">Полиуретанова смола / PU Resin</option>
+                          <option value="Епоксидна смола / Epoxy Resin">Епоксидна смола / Epoxy Resin</option>
+                          <option value="Инжекционна пяна / Injection Foam">Инжекционна пяна / Injection Foam</option>
+                          <option value="Инжекционен гел / Injection Gel">Инжекционен гел / Injection Gel</option>
+                          <option value="Минерален разтвор / Mineral Mortar">Минерален разтвор / Mineral Mortar</option>
+                          <option value="Набъбваща лента / Swellable Tape">Набъбваща лента / Swellable Tape</option>
+                          <option value="Хоризонтална Бариера">Хоризонтална бариера / Horizontal Barrier</option>
+                          <option value="Оборудване / Equipment">Оборудване / Equipment</option>
                         </select>
                       </div>
                       <div className="form-row">
