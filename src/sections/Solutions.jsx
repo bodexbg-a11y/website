@@ -1,14 +1,71 @@
 import { useState } from 'react';
 import { T } from '../context/LangContext';
 
+const materialToFilter = {
+  // Sealants
+  'HydroTape': 'seal',
+  'BentoFlex': 'seal',
+  'Pro Inject 403': 'seal',
+  // Resins
+  'HydroBloc PU 500': 'resins',
+  'HydroBloc 575 Integral': 'resins',
+  'HydroBloc Rapid 570': 'resins',
+  'HydroBloc EP 811': 'resins',
+  'Silox Injection 811 nt': 'resins',
+  'PU Ankerharz 640': 'resins',
+  'HydroBloc Injekt 583': 'resins',
+  'HydroBloc 500-15': 'resins',
+  'HydroBloc Rapid 572': 'resins',
+  // Foams & Gels
+  'HydroBloc Schaum 510': 'foam',
+  'HydroBloc AC 555': 'foam',
+  'HydroBloc Gel 530': 'foam',
+  'Polygel 530 + Polyblend 540': 'foam',
+  'HydroBloc Polygrout 650': 'foam',
+  'HydroBloc Polygel 660': 'foam',
+  'HydroBloc 510': 'foam',
+  'HydroBloc 620 NV': 'foam',
+  'HydroBloc Schaum 516': 'foam',
+  'HydroBloc 516': 'foam',
+  'HydroBloc 620': 'foam',
+  'Polygel 530': 'foam',
+  'HydroBloc Add 540': 'foam',
+  'HydroBloc AC 502': 'foam',
+  // Mortars
+  'GeoRock 181': 'mortar',
+  'GeoRock 185': 'mortar',
+  'SealFix 930': 'mortar',
+  'Seal Fix Mörtel 930': 'mortar',
+  'Silox EP 800': 'mortar',
+  'Silox EP 840': 'mortar',
+  'Planfloor 595': 'mortar',
+  'HydroBloc OM 593': 'mortar',
+  'HydroBloc OM 597': 'mortar',
+  'HydroBloc 1200': 'mortar',
+  'HydroBloc 1201': 'mortar',
+  // Coatings
+  'Cembond 863': 'coating',
+  'HydroCoat 750': 'coating',
+  // Horizontal Barrier
+  'Remafix 709': 'barrier',
+  'Remafix 715': 'barrier',
+  'SiliBond Si 711': 'barrier',
+  'SiliBond Si 714 reactiv': 'barrier'
+};
+
 const problems = [
   {
     id: 'joints',
     titleBg: 'Уплътняване на работни фуги',
     titleEn: 'Construction Joint Sealing',
-    descBg: 'Запечатване на студени фуги между бетонови отливки. Предотвратява проникване на вода през строителни швове.',
+    descBg: 'Запечатване на студени фуги между бетонови отливки. Предотвратява проникване на вода през строителни фуги.',
     descEn: 'Sealing cold joints between concrete pours. Prevents water ingress through construction joints.',
     materials: ['HydroBloc PU 500', 'HydroBloc 575 Integral', 'HydroBloc AC 502', 'HydroBloc Injekt 583'],
+    params: {
+      pressure: { val: 30, labelBg: 'Нисък дебит', labelEn: 'Low flow' },
+      spacing: { val: 60, labelBg: '15-20 см', labelEn: '15-20 cm' },
+      difficulty: { val: 40, labelBg: 'Стандартна', labelEn: 'Standard' }
+    },
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <rect x="4" y="8" width="10" height="16" rx="2" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/>
@@ -25,7 +82,12 @@ const problems = [
     titleEn: 'Expansion Joint Sealing',
     descBg: 'Еластично уплътняване на подвижни фуги. Издържа на многократни цикли на свиване и разширяване.',
     descEn: 'Elastic sealing of moving joints. Withstands repeated contraction and expansion cycles.',
-    materials: ['HydroBloc 500-15', 'HydroBloc Rapid 570', 'HydroBloc Rapid 572', 'Polygel 530 + Polyblend 540'],
+    materials: ['HydroBloc PU 500', 'HydroBloc Rapid 570', 'HydroBloc Gel 530'],
+    params: {
+      pressure: { val: 50, labelBg: 'Средно налягане', labelEn: 'Medium pressure' },
+      spacing: { val: 80, labelBg: '10-15 см (Гъсто)', labelEn: '10-15 cm (Dense)' },
+      difficulty: { val: 75, labelBg: 'Висока сложност', labelEn: 'High complexity' }
+    },
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <rect x="4" y="8" width="8" height="16" rx="2" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/>
@@ -40,7 +102,12 @@ const problems = [
     titleEn: 'Curtain Injection',
     descBg: 'Създаване на водонепропусклива бариера зад конструкцията. За тунели, подземни паркинги и фундаменти.',
     descEn: 'Creating waterproof barrier behind the structure. For tunnels, underground parking and foundations.',
-    materials: ['Polygel 530 + Polyblend 540', 'HydroBloc Polygrout 650', 'HydroBloc Polygel 660', 'SiliBond Si 711'],
+    materials: ['HydroBloc Gel 530', 'HydroBloc Add 540', 'HydroBloc EP 811'],
+    params: {
+      pressure: { val: 80, labelBg: 'Високо налягане', labelEn: 'High pressure' },
+      spacing: { val: 50, labelBg: '25-30 см', labelEn: '25-30 cm' },
+      difficulty: { val: 95, labelBg: 'Изключително висока', labelEn: 'Extreme difficulty' }
+    },
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <rect x="6" y="4" width="20" height="24" rx="2" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/>
@@ -53,9 +120,14 @@ const problems = [
     id: 'cracks',
     titleBg: 'Запълване на пукнатини',
     titleEn: 'Crack Injection',
-    descBg: 'Инжектиране на пукнатини в бетон и зидария. Възстановява водоплътност и/или носеща способност.',
-    descEn: 'Injecting cracks in concrete and masonry. Restores watertightness and/or load-bearing capacity.',
-    materials: ['HydroBloc PU 500', 'HydroBloc 575 Integral', 'Silox EP 800', 'Silox Injection 811 nt', 'HydroBloc AC 555'],
+    descBg: 'Инжектиране на пукнатини в бетон и зидария. Възстановява водоплътност и носеща способност.',
+    descEn: 'Injecting cracks in concrete and masonry. Restores watertightness and load-bearing capacity.',
+    materials: ['HydroBloc PU 500', 'HydroBloc 575 Integral', 'Silox EP 800', 'HydroBloc AC 555'],
+    params: {
+      pressure: { val: 65, labelBg: 'Средно до високо', labelEn: 'Medium to high' },
+      spacing: { val: 60, labelBg: '15-25 см', labelEn: '15-25 cm' },
+      difficulty: { val: 60, labelBg: 'Средна сложност', labelEn: 'Medium complexity' }
+    },
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <rect x="4" y="4" width="24" height="24" rx="3" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/>
@@ -69,7 +141,12 @@ const problems = [
     titleEn: 'Water Stoppage',
     descBg: 'Аварийно спиране на активни течове под налягане. Бързореагиращи пени и гелове.',
     descEn: 'Emergency stopping of active leaks under pressure. Fast-reacting foams and gels.',
-    materials: ['HydroBloc 575 Integral', 'HydroBloc 510', 'HydroBloc 620 NV', 'HydroBloc Rapid 570', 'HydroBloc Schaum 516'],
+    materials: ['HydroBloc Schaum 510', 'HydroBloc Rapid 570', 'HydroBloc Schaum 516'],
+    params: {
+      pressure: { val: 100, labelBg: 'Много високо (Активен теч)', labelEn: 'Extreme (Active leak)' },
+      spacing: { val: 90, labelBg: '5-10 см (Много гъсто)', labelEn: '5-10 cm (Very dense)' },
+      difficulty: { val: 90, labelBg: 'Критична сложност', labelEn: 'Critical complexity' }
+    },
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <circle cx="16" cy="16" r="10" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/>
@@ -84,7 +161,12 @@ const problems = [
     titleEn: 'Cavity Filling',
     descBg: 'Запълване на празнини зад облицовки, в почви и скали. Стабилизация и укрепване.',
     descEn: 'Filling voids behind linings, in soils and rocks. Stabilization and reinforcement.',
-    materials: ['HydroBloc 510', 'GeoRock 185', 'Seal Fix Mörtel 930', 'HydroBloc 516', 'Planfloor 595', 'HydroBloc 1200'],
+    materials: ['HydroBloc Schaum 510', 'GeoRock 181', 'SealFix 930', 'Planfloor 595'],
+    params: {
+      pressure: { val: 20, labelBg: 'Ниско (Гравитачно)', labelEn: 'Low (Gravity)' },
+      spacing: { val: 30, labelBg: '50+ см (Рядко)', labelEn: '50+ cm (Sparse)' },
+      difficulty: { val: 50, labelBg: 'Средна сложност', labelEn: 'Medium complexity' }
+    },
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <rect x="4" y="4" width="24" height="24" rx="3" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/>
@@ -100,11 +182,16 @@ const problems = [
     titleEn: 'Sheet Pile & Excavation',
     descBg: 'Уплътняване на шпунтови стени, диафрагмени стени и строителни изкопи.',
     descEn: 'Sealing sheet pile walls, diaphragm walls and construction excavations.',
-    materials: ['HydroBloc 575 Integral', 'HydroBloc 510', 'HydroBloc 620', 'HydroBloc Polygrout 650', 'HydroBloc Schaum 516'],
+    materials: ['HydroBloc PU 500', 'HydroBloc Schaum 510', 'HydroBloc Schaum 516'],
+    params: {
+      pressure: { val: 70, labelBg: 'Високо налягане', labelEn: 'High pressure' },
+      spacing: { val: 45, labelBg: '20-30 см', labelEn: '20-30 cm' },
+      difficulty: { val: 85, labelBg: 'Висока сложност', labelEn: 'High complexity' }
+    },
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <path d="M4 28 L4 8 L8 4 L12 8 L12 28" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.9)" strokeWidth="2" strokeLinejoin="round"/>
-        <path d="M12 28 L12 8 L16 4 L20 8 L20 28" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.7)" strokeWidth="2" strokeLinejoin="round"/>
+        <path d="M12 28 L12 8 L16 4 L20 8 L20 28" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.7)" strokeWidth="2" strokeLinejoin="round"/>
         <path d="M20 28 L20 8 L24 4 L28 8 L28 28" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinejoin="round"/>
       </svg>
     ),
@@ -115,7 +202,12 @@ const problems = [
     titleEn: 'Pipes & Manholes',
     descBg: 'Ремонт и уплътняване на канализационни тръби, шахти и колектори без разкопаване.',
     descEn: 'Repair and sealing of sewer pipes, manholes and collectors without excavation.',
-    materials: ['HydroBloc Rapid 570', 'HydroBloc Rapid 572', 'HydroBloc Polygrout 650', 'Polygel 530 + Polyblend 540'],
+    materials: ['HydroBloc Rapid 570', 'HydroBloc Gel 530', 'HydroBloc Add 540'],
+    params: {
+      pressure: { val: 55, labelBg: 'Средно налягане', labelEn: 'Medium pressure' },
+      spacing: { val: 60, labelBg: '15-20 см', labelEn: '15-20 cm' },
+      difficulty: { val: 70, labelBg: 'Висока сложност', labelEn: 'High complexity' }
+    },
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <ellipse cx="16" cy="8" rx="10" ry="4" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/>
@@ -130,7 +222,12 @@ const problems = [
     titleEn: 'Structural Reinforcement',
     descBg: 'Възстановяване на носеща способност. Залепване на пукнатини, укрепване на бетон и зидария.',
     descEn: 'Restoring load-bearing capacity. Crack bonding, reinforcement of concrete and masonry.',
-    materials: ['Silox EP 800', 'Silox Injection 811 nt', 'Silox EP 840', 'HydroBloc AC 555', 'GeoRock 185'],
+    materials: ['Silox EP 800', 'HydroBloc EP 811', 'GeoRock 181'],
+    params: {
+      pressure: { val: 75, labelBg: 'Високо налягане', labelEn: 'High pressure' },
+      spacing: { val: 60, labelBg: '15-20 см', labelEn: '15-20 cm' },
+      difficulty: { val: 80, labelBg: 'Висока сложност', labelEn: 'High complexity' }
+    },
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <rect x="6" y="6" width="20" height="20" rx="2" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/>
@@ -147,7 +244,12 @@ const problems = [
     titleEn: 'Anchoring',
     descBg: 'Химическо закрепване на анкери, арматура и болтове в бетон и скала.',
     descEn: 'Chemical anchoring of anchors, rebar and bolts in concrete and rock.',
-    materials: ['HydroBloc AC 555', 'Silox Bauharz 834', 'Silox Bauharz 835', 'PU Ankerharz 640', 'HydroBloc OM 593'],
+    materials: ['HydroBloc AC 555', 'Silox EP 800'],
+    params: {
+      pressure: { val: 10, labelBg: 'Без налягане (Химическо)', labelEn: 'No pressure (Chemical)' },
+      spacing: { val: 20, labelBg: 'Единични точки', labelEn: 'Single points' },
+      difficulty: { val: 30, labelBg: 'Ниска сложност', labelEn: 'Low complexity' }
+    },
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <rect x="4" y="18" width="24" height="10" rx="2" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/>
@@ -162,7 +264,12 @@ const problems = [
     titleEn: 'Slab Lifting',
     descBg: 'Повдигане и стабилизация на пропаднали бетонови плочи, пътни настилки и подове без разрушаване.',
     descEn: 'Lifting and stabilization of sunken concrete slabs, pavements and floors without demolition.',
-    materials: ['Planfloor 595', 'HydroBloc OM 597', 'HydroBloc 1200', 'HydroBloc 1201'],
+    materials: ['Planfloor 595'],
+    params: {
+      pressure: { val: 60, labelBg: 'Контролирано налягане', labelEn: 'Controlled pressure' },
+      spacing: { val: 25, labelBg: '50-100 см', labelEn: '50-100 cm' },
+      difficulty: { val: 80, labelBg: 'Висока точност', labelEn: 'High accuracy required' }
+    },
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <rect x="4" y="18" width="24" height="6" rx="2" fill="rgba(255,255,255,0.8)" stroke="rgba(255,255,255,0.5)" strokeWidth="1"/>
@@ -177,7 +284,12 @@ const problems = [
     titleEn: 'Horizontal Barrier',
     descBg: 'Спиране на капилярна влага в зидария. Инжекционна бариера без разрушаване на стените.',
     descEn: 'Stopping capillary moisture in masonry. Injection barrier without wall demolition.',
-    materials: ['Remafix 709', 'Remafix 715', 'SiliBond Si 711', 'SiliBond Si 714 reactiv'],
+    materials: ['Remafix 709', 'Remafix 715'],
+    params: {
+      pressure: { val: 15, labelBg: 'Нисък вискозитет (Гравитация)', labelEn: 'Low viscosity / Gravity' },
+      spacing: { val: 85, labelBg: '10-12 см (Сгъстено)', labelEn: '10-12 cm (Dense)' },
+      difficulty: { val: 45, labelBg: 'Средно ниска', labelEn: 'Low-Medium' }
+    },
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <rect x="4" y="4" width="24" height="24" rx="2" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.7)" strokeWidth="2"/>
@@ -190,70 +302,213 @@ const problems = [
 ];
 
 export default function Solutions() {
-  const [expanded, setExpanded] = useState(null);
+  const [selectedId, setSelectedId] = useState(problems[0].id);
+
+  const activeProblem = problems.find((p) => p.id === selectedId) || problems[0];
+
+  const handleSelectProblem = (id) => {
+    setSelectedId(id);
+    // On tablet & mobile, scroll down to the dashboard details card
+    if (window.innerWidth < 992) {
+      setTimeout(() => {
+        const detailsEl = document.getElementById('solution-details-card');
+        if (detailsEl) {
+          detailsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }, 50);
+    }
+  };
+
+  const handleMaterialClick = (mat) => {
+    const filter = materialToFilter[mat] || 'all';
+    const event = new CustomEvent('setProductFilter', { detail: { filter } });
+    window.dispatchEvent(event);
+  };
+
+  const handleRequestAdvice = (problem) => {
+    localStorage.setItem('prefilledTab', 'services');
+    localStorage.setItem(
+      'prefilledServiceType',
+      problem.id === 'structural' || problem.id === 'anchoring' || problem.id === 'slab'
+        ? 'Укрепване на фундамент / Foundation reinforcement'
+        : problem.id === 'cracks'
+        ? 'Ремонт на пукнатини / Crack repair'
+        : problem.id === 'joints' || problem.id === 'expansion'
+        ? 'Уплътняване на фуги / Joint sealing'
+        : 'Хидроизолация / Waterproofing'
+    );
+    localStorage.setItem(
+      'prefilledDescription',
+      `Здравейте, интересува ни инженерна консултация и оглед относно проблема: ${problem.titleBg} (${problem.titleEn}).`
+    );
+
+    // Dispatch event to Contact component
+    window.dispatchEvent(new Event('prefillContactForm'));
+
+    // Scroll to contact form
+    const contactEl = document.getElementById('contact');
+    if (contactEl) {
+      contactEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
-    <section className="section" id="solutions">
-      <div className="container">
-        <div>
-          <div className="eyebrow" data-reveal>—— <T bg="Матрица на решенията" en="Solutions Matrix" /></div>
+    <section className="section solutions-section" id="solutions">
+      <div className="glow-orb glow-orb-1"></div>
+      <div className="glow-orb glow-orb-2"></div>
+      
+      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+        <div style={{ marginBottom: '48px' }}>
+          <div className="eyebrow" data-reveal><T bg="Матрица на решенията" en="Solutions Matrix" /></div>
           <h2 className="h2" data-reveal>
             <T bg="Проблем → " en="Problem → " />
             <span className="accent"><T bg="Решение" en="Solution" /></span>
           </h2>
+          <p className="lead" style={{ maxWidth: '650px', marginTop: '16px' }} data-reveal>
+            <T 
+              bg="Интерактивен панел за избор на инжекционни и укрепващи решения. Маркирайте проблем, за да видите техническите параметри и сертифицирани материали."
+              en="Interactive panel for selecting injection and reinforcement solutions. Highlight a problem to view technical specs and certified materials."
+            />
+          </p>
         </div>
 
-        <p className="section-subtitle" data-reveal style={{ maxWidth: '700px', marginTop: '16px', marginBottom: '40px' }}>
-          <T 
-            bg="Изберете типа проблем и вижте кои ARCAN материали са препоръчителни за неговото решаване." 
-            en="Select the problem type and see which ARCAN materials are recommended for solving it." 
-          />
-        </p>
+        <div className="solutions-dashboard-layout">
+          {/* Left panel - Problem select list */}
+          <div className="problems-list" data-reveal>
+            {problems.map((problem) => {
+              const isActive = problem.id === selectedId;
+              return (
+                <button
+                  key={problem.id}
+                  className={`problem-selector-item ${isActive ? 'active' : ''}`}
+                  onClick={() => handleSelectProblem(problem.id)}
+                  aria-selected={isActive}
+                  role="tab"
+                >
+                  <div className="selector-icon-wrap">{problem.icon}</div>
+                  <div className="selector-text-wrap">
+                    <h4><T bg={problem.titleBg} en={problem.titleEn} /></h4>
+                    <p className="selector-subtitle">
+                      <T bg={problem.descBg.substring(0, 50) + '...'} en={problem.descEn.substring(0, 50) + '...'} />
+                    </p>
+                  </div>
+                  <div className="selector-chevron">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
 
-        <div className="solutions-grid">
-          {problems.map((problem) => (
-            <div 
-              className={`solution-card ${expanded === problem.id ? 'expanded' : ''}`} 
-              key={problem.id}
-              data-reveal
-            >
-              <div 
-                className="solution-card-header"
-                onClick={() => setExpanded(expanded === problem.id ? null : problem.id)}
-                role="button"
-                tabIndex="0"
-                onKeyDown={(e) => e.key === 'Enter' && setExpanded(expanded === problem.id ? null : problem.id)}
-                aria-expanded={expanded === problem.id}
-              >
-                <div className="solution-icon-wrap">{problem.icon}</div>
-                <div className="solution-text">
-                  <h3><T bg={problem.titleBg} en={problem.titleEn} /></h3>
-                  <p><T bg={problem.descBg} en={problem.descEn} /></p>
+          {/* Right panel - Solution dynamic details card */}
+          <div className="solution-details-panel" data-reveal data-d="1" id="solution-details-card" key={activeProblem.id}>
+            <div className="solution-details-header">
+              <div className="details-icon-wrap">{activeProblem.icon}</div>
+              <div>
+                <span className="details-eyebrow">
+                  <T bg="Техническо Решение" en="Technical Solution" />
+                </span>
+                <h3 className="h3">
+                  <T bg={activeProblem.titleBg} en={activeProblem.titleEn} />
+                </h3>
+              </div>
+            </div>
+
+            <p className="details-desc">
+              <T bg={activeProblem.descBg} en={activeProblem.descEn} />
+            </p>
+
+            {/* Infographic Gauges */}
+            <div className="details-section-divider"></div>
+            
+            <div className="details-specs-block">
+              <h5 className="details-subtitle">
+                <T bg="Параметри на приложението" en="Application Parameters" />
+              </h5>
+              
+              <div className="gauges-container">
+                {/* Gauge 1: Pressure */}
+                <div className="gauge-item">
+                  <div className="gauge-info">
+                    <span className="gauge-name"><T bg="Налягане на инжектиране" en="Injection Pressure" /></span>
+                    <span className="gauge-value"><T bg={activeProblem.params.pressure.labelBg} en={activeProblem.params.pressure.labelEn} /></span>
+                  </div>
+                  <div className="gauge-bar-bg">
+                    <div className="gauge-bar-fill" style={{ width: `${activeProblem.params.pressure.val}%` }}></div>
+                  </div>
                 </div>
-                <div className="solution-toggle">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points={expanded === problem.id ? "15 12 10 7 5 12" : "5 8 10 13 15 8"} />
-                  </svg>
+
+                {/* Gauge 2: Packer Spacing */}
+                <div className="gauge-item">
+                  <div className="gauge-info">
+                    <span className="gauge-name"><T bg="Интервал на пакерите" en="Packer Spacing" /></span>
+                    <span className="gauge-value"><T bg={activeProblem.params.spacing.labelBg} en={activeProblem.params.spacing.labelEn} /></span>
+                  </div>
+                  <div className="gauge-bar-bg">
+                    <div className="gauge-bar-fill accent-fill" style={{ width: `${activeProblem.params.spacing.val}%` }}></div>
+                  </div>
+                </div>
+
+                {/* Gauge 3: Difficulty */}
+                <div className="gauge-item">
+                  <div className="gauge-info">
+                    <span className="gauge-name"><T bg="Инженерна сложност" en="Engineering Difficulty" /></span>
+                    <span className="gauge-value"><T bg={activeProblem.params.difficulty.labelBg} en={activeProblem.params.difficulty.labelEn} /></span>
+                  </div>
+                  <div className="gauge-bar-bg">
+                    <div className="gauge-bar-fill warning-fill" style={{ width: `${activeProblem.params.difficulty.val}%` }}></div>
+                  </div>
                 </div>
               </div>
-              
-              {expanded === problem.id && (
-                <div className="solution-materials">
-                  <span className="materials-label"><T bg="Препоръчани материали:" en="Recommended materials:" /></span>
-                  <div className="materials-list">
-                    {problem.materials.map((mat, idx) => (
-                      <span key={idx} className="material-tag">{mat}</span>
-                    ))}
-                  </div>
-                  <a href="#contact" className="btn btn-primary btn-sm" style={{ marginTop: '16px' }}>
-                    <T bg="Консултация" en="Get Consultation" />
-                  </a>
-                </div>
-              )}
             </div>
-          ))}
+
+            <div className="details-section-divider"></div>
+
+            {/* Materials tags */}
+            <div className="details-materials-block">
+              <h5 className="details-subtitle">
+                <T bg="Препоръчани Продукти ARCAN" en="Recommended ARCAN Products" />
+              </h5>
+              <p className="materials-hint">
+                <T 
+                  bg="Кликнете върху материал, за да го филтрирате в продуктовия каталог." 
+                  en="Click on a material to filter it in the product catalog."
+                />
+              </p>
+              <div className="details-materials-list">
+                {activeProblem.materials.map((mat, idx) => (
+                  <button
+                    key={idx}
+                    className="details-material-tag"
+                    onClick={() => handleMaterialClick(mat)}
+                    title={`Виж в каталог: ${mat}`}
+                  >
+                    <span className="tag-dot"></span>
+                    {mat}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="details-cta-block">
+              <button 
+                onClick={() => handleRequestAdvice(activeProblem)} 
+                className="btn btn-primary"
+                style={{ width: '100%', justifyContent: 'center' }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '4px' }}>
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+                <T bg="Запитване за Инженерна Консултация" en="Request Engineering Advice" />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
+

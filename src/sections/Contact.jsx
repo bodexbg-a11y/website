@@ -7,11 +7,15 @@ export default function Contact() {
   const [activeTab, setActiveTab] = useState('materials');
   const [submitted, setSubmitted] = useState(false);
   const [selectedMaterial, setSelectedMaterial] = useState('');
+  const [selectedService, setSelectedService] = useState('');
+  const [projectDescription, setProjectDescription] = useState('');
 
   useEffect(() => {
     function handlePrefill() {
       const material = localStorage.getItem('prefilledMaterialType');
       const tab = localStorage.getItem('prefilledTab');
+      const service = localStorage.getItem('prefilledServiceType');
+      const desc = localStorage.getItem('prefilledDescription');
       if (material) {
         setSelectedMaterial(material);
         localStorage.removeItem('prefilledMaterialType');
@@ -19,6 +23,14 @@ export default function Contact() {
       if (tab) {
         setActiveTab(tab);
         localStorage.removeItem('prefilledTab');
+      }
+      if (service) {
+        setSelectedService(service);
+        localStorage.removeItem('prefilledServiceType');
+      }
+      if (desc) {
+        setProjectDescription(desc);
+        localStorage.removeItem('prefilledDescription');
       }
     }
     window.addEventListener('prefillContactForm', handlePrefill);
@@ -170,7 +182,7 @@ export default function Contact() {
                         <div className="form-group"><label><T bg="Количество" en="Quantity" /></label><input type="text" name="quantity" placeholder="напр. 200 кг" /></div>
                         <div className="form-group"><label><T bg="Срок" en="Required by" /></label><input type="date" name="delivery_date" /></div>
                       </div>
-                      <div className="form-group"><label><T bg="Описание на проекта" en="Project description" /></label><textarea name="description" /></div>
+                      <div className="form-group"><label><T bg="Описание на проекта" en="Project description" /></label><textarea name="description" value={projectDescription} onChange={(e) => setProjectDescription(e.target.value)} /></div>
                       <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
                         <T bg="Изпратете Запитване →" en="Send Enquiry →" />
                       </button>
@@ -189,12 +201,12 @@ export default function Contact() {
                       </div>
                       <div className="form-group">
                         <label><T bg="Вид услуга" en="Service type" /></label>
-                        <select name="service_type">
-                          <option value="" disabled defaultValue>—</option>
-                          <option>Укрепване на фундамент / Foundation reinforcement</option>
-                          <option>Ремонт на пукнатини / Crack repair</option>
-                          <option>Хидроизолация / Waterproofing</option>
-                          <option>Уплътняване на фуги / Joint sealing</option>
+                        <select name="service_type" value={selectedService} onChange={(e) => setSelectedService(e.target.value)}>
+                          <option value="" disabled>—</option>
+                          <option value="Укрепване на фундамент / Foundation reinforcement">Укрепване на фундамент / Foundation reinforcement</option>
+                          <option value="Ремонт на пукнатини / Crack repair">Ремонт на пукнатини / Crack repair</option>
+                          <option value="Хидроизолация / Waterproofing">Хидроизолация / Waterproofing</option>
+                          <option value="Уплътняване на фуги / Joint sealing">Уплътняване на фуги / Joint sealing</option>
                         </select>
                       </div>
                       <div className="form-group">
@@ -209,7 +221,7 @@ export default function Contact() {
                         </select>
                       </div>
                       <div className="form-group"><label><T bg="Адрес на обекта" en="Site address" /></label><input type="text" name="site_address" /></div>
-                      <div className="form-group"><label><T bg="Описание / Текущо състояние" en="Description / Current condition" /></label><textarea name="description" style={{ minHeight: 110 }} /></div>
+                      <div className="form-group"><label><T bg="Описание / Текущо състояние" en="Description / Current condition" /></label><textarea name="description" style={{ minHeight: 110 }} value={projectDescription} onChange={(e) => setProjectDescription(e.target.value)} /></div>
                       <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
                         <T bg="Заявете Оглед / Оферта →" en="Request Site Visit / Quote →" />
                       </button>
