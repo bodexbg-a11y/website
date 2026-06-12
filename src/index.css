@@ -873,3 +873,270 @@ body:not(.light-theme) .project-card { background:var(--bg-surface); }
   .form-row { grid-template-columns:1fr; }
   .cta-band-actions { flex-wrap:wrap; }
 }
+
+/* ════════════════════════════════════════════════
+   ПАТЧ v7.1 — фиксы по скринам
+   1. Hero SVG — светлый фон
+   2. Bento — меньше скруглений, чёткая сетка
+   3. Services — читаемый синий хед
+   4. Solutions — иконки, паддинги, gauge bars
+   5. Форма — увеличенные инпуты, светлый стиль
+   6. FloatCta — видимость
+   7. transition:all → конкретные свойства
+   8. font-display:swap, text-wrap:balance
+════════════════════════════════════════════════ */
+
+/* ── 1. Hero SVG — убрать тёмный фон ── */
+.hero-float-svg rect[fill="url(#wallGrad)"],
+.hero-float-svg rect[fill*="wallGrad"] { fill: transparent; }
+
+/* Hero SVG обёртка — тонкий бордер вместо чёрного прямоугольника */
+.hero-visual-wrap .hero-float-svg > rect:first-child,
+.hero-float-svg > rect[rx="12"] {
+  fill: rgba(255,255,255,0.7) !important;
+  stroke: var(--border) !important;
+}
+body:not(.light-theme) .hero-float-svg > rect[rx="12"] {
+  fill: rgba(13,20,37,0.85) !important;
+  stroke: rgba(255,255,255,0.08) !important;
+}
+
+/* ── 2. Bento — правильная сетка 3 колонки + визуал ── */
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 12px;
+}
+/* Большая карточка занимает 1 колонку */
+.bento-card-large { grid-column: 1; grid-row: 1 / 3; min-height: 280px; }
+/* Маленькие 2×2 справа */
+.bento-card-small { }
+/* Широкая нижняя */
+.bento-card-medium { grid-column: 1 / 4; }
+
+/* Скруглённые углы — стандарт 12px */
+.bento-card { border-radius: 14px !important; }
+.bento-card-large { border-radius: 14px !important; }
+
+/* Gauge SVG circle colors для светлой темы */
+.bento-gauge-wrap circle[stroke="rgba(15,23,42,0.05)"] { stroke: var(--light-bg); }
+
+/* ── 3. Services — читаемость синей карточки ── */
+.service-card-head-blue {
+  background: linear-gradient(135deg, #1A3FA8 0%, #0B1C3E 100%) !important;
+}
+.service-card-head-blue h3 { color: #fff !important; font-weight: 700; }
+.service-card-head-blue p  { color: rgba(255,255,255,0.75) !important; }
+.service-card-head-blue .service-icon-wrap {
+  background: rgba(255,255,255,0.15) !important;
+  border-color: rgba(255,255,255,0.25) !important;
+}
+.service-card-head-blue .service-icon-wrap svg { stroke: #fff !important; }
+
+/* Service card body — белый фон с чётким бордером */
+.service-card { border-radius: 16px !important; }
+.service-card-body { background: var(--bg-surface); padding: 20px 24px 24px; }
+body:not(.light-theme) .service-card-body { background: var(--bg-surface); }
+
+/* ── 4. Solutions — иконки + gauge bars ── */
+/* Иконки в левой панели — цвет */
+.solutions-left-pane { padding: 6px; }
+.solutions-left-pane button,
+.solutions-left-pane [role="button"],
+.solutions-left-pane > div {
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: background 150ms, color 150ms;
+  display: flex; align-items: flex-start; gap: 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  width: 100%; text-align: left;
+}
+.solutions-left-pane > div:hover { background: var(--light-bg); border-color: var(--border); }
+body:not(.light-theme) .solutions-left-pane > div:hover { background: rgba(255,255,255,0.05); }
+
+/* Иконки в selector */
+.selector-icon-wrap {
+  width: 36px; height: 36px; flex-shrink: 0;
+  border-radius: 8px;
+  background: var(--blue-50); border: 1px solid var(--blue-100);
+  display: grid; place-items: center;
+  color: var(--primary);
+}
+body:not(.light-theme) .selector-icon-wrap { background: rgba(91,143,238,0.12); border-color: rgba(91,143,238,0.2); color: var(--blue-300); }
+.selector-icon-wrap svg { stroke: currentColor; width: 18px; height: 18px; }
+
+.selector-text-wrap { flex: 1; min-width: 0; }
+.selector-subtitle { font-size: 12px; color: var(--muted); margin-top: 2px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.selector-chevron { color: var(--dim); flex-shrink: 0; }
+
+/* Gauge bars в деталях решения */
+.gauge-bar-bg { height: 5px; background: var(--light-bg); border-radius: 3px; overflow: hidden; margin-bottom: 5px; }
+.gauge-bar-fill { height: 100%; border-radius: 3px; }
+/* Цвета по типу */
+.gauge-bar-fill[style*="background: var(--accent-blue)"],
+.gauge-bar-fill[style*="background:var(--accent-blue)"] { background: var(--primary) !important; }
+
+/* Params row в details */
+.details-specs-block {
+  display: flex; gap: 24px; flex-wrap: wrap;
+  padding: 16px; border-radius: 10px;
+  background: var(--bg-base); border: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+body:not(.light-theme) .details-specs-block { background: var(--light-bg); }
+.gauge-item { flex: 1; min-width: 100px; }
+.gauge-name { font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); margin-bottom: 4px; }
+.gauge-value { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--text); margin-top: 4px; }
+
+/* Solution details полный стиль */
+.solution-details-panel {
+  padding: 32px 36px;
+  border-radius: 0 var(--r-xl) var(--r-xl) 0;
+}
+.solutions-dashboard-layout {
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  overflow: hidden; box-shadow: var(--sh);
+}
+
+/* ── 5. Форма — светлый профессиональный вид ── */
+.form-card {
+  border-radius: 18px !important;
+  box-shadow: 0 2px 8px rgba(11,28,62,0.06), 0 8px 32px rgba(11,28,62,0.08) !important;
+  border: 1px solid var(--border) !important;
+}
+body:not(.light-theme) .form-card { box-shadow: 0 4px 24px rgba(0,0,0,0.25) !important; }
+
+/* Инпуты — явный белый фон, чёткий бордер */
+.form-input, .form-select, .form-textarea {
+  background: var(--bg-surface) !important;
+  border: 1.5px solid rgba(11,28,62,0.15) !important;
+  border-radius: 9px !important;
+  font-family: var(--font-b) !important;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  color: var(--text) !important;
+  transition: border-color 150ms ease, box-shadow 150ms ease !important;
+}
+body:not(.light-theme) .form-input,
+body:not(.light-theme) .form-select,
+body:not(.light-theme) .form-textarea {
+  background: rgba(255,255,255,0.06) !important;
+  border-color: rgba(255,255,255,0.1) !important;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(26,63,168,0.10) !important;
+  outline: none !important;
+}
+
+/* Labels — читаемые, не слишком светлые */
+.form-group label {
+  color: var(--muted) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.10em !important;
+}
+
+/* Submit button — полный */
+.form-card .btn-primary,
+.form-card button[type="submit"] {
+  width: 100%;
+  justify-content: center;
+  min-height: 52px;
+  border-radius: 10px !important;
+  font-size: 16px !important;
+  letter-spacing: 0.01em;
+  margin-top: 4px;
+}
+
+/* form-tabs — переключатель Материали/Услуги */
+.form-tabs {
+  border-radius: 12px !important;
+  padding: 4px !important;
+}
+.form-tabs button {
+  border-radius: 9px !important;
+  font-family: var(--font-b) !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+}
+.form-tabs button.active {
+  font-weight: 700 !important;
+  color: var(--primary) !important;
+  box-shadow: 0 1px 4px rgba(11,28,62,0.08), 0 2px 8px rgba(11,28,62,0.06) !important;
+}
+
+/* ── 6. FloatCta — исправить видимость ── */
+/* FloatCta использует условный рендер (if !visible return null)
+   значит .visible класс добавляется через JS — уже ок.
+   Но кнопка — div > a, надо чтоб ссылка растянулась */
+.float-cta a {
+  display: flex; align-items: center; gap: 8px;
+  color: #fff; font-family: var(--font-b); font-size: 14px; font-weight: 600;
+}
+.float-cta svg { flex-shrink: 0; }
+/* float-cta всегда visible (JS рендерит только когда нужно) */
+.float-cta { opacity: 1 !important; transform: none !important; pointer-events: all !important; }
+
+/* ── 7. transition:all → конкретные свойства ── */
+/* Переопределяем --tr переменную правильно */
+:root { --tr: border-color 200ms ease, box-shadow 200ms ease, transform 180ms ease, background 180ms ease, color 150ms ease, opacity 180ms ease; }
+
+/* ── 8. text-wrap:balance на заголовках ── */
+h1, h2, h3, .hero-title, .bento-card-content h3, .bento-card-content h4 {
+  text-wrap: balance;
+}
+
+/* ── font-display: swap — уже в link href, добавим @font-face fallback ── */
+/* Системные шрифты как fallback пока грузится Manrope */
+body { font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
+
+/* ── scroll-margin-top для якорей ── */
+#services, #products, #sectors, #process, #contact, #why, #partner { scroll-margin-top: 80px; }
+
+/* ── Прочие мелкие фиксы ── */
+
+/* Числа в bento — tabular */
+.bento-card-number, .hero-stat-num, .gauge-text { font-variant-numeric: tabular-nums; }
+
+/* Bento blueprint grid — приглушённее */
+.bento-blueprint-grid { opacity: 0.2; }
+
+/* Cert stamps — чуть веселее */
+.cert-stamp { border-radius: 6px; background: var(--blue-50); border-color: var(--blue-100); color: var(--primary); font-weight: 600; }
+body:not(.light-theme) .cert-stamp { background: rgba(91,143,238,0.1); border-color: rgba(91,143,238,0.2); color: var(--blue-300); }
+
+/* Selector chevron (arrow в solutions) */
+.selector-chevron svg { stroke: var(--dim); width: 14px; height: 14px; }
+
+/* Progress mini bars */
+.bento-progress-bars .mini-bar { background: var(--light-bg); border-radius: 3px; }
+body:not(.light-theme) .bento-progress-bars .mini-bar { background: rgba(255,255,255,0.08); }
+
+/* Partner logo box — фикс размера */
+.partner-logo-box img { max-height: 60px; width: auto; object-fit: contain; }
+
+/* Sectors — убрать дублирующий .sector-card vs .sector-item */
+.sector-card { border-radius: 14px; }
+.sector-item { border-radius: 14px; }
+
+/* Process timeline — бордер-радиус */
+.process-step { border-radius: 14px; }
+.injection-card { border-radius: 14px; }
+
+/* ── АДАПТИВ ДОПОЛНЕНИЯ ── */
+@media (max-width: 900px) {
+  .bento-grid { grid-template-columns: 1fr 1fr; }
+  .bento-card-large { grid-column: 1 / 3; grid-row: 1; }
+  .bento-card-medium { grid-column: 1 / 3; }
+}
+@media (max-width: 600px) {
+  .bento-grid { grid-template-columns: 1fr; }
+  .bento-card-large, .bento-card-medium { grid-column: 1; }
+  .details-specs-block { flex-direction: column; gap: 16px; }
+}
