@@ -313,25 +313,28 @@ export default function Products() {
         <div className="product-grid" id="productGrid" key={activeFilter + searchQuery}>
           {visible.length > 0 ? (
             visible.map((p, index) => (
-              <div className={`product-card revealed`} data-reveal key={p.name || p.nameEn || index}>
-                <span className="product-cat-badge">{p.badge}</span>
-                <div className="product-icon-wrap">{p.icon}</div>
-                <h3>{p.name ? p.name : <T bg={p.nameBg} en={p.nameEn} />}</h3>
-                <p><T bg={p.bg} en={p.en} /></p>
-                
-                {/* Specs badges layout */}
-                <div className="product-card-specs">
-                  {p.specsBg && (
-                    <T 
-                      bg={p.specsBg.map((s, sidx) => <span key={sidx} className="prod-spec-badge">{s}</span>)}
-                      en={p.specsEn.map((s, sidx) => <span key={sidx} className="prod-spec-badge">{s}</span>)}
-                    />
-                  )}
+              <div className="product-card revealed" data-cat={p.cat} data-reveal key={p.name || p.nameEn || index}>
+                {/* Head — цветная шапка */}
+                <div className="product-card-head">
+                  <span className="product-cat-badge">{p.badge}</span>
+                  <div className="product-icon-wrap" aria-hidden="true">{p.icon}</div>
                 </div>
-
-                <a href="#contact" className="btn btn-outline-blue btn-sm">
-                  <T bg="Запитване" en="Enquire" />
-                </a>
+                {/* Body */}
+                <div className="product-card-body">
+                  <h3>{p.name ? p.name : <T bg={p.nameBg} en={p.nameEn} />}</h3>
+                  <p><T bg={p.bg} en={p.en} /></p>
+                  {p.specsBg && (
+                    <div className="product-card-specs">
+                      <T
+                        bg={p.specsBg.map((s, sidx) => <span key={sidx} className="prod-spec-badge">{s}</span>)}
+                        en={p.specsEn.map((s, sidx) => <span key={sidx} className="prod-spec-badge">{s}</span>)}
+                      />
+                    </div>
+                  )}
+                  <a href="#contact" className="btn btn-outline-blue btn-sm">
+                    <T bg="Запитване" en="Enquire" />
+                  </a>
+                </div>
               </div>
             ))
           ) : (
