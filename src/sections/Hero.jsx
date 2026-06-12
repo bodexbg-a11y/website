@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { T } from '../context/LangContext';
 
 export default function Hero() {
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(false);
   const isTransitioning = useRef(false);
   const backBgRef = useRef(null);
   const frontBgRef = useRef(null);
