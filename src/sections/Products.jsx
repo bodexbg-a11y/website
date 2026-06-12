@@ -1,295 +1,317 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLang, T } from '../context/LangContext';
 
-const products = [
+/* ── Цвета и иконки категорий ── */
+const CATS = [
   {
-    cat: 'seal', badge: 'WATER', name: 'HydroTape',
-    bg: 'Полимерна набъбваща лента за работни фуги, тунели, тръбни проходи. Набъбване до 140%, работи и в солена вода.',
-    en: 'Polymer swelling tape for construction joints, tunnels, pipe penetrations. Swelling up to 140%, works in salt water.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><rect x="4" y="10" width="20" height="8" rx="4" fill="rgba(255,255,255,0.9)"/><rect x="8" y="12" width="12" height="4" rx="2" fill="rgba(53,71,184,0.6)"/><line x1="14" y1="4" x2="14" y2="10" stroke="rgba(255,255,255,0.7)" strokeWidth="2" strokeLinecap="round"/><line x1="14" y1="18" x2="14" y2="24" stroke="rgba(255,255,255,0.7)" strokeWidth="2" strokeLinecap="round"/></svg>,
-    specsBg: ['Набъбване 140%', 'За фуги и тръби'],
-    specsEn: ['140% Swelling', 'For joints & pipes']
+    key: 'all',
+    bg: 'Всички', en: 'All',
+    color: '#2452A4', light: '#EEF4FF',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+        <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+      </svg>
+    ),
   },
   {
-    cat: 'seal', badge: 'MASONRY', name: 'BentoFlex',
-    bg: 'Бентонитова набъбваща лента за строителни фуги. Макс. набъбване 160%. За тунели, тръби и сглобяеми елементи.',
-    en: 'Bentonite swelling tape for construction joints. Max swelling 160%. For tunnels, pipes and prefab elements.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><rect x="3" y="11" width="22" height="6" rx="3" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.4)" strokeWidth="1"/><rect x="6" y="13" width="16" height="2" rx="1" fill="rgba(53,71,184,0.5)"/><path d="M3 14 Q7 10 14 14 Q21 18 25 14" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.2"/></svg>,
-    specsBg: ['Бентонит', 'Набъбване 160%'],
-    specsEn: ['Bentonite', '160% Swelling']
+    key: 'resins',
+    bg: 'Смоли', en: 'Resins',
+    color: '#2452A4', light: '#EEF4FF',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2C12 2 5 10 5 15a7 7 0 0014 0C19 10 12 2 12 2z"/>
+      </svg>
+    ),
   },
   {
-    cat: 'seal', badge: 'WATER', name: 'Pro Inject 403',
-    bg: 'Повторно инжектируем маркуч за работни фуги. Квадратна форма, позволява многократно инжектиране.',
-    en: 'Re-injectable hose for construction joints. Square profile, allows repeated injection without new drilling.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><path d="M4 14 Q8 8 14 14 Q20 20 24 14" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="2.5" strokeLinecap="round"/><circle cx="14" cy="14" r="3" fill="rgba(255,255,255,0.3)" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5"/><line x1="14" y1="4" x2="14" y2="11" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeDasharray="2,2"/></svg>,
-    specsBg: ['Многократно инжектиране', 'Маркуч за фуги'],
-    specsEn: ['Multi-injection', 'Joint hose']
+    key: 'foam',
+    bg: 'Пени & Гелове', en: 'Foams & Gels',
+    color: '#0EA5E9', light: '#E0F2FE',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="16" r="6"/><circle cx="8" cy="10" r="4"/><circle cx="17" cy="9" r="3"/>
+      </svg>
+    ),
   },
   {
-    cat: 'resins', badge: 'WATER', name: 'HydroBloc 575 Integral',
-    bg: 'Готова 1К набъбваща смола за пукнатини, фуги и маркучи. Не е пяна и не е гел. Подходяща за питейна вода (KTW).',
-    en: 'Ready-to-use 1C swelling resin for cracks, joints and hoses. Not a foam, not a gel. Suitable for drinking water (KTW).',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><path d="M14 4 C14 4 6 13 6 18 C6 22.4 9.6 26 14 26 C18.4 26 22 22.4 22 18 C22 13 14 4 14 4Z" fill="rgba(255,255,255,0.85)"/><path d="M10 20 C10 19 11 17.5 13 17.5" stroke="rgba(53,71,184,0.5)" strokeWidth="1.5" strokeLinecap="round" fill="none"/></svg>,
-    specsBg: ['Готова 1К смола', 'Питейна вода (KTW)'],
-    specsEn: ['Ready 1C resin', 'Drinking water (KTW)']
+    key: 'mortar',
+    bg: 'Разтвори', en: 'Mortars',
+    color: '#8B5CF6', light: '#F5F3FF',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 20h18M5 20V8l7-5 7 5v12"/><rect x="9" y="13" width="6" height="7"/>
+      </svg>
+    ),
   },
   {
-    cat: 'resins', badge: 'WATER', name: 'HydroBloc PU 500',
-    bg: 'Набъбваща PU смола за пукнатини и работни фуги. Набъбване до 150%, еластичност ~100%. DIN-EN 1504-5 и KTW.',
-    en: 'Swelling PU resin for cracks and construction joints. Swelling up to 150%, elasticity ~100%. DIN-EN 1504-5 and KTW.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><polygon points="14,3 24,10 24,21 14,27 4,21 4,10" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/><polygon points="14,3 24,10 14,14 4,10" fill="rgba(255,255,255,0.2)"/><line x1="14" y1="14" x2="14" y2="27" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5"/></svg>,
-    specsBg: ['PU еластичност 100%', 'DIN-EN 1504-5'],
-    specsEn: ['PU elasticity 100%', 'DIN-EN 1504-5']
+    key: 'seal',
+    bg: 'Уплътнители', en: 'Sealants',
+    color: '#059669', light: '#ECFDF5',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="8" width="20" height="8" rx="4"/>
+        <line x1="12" y1="2" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="22"/>
+      </svg>
+    ),
   },
   {
-    cat: 'resins', badge: 'WATER · FAST', name: 'HydroBloc Rapid 570',
-    bg: 'Много бързо реагираща набъбваща PU смола. За силни течове, пукнатини и дилатационни фуги под налягане.',
-    en: 'Very fast-reacting swelling PU resin. For heavy leaks, cracks and dilation joints under pressure.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><polygon points="14,2 17,11 26,11 19,17 22,26 14,20 6,26 9,17 2,11 11,11" fill="rgba(255,255,255,0.85)"/></svg>,
-    specsBg: ['Бърза PU реакция', 'Под налягане'],
-    specsEn: ['Fast PU reaction', 'Under pressure']
+    key: 'coating',
+    bg: 'Покрития', en: 'Coatings',
+    color: '#D97706', light: '#FFFBEB',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <path d="M3 9h18M3 15h18"/>
+      </svg>
+    ),
   },
   {
-    cat: 'foam', badge: 'WATER · FAST', name: 'HydroBloc Schaum 510',
-    bg: 'Бързо спиране на активни течове. Начало на реакция ~10 сек. Обем пяна до 40 л/кг. За последващо инжектиране.',
-    en: 'Fast stop of active leaks. Reaction start ~10 sec. Foam volume up to 40 L/kg. Suitable for subsequent injection.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><circle cx="14" cy="16" r="9" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/><circle cx="10" cy="11" r="4.5" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5"/><circle cx="19" cy="9" r="3" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.6)" strokeWidth="1.5"/><circle cx="8" cy="20" r="2" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)" strokeWidth="1"/></svg>,
-    specsBg: ['Спиране на течове', 'Разпенване 40х'],
-    specsEn: ['Active leak stop', '40x Expansion']
+    key: 'barrier',
+    bg: 'Хоризонтална Бариера', en: 'Horizontal Barrier',
+    color: '#DC2626', light: '#FEF2F2',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+    ),
   },
   {
-    cat: 'foam', badge: 'LOW TEMP', name: 'HydroBloc AC 555',
-    bg: 'Акрилатна инжекционна смола за пукнатини и фуги при отрицателни температури. Стабилизация и анкериране.',
-    en: 'Acrylic injection resin for cracks and joints at negative temperatures. Stabilization and anchoring applications.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><path d="M14 4 Q18 8 22 14 Q18 20 14 24 Q10 20 6 14 Q10 8 14 4Z" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/><line x1="8" y1="10" x2="20" y2="18" stroke="rgba(255,255,255,0.4)" strokeWidth="1" strokeDasharray="2,2"/></svg>,
-    specsBg: ['Акрилатен гел', 'Работа под 0°C'],
-    specsEn: ['Acrylic gel', 'Sub-zero application']
-  },
-  {
-    cat: 'mortar', badge: 'MASONRY', name: 'GeoRock 181',
-    bg: 'Геополимерен разтвор без цимент за ремонт и реконструкция на подове и стени. Отлична адхезия дори върху влажни повърхности.',
-    en: 'Cement-free geopolymer mortar for floor and wall repair. Excellent adhesion even on wet surfaces.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><rect x="4" y="14" width="20" height="10" rx="2" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/><rect x="8" y="10" width="12" height="6" rx="1.5" fill="rgba(255,255,255,0.25)" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5"/><rect x="11" y="7" width="6" height="5" rx="1" fill="rgba(255,255,255,0.3)" stroke="rgba(255,255,255,0.6)" strokeWidth="1.5"/></svg>,
-    specsBg: ['Геополимер', 'Без цимент'],
-    specsEn: ['Geopolymer', 'Cement-free']
-  },
-  {
-    cat: 'mortar', badge: 'WATER · FAST', name: 'SealFix 930',
-    bg: 'Бърз минерален разтвор за запушване на активни течове преди инжектиране. Аварийни водоспиращи работи.',
-    en: 'Fast mineral mortar for plugging active leaks before injection. Emergency water-stop works.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><polygon points="14,2 17,11 26,11 19,17 22,26 14,20 6,26 9,17 2,11 11,11" fill="rgba(255,255,255,0.8)"/></svg>,
-    specsBg: ['Бърз разтвор', 'Водоспиращ'],
-    specsEn: ['Rapid mortar', 'Water-stopping']
-  },
-  {
-    cat: 'mortar', badge: 'STRUCTURAL', name: 'Silox EP 800',
-    bg: 'Нисковискозна епоксидна смола за силово свързване, ремонт на пукнатини, консолидация. Без разтворители.',
-    en: 'Low-viscosity epoxy resin for structural bonding, crack repair, consolidation. Solvent-free formula.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><rect x="5" y="5" width="18" height="18" rx="3" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/><line x1="5" y1="14" x2="23" y2="14" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5"/><line x1="14" y1="5" x2="14" y2="23" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5"/><circle cx="14" cy="14" r="3" fill="rgba(255,255,255,0.4)"/></svg>,
-    specsBg: ['Епоксидна смола', 'Силово свързване'],
-    specsEn: ['Epoxy resin', 'Structural bonding']
-  },
-  {
-    cat: 'equip', badge: 'EQUIP', name: 'Jekto Pro-1 2K',
-    bg: 'Професионална 2К помпа за двукомпонентни смоли и пяни. Фиксирано съотношение 1:1, налягане до 200 бара.',
-    en: 'Professional 2C pump for two-component resins and foams. Fixed 1:1 ratio, pressure up to 200 bar.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><rect x="8" y="7" width="12" height="16" rx="3" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/><line x1="14" y1="3" x2="14" y2="7" stroke="rgba(255,255,255,0.8)" strokeWidth="2.5" strokeLinecap="round"/><line x1="20" y1="13" x2="24" y2="13" stroke="rgba(255,255,255,0.7)" strokeWidth="2" strokeLinecap="round"/><circle cx="14" cy="15" r="3" fill="rgba(255,255,255,0.5)"/></svg>,
-    specsBg: ['2К Помпа', 'Налягане 200 бара'],
-    specsEn: ['2C Pump', '200 bar max']
-  },
-  {
-    cat: 'equip', badge: 'EQUIP', name: 'Jekto M-3 / M-4 1K',
-    bg: 'Инжекционни помпи за еднокомпонентни смоли и пяни. Налягане до 220 бара. За строителни екипи на терен.',
-    en: 'Injection pumps for single-component resins and foams. Pressure up to 220 bar. For field construction teams.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><rect x="9" y="6" width="10" height="18" rx="3" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/><line x1="14" y1="2" x2="14" y2="6" stroke="rgba(255,255,255,0.8)" strokeWidth="2.5" strokeLinecap="round"/><line x1="19" y1="12" x2="23" y2="12" stroke="rgba(255,255,255,0.7)" strokeWidth="2" strokeLinecap="round"/><circle cx="14" cy="15" r="2.5" fill="rgba(255,255,255,0.45)"/></svg>,
-    specsBg: ['1К Помпа', 'Налягане 220 бара'],
-    specsEn: ['1C Pump', '220 bar max']
-  },
-  {
-    cat: 'equip', badge: 'EQUIP', nameBg: 'Пакери за Инжектиране', nameEn: 'Injection Packers',
-    bg: 'Метални и специализирани пакери за различни диаметри и налягания. За бетон, зидария и тунели.',
-    en: 'Metal and specialized packers for various diameters and pressures. For concrete, masonry and tunnels.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><line x1="14" y1="3" x2="14" y2="25" stroke="rgba(255,255,255,0.9)" strokeWidth="3" strokeLinecap="round"/><rect x="10" y="10" width="8" height="8" rx="2" fill="rgba(255,255,255,0.25)" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5"/><circle cx="14" cy="8" r="2" fill="rgba(255,255,255,0.6)"/><circle cx="14" cy="20" r="2" fill="rgba(255,255,255,0.6)"/></svg>,
-    specsBg: ['Стомана / Месинг', 'Всички размери'],
-    specsEn: ['Steel / Brass', 'All diameters']
-  },
-  {
-    cat: 'foam', badge: 'GEL', name: 'HydroBloc Gel 530',
-    bg: 'Еднокомпонентен акрилатен гел за запечатване на фуги и пукнатини. Постоянна еластичност, работи в натоварени и вибриращи конструкции.',
-    en: 'Single-component acrylate gel for sealing joints and cracks. Permanent elasticity, suitable for loaded and vibrating structures.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><ellipse cx="14" cy="16" rx="9" ry="7" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/><ellipse cx="14" cy="14" rx="5" ry="4" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.5)" strokeWidth="1.2"/><line x1="14" y1="7" x2="14" y2="10" stroke="rgba(255,255,255,0.7)" strokeWidth="2" strokeLinecap="round"/></svg>,
-    specsBg: ['Акрилатен гел', 'Висока еластичност'],
-    specsEn: ['Acrylic gel', 'High elasticity']
-  },
-  {
-    cat: 'foam', badge: 'ADDITIVE', name: 'HydroBloc Add 540',
-    bg: 'Добавка-ускорител за акрилатни гелове. Регулира времето на реакция при различни температури и концентрации на течове.',
-    en: 'Accelerator additive for acrylate gels. Controls reaction time at varying temperatures and leak concentrations.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><circle cx="14" cy="14" r="9" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/><line x1="14" y1="7" x2="14" y2="21" stroke="rgba(255,255,255,0.8)" strokeWidth="2" strokeLinecap="round"/><line x1="7" y1="14" x2="21" y2="14" stroke="rgba(255,255,255,0.8)" strokeWidth="2" strokeLinecap="round"/></svg>,
-    specsBg: ['Ускорител за гел', 'Контрол на реакцията'],
-    specsEn: ['Gel accelerator', 'Reaction control']
-  },
-  {
-    cat: 'foam', badge: 'WATER · FAST', name: 'HydroBloc Schaum 516',
-    bg: 'Двукомпонентна бързореагираща PU пяна за аварийно спиране на силни течове. Изключително висок обем пяна, бърдо втвърдяване.',
-    en: '2-component fast-reacting PU foam for emergency stopping of heavy leaks. Extremely high foam volume, rapid hardening.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><circle cx="14" cy="17" r="8" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/><circle cx="10" cy="12" r="4" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.65)" strokeWidth="1.5"/><circle cx="19" cy="10" r="3" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.55)" strokeWidth="1.5"/><text x="11.5" y="20" fontSize="9" fill="rgba(255,255,255,0.85)" fontWeight="bold">2K</text></svg>,
-    specsBg: ['2К PU Пяна', 'За силни течове'],
-    specsEn: ['2C PU Foam', 'For heavy leaks']
-  },
-  {
-    cat: 'resins', badge: 'STRUCTURAL', name: 'HydroBloc EP 811',
-    bg: 'Свръхнисковискозна епоксидна смола за инжектиране при мокри условия. Структурно залепване и консолидация на пукнатини в мокър бетон.',
-    en: 'Super low viscosity epoxy resin for injection in wet conditions. Structural bonding and consolidation of cracks in wet concrete.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><path d="M14 4 C14 4 6 13 6 18 C6 22.4 9.6 26 14 26 C18.4 26 22 22.4 22 18 C22 13 14 4 14 4Z" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/><text x="9.5" y="20" fontSize="8" fill="rgba(255,255,255,0.9)" fontWeight="bold">EP</text></svg>,
-    specsBg: ['Нисък вискозитет', 'Мокър бетон'],
-    specsEn: ['Low viscosity', 'Wet concrete']
-  },
-  {
-    cat: 'mortar', badge: 'LIFTING', name: 'Planfloor 595',
-    bg: 'Двукомпонентна PU пяна с висока твърдост за вдигане и стабилизация на плочи. Мин. инвазивно решение без разкопаване.',
-    en: '2-component rigid PU foam for slab lifting and stabilisation. Minimally invasive solution without excavation.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><rect x="4" y="17" width="20" height="5" rx="2" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.5)" strokeWidth="1"/><rect x="4" y="10" width="20" height="5" rx="1.5" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5"/><polyline points="10,10 14,5 18,10" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
-    specsBg: ['PU Твърда пяна', 'Вдигане на плочи'],
-    specsEn: ['Rigid PU foam', 'Slab lifting']
-  },
-  {
-    cat: 'coating', badge: 'MEMBRANE', name: 'Cembond 863',
-    bg: 'Циментова хидроизолационна шлам-мембрана. Нанася се четка или машинно, адхезия дори върху мокри повърхности. За резервоари, тунели и фундаменти.',
-    en: 'Cementitious waterproof slurry membrane. Applied by brush or machine, adhesion even on wet surfaces. For tanks, tunnels and foundations.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><rect x="4" y="6" width="20" height="16" rx="3" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.9)" strokeWidth="2"/><rect x="4" y="6" width="20" height="5" rx="2" fill="rgba(255,255,255,0.3)"/><line x1="4" y1="15" x2="24" y2="15" stroke="rgba(255,255,255,0.4)" strokeWidth="1" strokeDasharray="3,2"/></svg>,
-    specsBg: ['Циментова мембрана', 'Мокра основа'],
-    specsEn: ['Cementitious slurry', 'Damp substrates']
-  },
-  {
-    cat: 'coating', badge: 'WATERPROOF', name: 'HydroCoat 750',
-    bg: 'Еластична полимерна хидроизолационна боя. За хидроизолация на тераси, покриви и цокли. Стабилна при UV и температурни промени.',
-    en: 'Elastic polymer waterproof paint. For waterproofing terraces, roofs and plinths. Stable under UV and temperature changes.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><rect x="6" y="4" width="4" height="16" rx="2" fill="rgba(255,255,255,0.85)"/><rect x="4" y="20" width="8" height="3" rx="1" fill="rgba(255,255,255,0.5)"/><path d="M10 8 Q18 6 22 14 Q18 22 10 20" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5"/></svg>,
-    specsBg: ['Полимерна боя', 'Устойчива на UV'],
-    specsEn: ['Polymer coating', 'UV resistant']
-  },
-  {
-    cat: 'barrier', badge: 'BARRIER', name: 'Remafix 709',
-    bg: 'Течен препарат за хоризонтална преградна инжекция срещу капилярна влага в зидария. Дълготрайна защита без разрушаване.',
-    en: 'Liquid product for horizontal barrier injection against capillary moisture in masonry. Long-lasting protection without demolition.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><rect x="4" y="12" width="20" height="3" rx="1.5" fill="rgba(255,255,255,0.9)"/><path d="M6 15 Q8 20 10 22 M12 15 Q14 20 16 22 M18 15 Q20 20 22 22" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" fill="none"/><path d="M6 12 Q8 7 10 5 M12 12 Q14 7 16 5 M18 12 Q20 7 22 5" stroke="rgba(255,255,255,0.25)" strokeWidth="1" strokeLinecap="round" strokeDasharray="2,2" fill="none"/></svg>,
-    specsBg: ['Течна бариера', 'Капилярна влага'],
-    specsEn: ['Liquid barrier', 'Rising damp']
-  },
-  {
-    cat: 'barrier', badge: 'BARRIER', name: 'Remafix 715',
-    bg: 'Крем за хоризонтална преградна инжекция срещу капилярна влага. Вкарва се в предварително пробити отвори. Подходящ за стари зидани сгради.',
-    en: 'Cream for horizontal barrier injection against capillary moisture. Injected into pre-drilled holes. Ideal for old masonry buildings.',
-    icon: <svg width="28" height="28" viewBox="0 0 28 28"><rect x="4" y="12" width="20" height="3" rx="1.5" fill="rgba(255,255,255,0.9)"/><path d="M6 15 Q8 20 10 22 M12 15 Q14 20 16 22 M18 15 Q20 20 22 22" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" fill="none"/><circle cx="8" cy="12" r="2" fill="rgba(255,255,255,0.4)" stroke="rgba(255,255,255,0.7)" strokeWidth="1"/><circle cx="14" cy="12" r="2" fill="rgba(255,255,255,0.4)" stroke="rgba(255,255,255,0.7)" strokeWidth="1"/><circle cx="20" cy="12" r="2" fill="rgba(255,255,255,0.4)" stroke="rgba(255,255,255,0.7)" strokeWidth="1"/></svg>,
-    specsBg: ['Крем бариера', 'Лесно инжектиране'],
-    specsEn: ['Barrier cream', 'Easy injection']
+    key: 'equip',
+    bg: 'Оборудване', en: 'Equipment',
+    color: '#6B7280', light: '#F9FAFB',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/>
+      </svg>
+    ),
   },
 ];
 
-const filters = [
-  { key: 'all', bg: 'Всички', en: 'All' },
-  { key: 'resins', bg: 'Смоли', en: 'Resins' },
-  { key: 'foam', bg: 'Пени & Гелове', en: 'Foams & Gels' },
-  { key: 'mortar', bg: 'Разтвори', en: 'Mortars' },
-  { key: 'seal', bg: 'Уплътнители', en: 'Sealants' },
-  { key: 'coating', bg: 'Покрития', en: 'Coatings' },
-  { key: 'barrier', bg: 'Хоризонтална Бариера', en: 'Horizontal Barrier' },
-  { key: 'equip', bg: 'Оборудване', en: 'Equipment' },
+/* ── Фото-плейсхолдеры по категориям (SVG data URI) ── */
+const CARD_BG = {
+  resins:  { from: '#1A3FA8', to: '#2452A4', pattern: 'drop' },
+  foam:    { from: '#0369A1', to: '#0EA5E9', pattern: 'bubble' },
+  mortar:  { from: '#5B21B6', to: '#8B5CF6', pattern: 'grid' },
+  seal:    { from: '#065F46', to: '#059669', pattern: 'wave' },
+  coating: { from: '#92400E', to: '#D97706', pattern: 'stripe' },
+  barrier: { from: '#991B1B', to: '#DC2626', pattern: 'shield' },
+  equip:   { from: '#374151', to: '#6B7280', pattern: 'gear' },
+};
+
+function ProductCardImage({ cat, name }) {
+  const c = CARD_BG[cat] || CARD_BG.resins;
+  return (
+    <div className="pcard__img" style={{ background: `linear-gradient(135deg, ${c.from} 0%, ${c.to} 100%)` }}>
+      <div className="pcard__img-pattern" aria-hidden="true" />
+      <div className="pcard__img-label" aria-hidden="true">{name}</div>
+    </div>
+  );
+}
+
+/* ── Данные продуктов (упрощённая иконка — теперь внутри цветного фото) ── */
+const products = [
+  { cat:'seal',    badge:'WATER',        name:'HydroTape',
+    bg:'Полимерна набъбваща лента за работни фуги, тунели, тръбни проходи. Набъбване до 140%.',
+    en:'Polymer swelling tape for construction joints, tunnels, pipe penetrations. Swelling up to 140%.',
+    specsBg:['Набъбване 140%','За фуги и тръби'], specsEn:['140% Swelling','For joints & pipes'] },
+  { cat:'seal',    badge:'MASONRY',      name:'BentoFlex',
+    bg:'Бентонитова набъбваща лента за строителни фуги. Макс. набъбване 160%.',
+    en:'Bentonite swelling tape for construction joints. Max swelling 160%.',
+    specsBg:['Бентонит','Набъбване 160%'], specsEn:['Bentonite','160% Swelling'] },
+  { cat:'seal',    badge:'WATER',        name:'Pro Inject 403',
+    bg:'Повторно инжектируем маркуч за работни фуги. Квадратна форма, многократно инжектиране.',
+    en:'Re-injectable hose for construction joints. Square profile, repeated injection.',
+    specsBg:['Многократно инж.','Маркуч'], specsEn:['Multi-injection','Hose'] },
+  { cat:'resins',  badge:'WATER',        name:'HydroBloc 575 Integral',
+    bg:'Готова 1К набъбваща смола. Подходяща за питейна вода (KTW).',
+    en:'Ready 1C swelling resin. Suitable for drinking water (KTW).',
+    specsBg:['1К смола','Питейна вода KTW'], specsEn:['1C resin','Drinking water KTW'] },
+  { cat:'resins',  badge:'WATER',        name:'HydroBloc PU 500',
+    bg:'Набъбваща PU смола. Набъбване до 150%, еластичност ~100%. DIN-EN 1504-5 и KTW.',
+    en:'Swelling PU resin. Swelling up to 150%, elasticity ~100%. DIN-EN 1504-5 and KTW.',
+    specsBg:['PU 150%','DIN-EN 1504-5'], specsEn:['PU 150%','DIN-EN 1504-5'] },
+  { cat:'resins',  badge:'WATER · FAST', name:'HydroBloc Rapid 570',
+    bg:'Много бързо реагираща PU смола. За силни течове под налягане.',
+    en:'Very fast-reacting PU resin. For heavy leaks under pressure.',
+    specsBg:['Бърза реакция','Под налягане'], specsEn:['Fast reaction','Under pressure'] },
+  { cat:'foam',    badge:'WATER · FAST', name:'HydroBloc Schaum 510',
+    bg:'Бързо спиране на активни течове. Реакция ~10 сек. Разпенване до 40 л/кг.',
+    en:'Fast stop of active leaks. Reaction ~10 sec. Foam volume up to 40 L/kg.',
+    specsBg:['Реакция ~10s','Разпенване 40x'], specsEn:['Reaction ~10s','40x Expansion'] },
+  { cat:'foam',    badge:'LOW TEMP',     name:'HydroBloc AC 555',
+    bg:'Акрилатна смола за пукнатини при отрицателни температури.',
+    en:'Acrylic resin for cracks at negative temperatures.',
+    specsBg:['Акрилат','Работа под 0°C'], specsEn:['Acrylic','Sub-zero'] },
+  { cat:'foam',    badge:'GEL',          name:'HydroBloc Gel 530',
+    bg:'Акрилатен гел за фуги и пукнатини. Постоянна еластичност.',
+    en:'Acrylate gel for joints and cracks. Permanent elasticity.',
+    specsBg:['Акрилатен гел','Еластичен'], specsEn:['Acrylate gel','Elastic'] },
+  { cat:'foam',    badge:'WATER · FAST', name:'HydroBloc Schaum 516',
+    bg:'2К PU пяна за аварийно спиране на силни течове.',
+    en:'2C PU foam for emergency stopping of heavy leaks.',
+    specsBg:['2К PU','Аварийна'], specsEn:['2C PU','Emergency'] },
+  { cat:'mortar',  badge:'MASONRY',      name:'GeoRock 181',
+    bg:'Геополимерен разтвор без цимент. Адхезия и върху влажни повърхности.',
+    en:'Cement-free geopolymer mortar. Adhesion even on wet surfaces.',
+    specsBg:['Геополимер','Без цимент'], specsEn:['Geopolymer','Cement-free'] },
+  { cat:'mortar',  badge:'WATER · FAST', name:'SealFix 930',
+    bg:'Бърз минерален разтвор за запушване преди инжектиране.',
+    en:'Fast mineral mortar for plugging before injection.',
+    specsBg:['Бърз разтвор','Водоспиращ'], specsEn:['Rapid mortar','Water-stop'] },
+  { cat:'mortar',  badge:'STRUCTURAL',   name:'Silox EP 800',
+    bg:'Нисковискозна епоксидна смола за силово свързване. Без разтворители.',
+    en:'Low-viscosity epoxy resin for structural bonding. Solvent-free.',
+    specsBg:['Епоксид','Силово залепване'], specsEn:['Epoxy','Structural bond'] },
+  { cat:'mortar',  badge:'LIFTING',      name:'Planfloor 595',
+    bg:'2К PU пяна с висока твърдост за вдигане на плочи.',
+    en:'2C rigid PU foam for slab lifting and stabilisation.',
+    specsBg:['Твърда пяна','Вдигане плочи'], specsEn:['Rigid foam','Slab lifting'] },
+  { cat:'coating', badge:'MEMBRANE',     name:'Cembond 863',
+    bg:'Циментова хидроизолационна мембрана. За резервоари и тунели.',
+    en:'Cementitious waterproof slurry membrane. For tanks and tunnels.',
+    specsBg:['Циментова','Мокра основа'], specsEn:['Cementitious','Damp substrates'] },
+  { cat:'coating', badge:'WATERPROOF',   name:'HydroCoat 750',
+    bg:'Еластична полимерна боя за тераси и покриви. UV стабилна.',
+    en:'Elastic polymer waterproof paint. UV stable.',
+    specsBg:['Полимерна боя','UV устойчива'], specsEn:['Polymer paint','UV resistant'] },
+  { cat:'barrier', badge:'BARRIER',      name:'Remafix 709',
+    bg:'Течен препарат за хоризонтална инжекция срещу капилярна влага.',
+    en:'Liquid product for horizontal injection against rising damp.',
+    specsBg:['Течна бариера','Капилярна влага'], specsEn:['Liquid barrier','Rising damp'] },
+  { cat:'barrier', badge:'BARRIER',      name:'Remafix 715',
+    bg:'Крем за хоризонтална преградна инжекция. За стари зидани сгради.',
+    en:'Cream for horizontal barrier injection. For old masonry buildings.',
+    specsBg:['Крем бариера','Лесно инж.'], specsEn:['Barrier cream','Easy injection'] },
+  { cat:'equip',   badge:'EQUIP',        name:'Jekto Pro-1 2K',
+    bg:'Професионална 2К помпа. Съотношение 1:1, налягане до 200 бара.',
+    en:'Professional 2C pump. 1:1 ratio, pressure up to 200 bar.',
+    specsBg:['2К Помпа','200 бара'], specsEn:['2C Pump','200 bar'] },
+  { cat:'equip',   badge:'EQUIP',        name:'Jekto M-3 / M-4 1K',
+    bg:'Инжекционни помпи за 1К смоли. Налягане до 220 бара.',
+    en:'Injection pumps for 1C resins. Pressure up to 220 bar.',
+    specsBg:['1К Помпа','220 бара'], specsEn:['1C Pump','220 bar'] },
+  { cat:'equip',   badge:'EQUIP',        nameBg:'Пакери за Инжектиране', nameEn:'Injection Packers',
+    bg:'Метални и специализирани пакери за всички диаметри.',
+    en:'Metal and specialized packers for all diameters.',
+    specsBg:['Стомана / Месинг','Всички размери'], specsEn:['Steel / Brass','All sizes'] },
+  { cat:'resins',  badge:'STRUCTURAL',   name:'HydroBloc EP 811',
+    bg:'Свръхнисковискозна епоксидна смола при мокри условия.',
+    en:'Super low viscosity epoxy for wet conditions.',
+    specsBg:['Нисък вискозитет','Мокър бетон'], specsEn:['Low viscosity','Wet concrete'] },
+  { cat:'foam',    badge:'ADDITIVE',     name:'HydroBloc Add 540',
+    bg:'Добавка-ускорител за акрилатни гелове. Регулира времето на реакция.',
+    en:'Accelerator additive for acrylate gels. Controls reaction time.',
+    specsBg:['Ускорител','Контрол реакция'], specsEn:['Accelerator','Reaction control'] },
 ];
 
 export default function Products() {
   const [activeFilter, setActiveFilter] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery]   = useState('');
   const { lang } = useLang();
+  const gridRef = useRef(null);
 
+  /* Внешний фильтр (из Solutions) */
   useEffect(() => {
-    const handleFilterChange = (e) => {
-      if (e.detail && e.detail.filter) {
+    function onFilterChange(e) {
+      if (e.detail?.filter) {
         setActiveFilter(e.detail.filter);
         setSearchQuery('');
-        const gridEl = document.getElementById('products');
-        if (gridEl) {
-          gridEl.scrollIntoView({ behavior: 'smooth' });
-        }
+        document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
       }
-    };
-    window.addEventListener('setProductFilter', handleFilterChange);
-    return () => window.removeEventListener('setProductFilter', handleFilterChange);
+    }
+    window.addEventListener('setProductFilter', onFilterChange);
+    return () => window.removeEventListener('setProductFilter', onFilterChange);
   }, []);
 
-  const getCategoryCount = (catKey) => {
-    if (catKey === 'all') return products.length;
-    return products.filter((p) => p.cat === catKey).length;
+  const handleCatClick = (key) => {
+    setActiveFilter(key);
+    setSearchQuery('');
+    /* небольшая задержка чтобы фильтр применился, потом скролл к гриду */
+    setTimeout(() => gridRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
   };
 
-  const visible = products.filter((p) => {
-    const matchesCat = activeFilter === 'all' || p.cat === activeFilter;
-    const nameStr = p.name ? p.name : (lang === 'bg' ? p.nameBg : p.nameEn);
-    const descStr = lang === 'bg' ? p.bg : p.en;
-    const nameMatch = (nameStr || '').toLowerCase().includes(searchQuery.toLowerCase());
-    const descMatch = (descStr || '').toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCat && (nameMatch || descMatch);
+  const catInfo = (key) => CATS.find(c => c.key === key) || CATS[0];
+
+  const visible = products.filter(p => {
+    const matchCat = activeFilter === 'all' || p.cat === activeFilter;
+    const name = p.name || (lang === 'bg' ? p.nameBg : p.nameEn) || '';
+    const desc = lang === 'bg' ? p.bg : p.en;
+    return matchCat && (
+      name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      desc.toLowerCase().includes(searchQuery.toLowerCase())
+    );
   });
 
+  const countFor = (key) => key === 'all' ? products.length : products.filter(p => p.cat === key).length;
+
   return (
-    <section id="products" className="section">
+    <section id="products" className="section products-section">
       <div className="container">
-        <div className="products-top">
+
+        {/* Header */}
+        <div className="prod-hdr">
           <div>
             <div className="eyebrow" data-reveal><T bg="Каталог продукти" en="Product catalogue" /></div>
-            <h2 className="h2" data-reveal><T bg={<>Нашите <span className="accent">Продукти</span></>} en={<>Our <span className="accent">Products</span></>} /></h2>
+            <h2 className="h2" data-reveal>
+              <T bg={<>Нашите <span className="accent">Продукти</span></>}
+                 en={<>Our <span className="accent">Products</span></>} />
+            </h2>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-            <a
-              href="/ARCAN_Injection_Matrix_BG.pdf"
-              download="ARCAN_Injection_Matrix_BG.pdf"
-              className="btn btn-outline-blue"
-              data-reveal
-              title="Изтегли инжекционна матрица"
-              style={{ display: 'flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <div className="prod-hdr__actions" data-reveal>
+            <a href="/ARCAN_Injection_Matrix_BG.pdf" download className="btn btn-outline-blue">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <rect x="3" y="3" width="18" height="18" rx="2"/>
                 <path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>
               </svg>
-              <T bg="Инжекционна Матрица" en="Injection Matrix" />
+              <T bg="Матрица" en="Matrix" />
             </a>
-            <a
-              href="/ARCAN_BODEX_Catalog_2026_BG.pdf"
-              download="ARCAN_BODEX_Catalog_2026_BG.pdf"
-              className="btn btn-outline-blue"
-              data-reveal
-              title="Изтегли каталог"
-              style={{ display: 'flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <a href="/ARCAN_BODEX_Catalog_2026_BG.pdf" download className="btn btn-outline-blue">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
                 <polyline points="7 10 12 15 17 10"/>
                 <line x1="12" y1="15" x2="12" y2="3"/>
               </svg>
               <T bg="Каталог PDF" en="Catalogue PDF" />
             </a>
-            <a href="#contact" className="btn btn-outline-blue" data-reveal>
-              <T bg="Заявете Пълен Каталог" en="Request Full Catalogue" />
-            </a>
           </div>
         </div>
 
-        {/* Dynamic Search Bar */}
+        {/* Categories grid */}
+        <div className="cat-grid" data-reveal role="tablist" aria-label="Категории продукти">
+          {CATS.map(c => {
+            const active = activeFilter === c.key;
+            return (
+              <button
+                key={c.key}
+                role="tab"
+                aria-selected={active}
+                className={`cat-card${active ? ' cat-card--active' : ''}`}
+                style={active ? { '--cat-color': c.color, '--cat-light': c.light } : { '--cat-color': c.color, '--cat-light': c.light }}
+                onClick={() => handleCatClick(c.key)}
+              >
+                <span className="cat-card__icon" aria-hidden="true">{c.icon}</span>
+                <span className="cat-card__name"><T bg={c.bg} en={c.en} /></span>
+                <span className="cat-card__count">{countFor(c.key)}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Search */}
         <div className="search-bar-wrap" data-reveal>
           <div className="search-input-container">
-            <svg className="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <svg className="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
-            <input 
-              type="text" 
-              placeholder={lang === 'bg' ? 'Търсене на продукти (напр. смола, помпа, лента)...' : 'Search products (e.g. resin, pump, tape)...'} 
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+            <input
+              type="search"
               className="search-input"
+              placeholder={lang === 'bg' ? 'Търсене (напр. смола, помпа, лента)…' : 'Search (e.g. resin, pump, tape)…'}
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              aria-label={lang === 'bg' ? 'Търсене на продукти' : 'Search products'}
             />
             {searchQuery && (
               <button className="search-clear-btn" onClick={() => setSearchQuery('')} aria-label="Clear search">✕</button>
@@ -297,52 +319,66 @@ export default function Products() {
           </div>
         </div>
 
-        <div className="filter-bar" data-reveal>
-          {filters.map((f) => (
-            <button
-              key={f.key}
-              className={`filter-btn${activeFilter === f.key && !searchQuery ? ' active' : ''}`}
-              onClick={() => { setActiveFilter(f.key); setSearchQuery(''); }}
-            >
-              <T bg={f.bg} en={f.en} />
-              <span className="filter-count">{getCategoryCount(f.key)}</span>
-            </button>
-          ))}
-        </div>
+        {/* Active category label */}
+        {activeFilter !== 'all' && (
+          <div className="active-cat-label" ref={gridRef}>
+            <span className="active-cat-label__dot" style={{ background: catInfo(activeFilter).color }} aria-hidden="true" />
+            <span className="active-cat-label__name" style={{ color: catInfo(activeFilter).color }}>
+              <T bg={catInfo(activeFilter).bg} en={catInfo(activeFilter).en} />
+            </span>
+            <span className="active-cat-label__count">— {visible.length} <T bg="продукта" en="products" /></span>
+          </div>
+        )}
 
-        <div className="product-grid" id="productGrid" key={activeFilter + searchQuery}>
-          {visible.length > 0 ? (
-            visible.map((p, index) => (
-              <div className="product-card revealed" data-cat={p.cat} data-reveal key={p.name || p.nameEn || index}>
-                {/* Head — цветная шапка */}
-                <div className="product-card-head">
-                  <span className="product-cat-badge">{p.badge}</span>
-                  <div className="product-icon-wrap" aria-hidden="true">{p.icon}</div>
+        {/* Grid */}
+        <div className="pgrid-4" id="productGrid" key={activeFilter + searchQuery} ref={activeFilter === 'all' ? gridRef : undefined}>
+          {visible.length > 0 ? visible.map((p, i) => {
+            const name = p.name || (lang === 'bg' ? p.nameBg : p.nameEn);
+            const ci = catInfo(p.cat);
+            return (
+              <article
+                className="pcard"
+                key={name + i}
+                data-reveal
+                data-d={String(i % 4)}
+                style={{ '--cat-color': ci.color, '--cat-light': ci.light }}
+              >
+                {/* Фото-шапка */}
+                <ProductCardImage cat={p.cat} name={name} />
+
+                {/* Бейдж */}
+                <div className="pcard__badges">
+                  <span className="pcard__badge" style={{ background: ci.color }}>{p.badge}</span>
                 </div>
-                {/* Body */}
-                <div className="product-card-body">
-                  <h3>{p.name ? p.name : <T bg={p.nameBg} en={p.nameEn} />}</h3>
-                  <p><T bg={p.bg} en={p.en} /></p>
+
+                {/* Контент */}
+                <div className="pcard__body">
+                  <h3 className="pcard__name">{name}</h3>
+                  <p className="pcard__desc"><T bg={p.bg} en={p.en} /></p>
                   {p.specsBg && (
-                    <div className="product-card-specs">
+                    <div className="pcard__specs">
                       <T
-                        bg={p.specsBg.map((s, sidx) => <span key={sidx} className="prod-spec-badge">{s}</span>)}
-                        en={p.specsEn.map((s, sidx) => <span key={sidx} className="prod-spec-badge">{s}</span>)}
+                        bg={p.specsBg.map((s, si) => <span key={si} className="pcard__spec">{s}</span>)}
+                        en={p.specsEn.map((s, si) => <span key={si} className="pcard__spec">{s}</span>)}
                       />
                     </div>
                   )}
-                  <a href="#contact" className="btn btn-outline-blue btn-sm">
+                  <a href="#contact" className="pcard__cta" aria-label={`Запитване за ${name}`}>
                     <T bg="Запитване" en="Enquire" />
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                    </svg>
                   </a>
                 </div>
-              </div>
-            ))
-          ) : (
-            <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '60px 40px', color: 'var(--muted)' }}>
-              <T bg="Няма намерени продукти за вашето търсене" en="No products found matching your search" />
+              </article>
+            );
+          }) : (
+            <div className="pgrid-empty" role="status">
+              <T bg="Няма намерени продукти" en="No products found" />
             </div>
           )}
         </div>
+
       </div>
     </section>
   );
