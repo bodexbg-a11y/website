@@ -2411,3 +2411,21 @@ body:not(.light-theme) .pcard__spec { background: rgba(255,255,255,0.05); }
 @media (max-width: 360px)  {
   .pgrid-4 { grid-template-columns: 1fr; }
 }
+
+/* ── Fix: product cards always visible (no data-reveal animation) ── */
+.pcard--visible {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: pcardIn 220ms ease both;
+}
+/* Stagger via nth-child */
+.pcard--visible:nth-child(4n+2) { animation-delay: 40ms; }
+.pcard--visible:nth-child(4n+3) { animation-delay: 80ms; }
+.pcard--visible:nth-child(4n+4) { animation-delay: 120ms; }
+@keyframes pcardIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pcard--visible { animation: none !important; }
+}

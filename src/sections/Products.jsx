@@ -337,10 +337,8 @@ export default function Products() {
             const ci = catInfo(p.cat);
             return (
               <article
-                className="pcard"
+                className="pcard pcard--visible"
                 key={name + i}
-                data-reveal
-                data-d={String(i % 4)}
                 style={{ '--cat-color': ci.color, '--cat-light': ci.light }}
               >
                 {/* Фото-шапка */}
