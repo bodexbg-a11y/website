@@ -218,7 +218,7 @@ export default function Products() {
       if (e.detail?.filter) {
         setActiveFilter(e.detail.filter);
         setSearchQuery('');
-        document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => document.getElementById('prod-grid-anchor')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
       }
     }
     window.addEventListener('setProductFilter', onFilterChange);
@@ -228,8 +228,7 @@ export default function Products() {
   const handleCatClick = (key) => {
     setActiveFilter(key);
     setSearchQuery('');
-    /* небольшая задержка чтобы фильтр применился, потом скролл к гриду */
-    setTimeout(() => gridRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+    setTimeout(() => document.getElementById('prod-grid-anchor')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
   };
 
   const catInfo = (key) => CATS.find(c => c.key === key) || CATS[0];
@@ -319,9 +318,10 @@ export default function Products() {
           </div>
         </div>
 
-        {/* Active category label */}
+        {/* Active category label + scroll anchor */}
+        <div id="prod-grid-anchor" style={{ scrollMarginTop: '84px' }} />
         {activeFilter !== 'all' && (
-          <div className="active-cat-label" ref={gridRef}>
+          <div className="active-cat-label">
             <span className="active-cat-label__dot" style={{ background: catInfo(activeFilter).color }} aria-hidden="true" />
             <span className="active-cat-label__name" style={{ color: catInfo(activeFilter).color }}>
               <T bg={catInfo(activeFilter).bg} en={catInfo(activeFilter).en} />
@@ -331,7 +331,7 @@ export default function Products() {
         )}
 
         {/* Grid */}
-        <div className="pgrid-4" id="productGrid" key={activeFilter + searchQuery} ref={activeFilter === 'all' ? gridRef : undefined}>
+        <div className="pgrid-4" id="productGrid" key={activeFilter + searchQuery}>
           {visible.length > 0 ? visible.map((p, i) => {
             const name = p.name || (lang === 'bg' ? p.nameBg : p.nameEn);
             const ci = catInfo(p.cat);
