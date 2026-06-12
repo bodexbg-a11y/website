@@ -78,7 +78,7 @@ export default function Services() {
 
           {/* Reinforcement Service */}
           <div className="service-card" data-reveal data-d="1">
-            <div className="service-card-head" style={{ background: 'linear-gradient(135deg,#0f3460,#1e3090)' }}>
+            <div className="service-card-head service-card-head-blue">
               <div className="service-icon-wrap">
                 <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                   <rect x="4" y="18" width="24" height="10" rx="2" fill="rgba(255,255,255,0.3)" stroke="rgba(255,255,255,0.8)" strokeWidth="1.8"/>
