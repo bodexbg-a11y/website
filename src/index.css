@@ -1914,12 +1914,12 @@ body:not(.light-theme) .form-card textarea {
   font-family: var(--font-mono);
   font-size: 11px; font-weight: 500;
   letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--blue-200);
+  color: rgba(255,255,255,0.75);
   margin-bottom: 16px;
 }
 .cta-band-full__eyebrow::before {
   content: ''; width: 20px; height: 1px;
-  background: var(--blue-200);
+  background: rgba(255,255,255,0.75);
 }
 .cta-band-full__h {
   font-family: var(--font-h);
