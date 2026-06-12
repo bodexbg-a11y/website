@@ -1494,3 +1494,328 @@ body:not(.light-theme) .sol-mat-tag:hover {
   .sol-list { grid-template-columns: repeat(3, 1fr); }
   .sol-detail { padding: 20px 16px; }
 }
+
+/* ════════════════════════════════════════════════
+   ПАТЧ v7.3 — Services + Contact Form
+   По скринам: иконки, layout карточек, все инпуты
+════════════════════════════════════════════════ */
+
+/* ── SERVICES — полный редизайн карточек ── */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+.service-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: var(--sh);
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+  display: flex;
+  flex-direction: column;
+}
+.service-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sh-lg);
+  border-color: var(--border-hover);
+}
+
+/* Head — светлая первая карточка */
+.service-card-head {
+  padding: 28px 28px 24px;
+  background: var(--bg-base);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+/* Head — синяя вторая карточка */
+.service-card-head-blue {
+  background: linear-gradient(145deg, #1A3FA8 0%, #0B1C3E 100%);
+  border-bottom-color: rgba(255,255,255,0.08);
+}
+.service-card-head-blue h3 { color: #fff !important; }
+.service-card-head-blue p  { color: rgba(255,255,255,0.72) !important; }
+
+/* Иконка — белый фон для светлой карточки, полупрозрачный для синей */
+.service-icon-wrap {
+  width: 52px; height: 52px;
+  border-radius: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+/* Иконка в синей карточке */
+.service-card-head-blue .service-icon-wrap {
+  background: rgba(255,255,255,0.14);
+  border-color: rgba(255,255,255,0.22);
+}
+
+/* SVG иконки в светлой карточке — перекрашиваем stroke на primary */
+.service-card-head:not(.service-card-head-blue) .service-icon-wrap svg path,
+.service-card-head:not(.service-card-head-blue) .service-icon-wrap svg rect,
+.service-card-head:not(.service-card-head-blue) .service-icon-wrap svg circle,
+.service-card-head:not(.service-card-head-blue) .service-icon-wrap svg polyline,
+.service-card-head:not(.service-card-head-blue) .service-icon-wrap svg line {
+  stroke: var(--primary) !important;
+  fill: none !important;
+}
+/* Небольшие заливки в иконке — сделать полупрозрачными синими */
+.service-card-head:not(.service-card-head-blue) .service-icon-wrap svg rect[fill],
+.service-card-head:not(.service-card-head-blue) .service-icon-wrap svg circle[fill="rgba(255,255,255,0.8)"] {
+  fill: var(--blue-100) !important;
+}
+
+.service-card-head h3 {
+  font-family: var(--font-h);
+  font-size: 20px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.01em;
+  margin: 0;
+}
+.service-card-head p {
+  font-size: 14px; line-height: 1.65;
+  color: var(--muted); margin: 0;
+}
+
+/* Body */
+.service-card-body {
+  padding: 24px 28px 28px;
+  background: var(--bg-surface);
+  display: flex; flex-direction: column;
+  gap: 20px; flex: 1;
+}
+body:not(.light-theme) .service-card-body { background: var(--bg-surface); }
+
+.service-list {
+  list-style: none;
+  display: flex; flex-direction: column;
+  gap: 10px; flex: 1;
+}
+.service-list li {
+  display: flex; align-items: center;
+  gap: 10px;
+  font-size: 14px; font-weight: 400;
+  color: var(--text); line-height: 1.4;
+}
+.check-icon {
+  width: 20px; height: 20px; flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--primary);
+  display: grid; place-items: center;
+}
+/* CTA кнопка в карточке */
+.service-card-body .btn {
+  width: 100%;
+  justify-content: center;
+  border-radius: 10px !important;
+}
+
+/* ── CONTACT — полная стилизация формы ── */
+/* Обёртка */
+.contact-section {
+  background: var(--bg-base);
+  border-top: 1px solid var(--border);
+}
+.contact-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+/* Контактные детали */
+.contact-details {
+  display: flex; flex-direction: column; gap: 20px;
+  margin-bottom: 28px;
+}
+.contact-detail {
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.contact-icon {
+  width: 44px; height: 44px; flex-shrink: 0;
+  border-radius: 10px;
+  background: var(--primary);
+  display: grid; place-items: center;
+}
+.contact-icon svg { stroke: #fff; width: 18px; height: 18px; }
+.contact-detail-text {}
+.contact-detail-text strong {
+  font-family: var(--font-h);
+  display: block; font-size: 14px; font-weight: 700;
+  color: var(--text); margin-bottom: 2px;
+}
+.contact-detail-text span, .contact-detail-text a {
+  font-size: 15px; color: var(--muted);
+  transition: color 140ms;
+}
+.contact-detail-text a:hover { color: var(--primary); }
+
+/* B2B notice */
+.b2b-notice {
+  padding: 14px 16px;
+  background: var(--blue-50);
+  border: 1px solid var(--blue-100);
+  border-radius: 10px;
+}
+.b2b-notice p { font-size: 13px; color: var(--primary); line-height: 1.55; margin: 0; }
+body:not(.light-theme) .b2b-notice { background: rgba(91,143,238,0.08); border-color: rgba(91,143,238,0.18); }
+body:not(.light-theme) .b2b-notice p { color: var(--blue-200); }
+
+/* Form card */
+.form-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 32px;
+  box-shadow: 0 2px 8px rgba(11,28,62,0.05), 0 8px 32px rgba(11,28,62,0.07);
+}
+body:not(.light-theme) .form-card { background: var(--bg-surface); }
+
+/* Tabs */
+.form-tabs {
+  display: flex;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 24px;
+  gap: 0;
+}
+body:not(.light-theme) .form-tabs { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+
+.form-tab {
+  flex: 1; padding: 10px 16px;
+  min-height: 46px;
+  font-family: var(--font-b);
+  font-size: 15px; font-weight: 500;
+  color: var(--dim);
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background 140ms, color 140ms, box-shadow 140ms;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid transparent;
+}
+.form-tab.active {
+  background: var(--bg-surface);
+  color: var(--primary);
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(11,28,62,0.08), 0 2px 8px rgba(11,28,62,0.05);
+  border-color: var(--border);
+}
+body:not(.light-theme) .form-tab.active { color: var(--blue-200); background: rgba(255,255,255,0.07); box-shadow: none; border-color: rgba(255,255,255,0.1); }
+.form-tab:hover:not(.active) { color: var(--text); background: rgba(0,0,0,0.03); }
+
+/* Form layout */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.form-group {
+  display: flex; flex-direction: column; gap: 6px;
+  margin-bottom: 12px;
+}
+.form-group:last-of-type { margin-bottom: 0; }
+
+/* Labels */
+.form-group label {
+  font-family: var(--font-mono) !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--dim) !important;
+  display: block;
+}
+
+/* INPUTS — применяем к тегам напрямую внутри form-card */
+/* (JSX не имеет className на input/select/textarea) */
+.form-card input[type="text"],
+.form-card input[type="email"],
+.form-card input[type="tel"],
+.form-card input[type="date"],
+.form-card input[type="number"],
+.form-card select,
+.form-card textarea {
+  width: 100%;
+  background: var(--bg-base) !important;
+  border: 1.5px solid rgba(11,28,62,0.13) !important;
+  border-radius: 9px !important;
+  padding: 12px 14px !important;
+  font-family: var(--font-b) !important;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  color: var(--text) !important;
+  outline: none !important;
+  min-height: 50px;
+  width: 100%;
+  transition: border-color 140ms ease, box-shadow 140ms ease !important;
+  -webkit-appearance: none;
+  appearance: none;
+}
+body:not(.light-theme) .form-card input[type="text"],
+body:not(.light-theme) .form-card input[type="email"],
+body:not(.light-theme) .form-card input[type="tel"],
+body:not(.light-theme) .form-card input[type="date"],
+body:not(.light-theme) .form-card select,
+body:not(.light-theme) .form-card textarea {
+  background: rgba(255,255,255,0.05) !important;
+  border-color: rgba(255,255,255,0.10) !important;
+  color: var(--text) !important;
+}
+.form-card input:focus,
+.form-card select:focus,
+.form-card textarea:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(26,63,168,0.10) !important;
+  background: var(--bg-surface) !important;
+}
+.form-card input::placeholder,
+.form-card textarea::placeholder { color: var(--dim) !important; }
+
+.form-card select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238A96B0' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 14px center !important;
+  padding-right: 40px !important;
+}
+.form-card textarea { min-height: 100px !important; resize: vertical; }
+
+/* Submit button */
+.form-card button[type="submit"] {
+  width: 100%;
+  justify-content: center;
+  margin-top: 4px;
+  border-radius: 10px !important;
+  min-height: 52px !important;
+  font-size: 16px !important;
+}
+
+/* Form success */
+.form-success {
+  text-align: center;
+  padding: 48px 24px;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 12px;
+}
+.form-success h3 {
+  font-family: var(--font-h);
+  font-size: 22px; font-weight: 700; color: var(--text);
+}
+.form-success p { font-size: 15px; color: var(--muted); }
+
+/* ── АДАПТИВ ── */
+@media (max-width: 900px) {
+  .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
+  .services-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .form-row { grid-template-columns: 1fr; }
+  .form-card { padding: 20px 16px; }
+}
