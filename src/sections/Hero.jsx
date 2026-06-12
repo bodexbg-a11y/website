@@ -1,11 +1,64 @@
+import { useState, useEffect, useRef } from 'react';
 import { T } from '../context/LangContext';
 
 export default function Hero() {
+  const [isDark, setIsDark] = useState(true);
+  const isTransitioning = useRef(false);
+  const backBgRef = useRef(null);
+  const frontBgRef = useRef(null);
+
+  useEffect(() => {
+    // Synchronize global document body class
+    document.body.classList.toggle('light-theme', !isDark);
+  }, [isDark]);
+
+  useEffect(() => {
+    // Set initial background image URLs
+    const initialImg = isDark ? 'url(/hero-dark.png)' : 'url(/hero-light.png)';
+    if (backBgRef.current) backBgRef.current.style.backgroundImage = initialImg;
+    if (frontBgRef.current) frontBgRef.current.style.backgroundImage = initialImg;
+  }, []);
+
+  const handleThemeChange = (newTheme) => {
+    if (newTheme === isDark || isTransitioning.current) return;
+    isTransitioning.current = true;
+
+    const bgImg = newTheme ? 'url(/hero-dark.png)' : 'url(/hero-light.png)';
+    const back = backBgRef.current;
+    const front = frontBgRef.current;
+
+    // Load new image behind
+    if (back) back.style.backgroundImage = bgImg;
+    // Trigger physical pull-down effect on the front image
+    if (front) front.classList.add('pull-down');
+
+    window.setTimeout(() => {
+      setIsDark(newTheme);
+      // Synchronize front image after pull-down covers
+      if (front) front.style.backgroundImage = bgImg;
+    }, 300);
+
+    window.setTimeout(() => {
+      // Remove pull-down state to restore front layer
+      if (front) front.classList.remove('pull-down');
+      isTransitioning.current = false;
+    }, 330);
+  };
+
   return (
     <section id="hero">
-      <div className="hero-photo" id="heroBg" />
-      <div className="hero-img-overlay" />
+      {/* Top & Bottom Blur Overlays (Reposit-style) */}
+      <div className="blur-overlay blur-overlay-top" aria-hidden="true" />
+      <div className="blur-overlay blur-overlay-bottom" aria-hidden="true" />
+
+      {/* Layered Background Images */}
+      <div className="hero-bg-wrapper">
+        <div ref={backBgRef} className="hero-bg bg-back" aria-hidden="true" />
+        <div ref={frontBgRef} className="hero-bg bg-front" aria-hidden="true" />
+      </div>
+
       <div className="hero-pattern" />
+
       <div className="container">
         <div className="hero-grid-layout">
           <div className="hero-content">
@@ -13,12 +66,40 @@ export default function Hero() {
               <span className="hero-badge-dot" />
               <T bg="B2B · Продажби само на едро · Официален партньор ARCAN" en="B2B Wholesale Only · Authorized ARCAN Partner" />
             </div>
+            
             <h1 className="hero-title anim-up-1">
               <T
-                bg={<>Инжекционни<span className="line2">Системи</span>за Бетон</>}
-                en={<>Injection<span className="line2">Systems</span>for Concrete</>}
+                bg={<>Инжекционни <span className="line2">Системи за Бетон</span></>}
+                en={<>Injection <span className="line2">Systems for Concrete</span></>}
               />
             </h1>
+
+            {/* Reposit-style Theme Toggle Pill */}
+            <div className="theme-toggle-wrap anim-up-2">
+              <div className="theme-toggle">
+                <div 
+                  className="toggle-indicator" 
+                  style={{ transform: isDark ? 'translateX(calc(100% + 4px))' : 'translateX(0)' }} 
+                />
+                <button
+                  type="button"
+                  className={`toggle-btn ${!isDark ? 'active' : ''}`}
+                  onClick={() => handleThemeChange(false)}
+                >
+                  <span className="label"><T bg="Ден" en="Day" /></span>
+                  <span className="subtext"><T bg="Светла тема" en="Light Theme" /></span>
+                </button>
+                <button
+                  type="button"
+                  className={`toggle-btn ${isDark ? 'active' : ''}`}
+                  onClick={() => handleThemeChange(true)}
+                >
+                  <span className="label"><T bg="Нощ" en="Night" /></span>
+                  <span className="subtext"><T bg="Тъмна тема" en="Dark Theme" /></span>
+                </button>
+              </div>
+            </div>
+
             <p className="hero-desc anim-up-2">
               <T
                 bg="Доставка на полимерни смоли и инжекционни материали. Укрепване на фундаменти и ремонт на пукнатини — от инфраструктурни до търговски обекти."
