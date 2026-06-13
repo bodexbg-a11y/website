@@ -1,113 +1,182 @@
 import { T } from '../context/LangContext';
 import { useEffect } from 'react';
 
-const CheckIcon = () => (
-  <div className="check-icon">
-    <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-      <path d="M2 6l3 3 5-5" stroke="#fff" strokeWidth="2" strokeLinecap="round"/>
-    </svg>
-  </div>
-);
-
 export default function Services() {
   useEffect(() => {
-    // Add JSON-LD structured data for services
     const script = document.createElement('script');
     script.type = 'application/ld+json';
     script.textContent = JSON.stringify({
       "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Доставка на материали",
-          "url": "https://bodexbulgaria.com/#services"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Укрепване на конструкции",
-          "url": "https://bodexbulgaria.com/#services"
-        }
-      ]
+      "@type": "Service",
+      "provider": { "@type": "Organization", "name": "BODEX Bulgaria" },
+      "serviceType": ["Injection Materials Supply", "Structural Reinforcement"],
+      "areaServed": "BG"
     });
     document.head.appendChild(script);
     return () => script.remove();
   }, []);
 
+  const supplyItems = [
+    { bg: 'Полиуретанови смоли', en: 'PU Resins' },
+    { bg: 'Епоксидни смоли', en: 'Epoxy Resins' },
+    { bg: 'Инжекционни пени', en: 'Injection Foams' },
+    { bg: 'Акрилатни гелове', en: 'Acrylate Gels' },
+    { bg: 'Набъбващи ленти', en: 'Swelling Tapes' },
+    { bg: 'Минерални разтвори', en: 'Mineral Mortars' },
+    { bg: 'Покрития', en: 'Coatings' },
+    { bg: 'Инжекционни помпи', en: 'Injection Pumps' },
+    { bg: 'Пакери', en: 'Packers' },
+  ];
+
+  const workItems = [
+    { bg: 'Укрепване на фундаменти', en: 'Foundation reinforcement' },
+    { bg: 'Ремонт на пукнатини', en: 'Crack repair' },
+    { bg: 'Хидроизолация', en: 'Waterproofing' },
+    { bg: 'Уплътняване на фуги', en: 'Joint sealing' },
+    { bg: 'Спиране на течове', en: 'Leak stopping' },
+    { bg: 'Стабилизация на почви', en: 'Soil stabilisation' },
+    { bg: 'Инжекционни завеси', en: 'Injection curtains' },
+    { bg: 'Хоризонтални бариери', en: 'Horizontal barriers' },
+  ];
+
   return (
-    <section id="services" className="section">
+    <section id="services" className="section services-section">
       <div className="container">
-        <div className="eyebrow" data-reveal><T bg="Нашите услуги" en="Our services" /></div>
-        <h2 className="h2" data-reveal><T bg={<>Какво <span className="accent">Правим</span></>} en={<>What We <span className="accent">Do</span></>} /></h2>
-        <div className="services-grid">
-          {/* Supply Service */}
-          <div className="service-card" data-reveal>
-            <div className="service-card-head">
-              <div className="service-icon-wrap">
-                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 8 L6 26 L26 26 L26 8" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="2" strokeLinecap="round"/>
-                  <rect x="10" y="12" width="6" height="14" rx="1" fill="rgba(255,255,255,0.6)"/>
-                  <rect x="18" y="16" width="6" height="10" rx="1" fill="rgba(255,255,255,0.4)"/>
-                  <path d="M4 8 L16 4 L28 8" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <circle cx="22" cy="8" r="3" fill="rgba(255,255,255,0.8)"/>
-                  <line x1="22" y1="5" x2="22" y2="2" stroke="rgba(255,255,255,0.7)" strokeWidth="2"/>
-                </svg>
+        <div className="eyebrow"><T bg="Нашите услуги" en="Our services" /></div>
+        <h2 className="h2" style={{ marginTop: 8, marginBottom: 32 }}>
+          <T bg={<>Какво <span className="accent">Правим</span></>}
+             en={<>What We <span className="accent">Do</span></>} />
+        </h2>
+
+        <div className="srv-grid">
+
+          {/* ── CARD 1: Delivery ── */}
+          <div className="srv-card">
+            {/* Top band */}
+            <div className="srv-band srv-band--light">
+              <div className="srv-band__left">
+                <div className="srv-band__icon srv-band__icon--blue">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="1" y="3" width="15" height="13"/>
+                    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                    <circle cx="5.5" cy="18.5" r="2.5"/>
+                    <circle cx="18.5" cy="18.5" r="2.5"/>
+                  </svg>
+                </div>
+                <div>
+                  <div className="srv-band__label"><T bg="Услуга 01" en="Service 01" /></div>
+                  <h3 className="srv-band__title"><T bg="Доставка на материали" en="Materials Supply" /></h3>
+                </div>
               </div>
-              <h3><T bg="Доставка на Инжекционни Материали" en="Injection Materials Supply" /></h3>
-              <p><T bg="Доставка на едро на полимерни смоли, пени, гелове и минерални инжекции от ARCAN Waterproofing (Германия)." en="Wholesale supply of polymer resins, foams, gels and mineral injections from ARCAN Waterproofing (Germany)." /></p>
+              <div className="srv-band__badge">B2B · Едро</div>
             </div>
-            <div className="service-card-body">
-              <ul className="service-list">
-                {[
-                  { bg: 'Полиуретанови и епоксидни смоли', en: 'Polyurethane and epoxy resins' },
-                  { bg: 'Инжекционни пени и гелове', en: 'Injection foams and gels' },
-                  { bg: 'Минерални разтвори за инжектиране', en: 'Mineral injection mortars' },
-                  { bg: 'Набъбващи ленти и уплътнения', en: 'Swellable tapes and sealants' },
-                  { bg: 'Инжекционни помпи и пакери', en: 'Injection pumps and packers' },
-                ].map((item) => (
-                  <li key={item.en}><CheckIcon /><T bg={item.bg} en={item.en} /></li>
+
+            {/* Body */}
+            <div className="srv-body">
+              <p className="srv-desc">
+                <T
+                  bg="Директна доставка на едро на полимерни смоли, пени, гелове и минерални инжекции от ARCAN Waterproofing (Германия). Гарантиран произход с пълна техническа документация."
+                  en="Direct wholesale supply of polymer resins, foams, gels and mineral injections from ARCAN Waterproofing (Germany). Guaranteed origin with full technical documentation."
+                />
+              </p>
+
+              {/* Tag pills */}
+              <div className="srv-tags">
+                {supplyItems.map((item, i) => (
+                  <span key={i} className="srv-tag">
+                    <T bg={item.bg} en={item.en} />
+                  </span>
                 ))}
-              </ul>
-              <a href="#contact" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
+              </div>
+
+              {/* Stats row */}
+              <div className="srv-mini-stats">
+                <div className="srv-mini-stat">
+                  <span className="srv-mini-stat__num">50+</span>
+                  <span className="srv-mini-stat__lbl"><T bg="Продукта" en="Products" /></span>
+                </div>
+                <div className="srv-mini-stat">
+                  <span className="srv-mini-stat__num">DE</span>
+                  <span className="srv-mini-stat__lbl"><T bg="Произход" en="Origin" /></span>
+                </div>
+                <div className="srv-mini-stat">
+                  <span className="srv-mini-stat__num">CE</span>
+                  <span className="srv-mini-stat__lbl"><T bg="Сертификат" en="Certified" /></span>
+                </div>
+              </div>
+
+              <a href="#contact" className="btn btn-primary srv-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                </svg>
                 <T bg="Запитване за Материал" en="Material Enquiry" />
               </a>
             </div>
           </div>
 
-          {/* Reinforcement Service */}
-          <div className="service-card" data-reveal data-d="1">
-            <div className="service-card-head service-card-head-blue">
-              <div className="service-icon-wrap">
-                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="4" y="18" width="24" height="10" rx="2" fill="rgba(255,255,255,0.3)" stroke="rgba(255,255,255,0.8)" strokeWidth="1.8"/>
-                  <polyline points="8,18 8,10 24,10 24,18" fill="none" stroke="rgba(255,255,255,0.8)" strokeWidth="1.8"/>
-                  <line x1="16" y1="4" x2="16" y2="10" stroke="rgba(255,255,255,0.6)" strokeWidth="2" strokeDasharray="2,2"/>
-                  <polyline points="10,18 12,14 16,20 20,12 22,18" fill="none" stroke="#93a8f5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <circle cx="16" cy="4" r="3" fill="rgba(255,255,255,0.8)"/>
-                </svg>
+          {/* ── CARD 2: Works ── */}
+          <div className="srv-card">
+            {/* Top band — dark blue */}
+            <div className="srv-band srv-band--dark">
+              <div className="srv-band__left">
+                <div className="srv-band__icon srv-band__icon--white">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="3" width="20" height="14" rx="2"/>
+                    <path d="M8 21h8M12 17v4"/>
+                    <path d="M7 8l2 2 4-4"/>
+                  </svg>
+                </div>
+                <div>
+                  <div className="srv-band__label srv-band__label--inv"><T bg="Услуга 02" en="Service 02" /></div>
+                  <h3 className="srv-band__title srv-band__title--inv"><T bg="Инжекционни работи" en="Injection Works" /></h3>
+                </div>
               </div>
-              <h3><T bg="Укрепване на Конструкции" en="Structural Reinforcement" /></h3>
-              <p><T bg="Изпълнение на инжекционни работи — укрепване на фундаменти, ремонт на пукнатини, хидроизолация. Всякакви обекти." en="Execution of injection works — foundation reinforcement, crack repair, waterproofing. Any type of object." /></p>
+              <div className="srv-band__badge srv-band__badge--inv">На обекта</div>
             </div>
-            <div className="service-card-body">
-              <ul className="service-list">
-                {[
-                  { bg: 'Укрепване на фундаменти и основи', en: 'Foundation and base reinforcement' },
-                  { bg: 'Ремонт на пукнатини в бетон', en: 'Concrete crack repair' },
-                  { bg: 'Хидроизолация чрез инжектиране', en: 'Waterproofing by injection' },
-                  { bg: 'Уплътняване на строителни фуги', en: 'Construction joint sealing' },
-                  { bg: 'Стабилизация на почви и основи', en: 'Soil and foundation stabilization' },
-                ].map((item) => (
-                  <li key={item.en}><CheckIcon /><T bg={item.bg} en={item.en} /></li>
+
+            {/* Body */}
+            <div className="srv-body">
+              <p className="srv-desc">
+                <T
+                  bg="Изпълнение на инжекционни работи от квалифицирани специалисти — укрепване на фундаменти, ремонт на пукнатини, хидроизолация. Всякакви обекти в България."
+                  en="Execution of injection works by qualified specialists — foundation reinforcement, crack repair, waterproofing. Any type of project in Bulgaria."
+                />
+              </p>
+
+              {/* Tag pills */}
+              <div className="srv-tags">
+                {workItems.map((item, i) => (
+                  <span key={i} className="srv-tag srv-tag--blue">
+                    <T bg={item.bg} en={item.en} />
+                  </span>
                 ))}
-              </ul>
-              <a href="#contact" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
+              </div>
+
+              {/* Stats row */}
+              <div className="srv-mini-stats">
+                <div className="srv-mini-stat">
+                  <span className="srv-mini-stat__num">BG</span>
+                  <span className="srv-mini-stat__lbl"><T bg="Цяла страна" en="Nationwide" /></span>
+                </div>
+                <div className="srv-mini-stat">
+                  <span className="srv-mini-stat__num">B2B</span>
+                  <span className="srv-mini-stat__lbl"><T bg="Само фирми" en="Firms only" /></span>
+                </div>
+                <div className="srv-mini-stat">
+                  <span className="srv-mini-stat__num">24h</span>
+                  <span className="srv-mini-stat__lbl"><T bg="Отговор" en="Response" /></span>
+                </div>
+              </div>
+
+              <a href="#contact" className="btn btn-primary srv-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                </svg>
                 <T bg="Запитване за Услуга" en="Service Enquiry" />
               </a>
             </div>
           </div>
+
         </div>
       </div>
     </section>
