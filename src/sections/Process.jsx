@@ -107,8 +107,8 @@ export default function Process() {
               <div className="proc-step__circle">
                 <span className="proc-step__icon" aria-hidden="true">{s.icon}</span>
               </div>
-              <div className="proc-step__num" aria-hidden="true">{s.num}</div>
-              <h4 className="proc-step__title" data-n={s.num}><T bg={s.titleBg} en={s.titleEn} /></h4>
+              <div className="proc-step__num">{s.num}</div>
+              <h4 className="proc-step__title"><T bg={s.titleBg} en={s.titleEn} /></h4>
               <p className="proc-step__desc"><T bg={s.descBg} en={s.descEn} /></p>
             </div>
           ))}

@@ -3,161 +3,126 @@ import { T } from '../context/LangContext';
 export default function Why() {
   return (
     <section id="why" className="section why-section">
-      <div className="glow-orb glow-orb-1"></div>
-      <div className="glow-orb glow-orb-2"></div>
-      
-      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-        <div className="why-header">
+      <div className="container">
+
+        {/* Header */}
+        <div className="why-hdr">
           <div>
-            <div className="eyebrow" data-reveal><T bg="B2B Партньорство" en="B2B Partnership" /></div>
-            <h2 className="h2" data-reveal>
+            <div className="eyebrow"><T bg="B2B Партньорство" en="B2B Partnership" /></div>
+            <h2 className="h2" style={{ marginTop: 8 }}>
               <T
-                bg={<>Технологично превъзходство и <span className="accent">Сигурност</span></>}
-                en={<>Technological excellence and <span className="accent">Security</span></>}
+                bg={<>Технологично превъзходство<br/>и <span className="accent">Сигурност</span></>}
+                en={<>Technological excellence<br/>and <span className="accent">Security</span></>}
               />
             </h2>
           </div>
-          <div data-reveal data-d="1">
-            <p className="lead">
-              <T
-                bg="Като официален дистрибутор на ARCAN Waterproofing (Германия), ние съчетаваме висококачествени материали с професионално инженерно ноу-хау за B2B сектора."
-                en="As an official partner of ARCAN Waterproofing (Germany), we combine high-performance materials with professional engineering know-how for the B2B sector."
-              />
-            </p>
+          <p className="lead why-sub">
+            <T
+              bg="Официален дистрибутор на ARCAN Waterproofing (Германия) — висококачествени материали с инженерна поддръжка за B2B сектора."
+              en="Official distributor of ARCAN Waterproofing (Germany) — high-performance materials with engineering support for the B2B sector."
+            />
+          </p>
+        </div>
+
+        {/* Stats row */}
+        <div className="why-stats">
+          <div className="why-stat why-stat--blue">
+            <div className="why-stat__num">15<span>+</span></div>
+            <div className="why-stat__lbl"><T bg="Години на пазара" en="Years on market" /></div>
+          </div>
+          <div className="why-stat why-stat--navy">
+            <div className="why-stat__num">50<span>+</span></div>
+            <div className="why-stat__lbl"><T bg="Продуктови линии" en="Product lines" /></div>
+          </div>
+          <div className="why-stat why-stat--teal">
+            <div className="why-stat__num">200<span> bar</span></div>
+            <div className="why-stat__lbl"><T bg="Макс. налягане" en="Max pressure" /></div>
+          </div>
+          <div className="why-stat why-stat--green">
+            <div className="why-stat__num">~10<span>s</span></div>
+            <div className="why-stat__lbl"><T bg="Реакция на смола" en="Resin reaction" /></div>
+          </div>
+          <div className="why-stat why-stat--purple">
+            <div className="why-stat__num">B2B</div>
+            <div className="why-stat__lbl"><T bg="Само на едро" en="Wholesale only" /></div>
           </div>
         </div>
 
-        {/* Bento Grid */}
-        <div className="bento-grid">
-          {/* Tile 1: Large B2B Focus value card */}
-          <div className="bento-card bento-card-large" data-reveal>
-            <div className="bento-card-glow"></div>
-            <span className="bento-card-tag"><T bg="Фокус" en="Focus" /></span>
-            <div className="bento-card-content">
-              <h3>
-                <T bg="Вашият Надежден B2B Партньор" en="Your Reliable B2B Partner" />
-              </h3>
-              <p>
-                <T
-                  bg="Обслужваме изключително строителни компании, проектантски бюра и търговски дистрибутори. Без прекупвачи. С директни доставки на едро и пълна инженерно-техническа поддръжка на обекта."
-                  en="We serve exclusively construction firms, design offices and commercial distributors. No intermediaries. Direct wholesale supply and full engineering field support."
-                />
-              </p>
-            </div>
-            {/* Tech grid blueprint element on background */}
-            <div className="bento-blueprint-grid"></div>
-          </div>
+        {/* Feature cards */}
+        <div className="why-cards">
 
-          {/* Tile 2: 15+ Years Experience (Radial Gauge) */}
-          <div className="bento-card bento-card-small text-center" data-reveal data-d="1">
-            <div className="bento-card-glow"></div>
-            <div className="bento-gauge-wrap">
-              <svg width="100" height="100" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(15,23,42,0.05)" strokeWidth="8" />
-                <circle cx="50" cy="50" r="40" fill="none" stroke="url(#cyanBlueGrad)" strokeWidth="8" strokeDasharray="251.2" strokeDashoffset="50" strokeLinecap="round" />
-                <defs>
-                  <linearGradient id="cyanBlueGrad" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="var(--accent-cyan)" />
-                    <stop offset="100%" stopColor="var(--primary)" />
-                  </linearGradient>
-                </defs>
+          {/* Big — B2B focus */}
+          <div className="why-card why-card--main">
+            <div className="why-card__icon why-card__icon--blue">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+                <path d="M16 3.13a4 4 0 010 7.75"/>
               </svg>
-              <div className="gauge-text">15+</div>
             </div>
-            <div className="bento-card-content mt-12">
-              <h4>
-                <T bg="Години Опит" en="Years Experience" />
-              </h4>
-              <p>
-                <T bg="На българския пазар" en="On the Bulgarian market" />
-              </p>
-            </div>
+            <div className="why-card__tag"><T bg="Само B2B" en="B2B Only" /></div>
+            <h3 className="why-card__title"><T bg="Вашият Надежден B2B Партньор" en="Your Reliable B2B Partner" /></h3>
+            <p className="why-card__desc">
+              <T
+                bg="Обслужваме строителни компании, проектантски бюра и дистрибутори. Без прекупвачи — директни доставки на едро с пълна инженерна поддръжка."
+                en="We serve construction firms, design offices and distributors. No middlemen — direct wholesale with full engineering support."
+              />
+            </p>
+            <div className="why-card__bg-pattern" aria-hidden="true" />
           </div>
 
-          {/* Tile 3: ARCAN Germany Certified */}
-          <div className="bento-card bento-card-small text-center" data-reveal data-d="2">
-            <div className="bento-card-glow"></div>
-            <div className="bento-shield-wrap">
-              <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="rgba(30,64,175,0.05)"/>
-                <polyline points="9 11 11 13 15 9" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          {/* ARCAN Germany */}
+          <div className="why-card why-card--dark">
+            <div className="why-card__de">DE</div>
+            <div className="why-card__icon why-card__icon--white">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <polyline points="9 12 11 14 15 10"/>
               </svg>
-              <span className="certified-text">DE</span>
             </div>
-            <div className="bento-card-content mt-16">
-              <h4>
-                <T bg="Немско Качество" en="German Quality" />
-              </h4>
-              <p>
-                <T bg="Официален партньор на ARCAN" en="Official ARCAN partner" />
-              </p>
+            <h3 className="why-card__title why-card__title--inv"><T bg="Немско Качество" en="German Quality" /></h3>
+            <p className="why-card__desc why-card__desc--inv"><T bg="Официален партньор на ARCAN Waterproofing" en="Official ARCAN Waterproofing partner" /></p>
+            <div className="why-card__certs">
+              <span>CE</span><span>KTW</span><span>ISO</span><span>ETA</span>
             </div>
           </div>
 
-          {/* Tile 4: 50+ Product Lines */}
-          <div className="bento-card bento-card-small" data-reveal data-d="3">
-            <div className="bento-card-glow"></div>
-            <div className="bento-card-content">
-              <span className="bento-card-number">50+</span>
-              <h4>
-                <T bg="Продуктови линии" en="Product Lines" />
-              </h4>
-              <p>
-                <T bg="Смоли, пени, гелове, помпи и пакери" en="Resins, foams, gels, pumps & packers" />
-              </p>
-              {/* Micro-meter bars */}
-              <div className="bento-progress-bars">
-                <div className="mini-bar"><div className="fill" style={{ width: '85%' }}></div></div>
-                <div className="mini-bar"><div className="fill" style={{ width: '70%' }}></div></div>
-                <div className="mini-bar"><div className="fill" style={{ width: '95%' }}></div></div>
-              </div>
+          {/* Direct delivery */}
+          <div className="why-card why-card--accent">
+            <div className="why-card__icon why-card__icon--white">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="1" y="3" width="15" height="13"/>
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                <circle cx="5.5" cy="18.5" r="2.5"/>
+                <circle cx="18.5" cy="18.5" r="2.5"/>
+              </svg>
             </div>
+            <h3 className="why-card__title why-card__title--inv"><T bg="Директна Доставка" en="Direct Delivery" /></h3>
+            <p className="why-card__desc why-card__desc--inv">
+              <T bg="От производствените линии ARCAN в Германия директно до вашия обект. Гарантиран произход." en="From ARCAN production lines in Germany directly to your site. Guaranteed origin." />
+            </p>
           </div>
 
-          {/* Tile 5: 100% Certified */}
-          <div className="bento-card bento-card-small" data-reveal data-d="4">
-            <div className="bento-card-glow"></div>
-            <div className="bento-card-content">
-              <span className="bento-card-number">CE</span>
-              <h4>
-                <T bg="100% Сертифицирани" en="100% Certified" />
-              </h4>
-              <p>
-                <T bg="DIN-EN 1504-5 съвместимост и KTW сертификати" en="DIN-EN 1504-5 compliance & KTW certificates" />
-              </p>
-              <div className="bento-cert-stamps">
-                <span className="cert-stamp">CE</span>
-                <span className="cert-stamp">KTW</span>
-                <span className="cert-stamp">ISO</span>
-              </div>
-            </div>
+          {/* DIN-EN certified */}
+          <div className="why-card why-card--light">
+            <div className="why-card__bignum">CE</div>
+            <h3 className="why-card__title"><T bg="100% Сертифицирани" en="100% Certified" /></h3>
+            <p className="why-card__desc"><T bg="DIN-EN 1504-5 съвместимост, KTW за питейна вода" en="DIN-EN 1504-5 compliance, KTW for drinking water" /></p>
           </div>
 
-          {/* Tile 6: Direct Deliveries */}
-          <div className="bento-card bento-card-medium" data-reveal data-d="5">
-            <div className="bento-card-glow"></div>
-            <div className="bento-card-content">
-              <div className="flex-row-align">
-                <div className="bento-truck-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="1" y="3" width="15" height="13" />
-                    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
-                    <circle cx="5.5" cy="18.5" r="2.5" />
-                    <circle cx="18.5" cy="18.5" r="2.5" />
-                  </svg>
-                </div>
-                <h3>
-                  <T bg="Директен Внос без Посредници" en="Direct Import No Middlemen" />
-                </h3>
-              </div>
-              <p style={{ marginTop: '12px' }}>
-                <T
-                  bg="Доставяме материали директно от производствените линии на ARCAN в Германия. Гарантиран произход, пълна техническа проследимост, цени на едро и оперативна доставка за строителни проекти в България."
-                  en="We ship materials directly from ARCAN production lines in Germany. Guaranteed origin, full technical traceability, wholesale pricing and rapid shipping for Bulgarian construction sites."
-                />
-              </p>
+          {/* 24h response */}
+          <div className="why-card why-card--light">
+            <div className="why-card__icon why-card__icon--blue">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
             </div>
+            <h3 className="why-card__title"><T bg="Отговор до 24 часа" en="Response within 24h" /></h3>
+            <p className="why-card__desc"><T bg="Бърза техническа консултация и оферта за всеки проект" en="Fast technical consultation and quote for every project" /></p>
           </div>
+
         </div>
       </div>
     </section>
