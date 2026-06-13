@@ -8,7 +8,6 @@ import Products from '../sections/Products';
 import Solutions from '../sections/Solutions';
 import Sectors from '../sections/Sectors';
 import Process from '../sections/Process';
-import Partner from '../sections/Partner';
 import Contact from '../sections/Contact';
 
 /* ── Inline accent blocks — не требуют отдельных файлов ── */
@@ -160,7 +159,6 @@ export default function HomePage() {
       <Sectors />
       <Process />
       <TrustBand />
-      <Partner />
       <Contact />
     </>
   );

@@ -4363,3 +4363,82 @@ body:not(.light-theme) .ct-form textarea { background:rgba(255,255,255,.04) !imp
   .ct-row  { grid-template-columns:1fr; }
   .ct-hero__stats { display:none; }
 }
+
+/* ════════════════════════════════════
+   FOOTER v2 — white logo, compact
+════════════════════════════════════ */
+.ft {
+  background: var(--blue-800);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 56px 0 0;
+}
+
+.ft-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Brand col */
+.ft-brand { display: flex; flex-direction: column; gap: 16px; }
+.ft-logo { height: 44px; width: auto; }
+.ft-desc { font-size: 13px; line-height: 1.65; color: rgba(255,255,255,0.45); max-width: 28ch; }
+
+/* ARCAN link — compact pill */
+.ft-arcan {
+  display: inline-flex; flex-direction: column; gap: 2px;
+  padding: 10px 14px; border-radius: 10px; width: fit-content;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  text-decoration: none;
+  transition: background 150ms, border-color 150ms;
+}
+.ft-arcan:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.22); }
+.ft-arcan__label {
+  font-family: var(--font-mono); font-size: 9px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+.ft-arcan__name {
+  font-family: var(--font-h); font-size: 13px; font-weight: 700;
+  color: rgba(255,255,255,0.85);
+}
+.ft-arcan:hover .ft-arcan__name { color: #fff; }
+
+/* Nav cols */
+.ft-col__title {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.35); margin-bottom: 16px;
+}
+.ft-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.ft-links a {
+  font-size: 13px; color: rgba(255,255,255,0.5);
+  text-decoration: none; transition: color 140ms;
+}
+.ft-links a:hover { color: #fff; }
+
+/* Bottom bar */
+.ft-bottom {
+  padding: 16px 0;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  font-family: var(--font-mono); font-size: 11px;
+  color: rgba(255,255,255,0.28);
+}
+.ft-bottom a { color: rgba(255,255,255,0.4); text-decoration: none; transition: color 140ms; }
+.ft-bottom a:hover { color: rgba(255,255,255,0.8); }
+.ft-bottom__sep { color: rgba(255,255,255,0.15); }
+
+/* Responsive */
+@media (max-width:900px) {
+  .ft-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .ft-brand { grid-column: 1/-1; flex-direction: row; flex-wrap: wrap; align-items: flex-start; gap: 24px; }
+  .ft-desc { max-width: none; }
+}
+@media (max-width:560px) {
+  .ft-grid { grid-template-columns: 1fr 1fr; }
+  .ft-brand { flex-direction: column; grid-column: 1/-1; }
+  .ft-bottom { justify-content: center; }
+}

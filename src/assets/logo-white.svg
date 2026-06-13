@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-label="BODEX Bulgaria logo">
+  <defs>
+    <linearGradient id="gLeft" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#FFFFFF"/>
+    </linearGradient>
+    <linearGradient id="gRight" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#CCDDFF"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Building mark -->
+  <g transform="translate(45 54)">
+    <!-- left small blocks -->
+    <polygon points="0,226 36,205 36,300 0,300" fill="url(#gLeft)"/>
+    <polygon points="52,174 118,136 118,300 52,300" fill="url(#gLeft)"/>
+    <polygon points="138,86 242,26 242,300 138,300" fill="url(#gLeft)"/>
+
+    <!-- right blocks -->
+    <polygon points="262,26 366,86 366,300 262,300" fill="url(#gRight)"/>
+    <polygon points="386,136 452,174 452,300 386,300" fill="url(#gRight)"/>
+    <polygon points="468,205 504,226 504,300 468,300" fill="url(#gRight)"/>
+
+    <!-- white construction gaps -->
+    <polygon points="242,0 262,0 262,300 242,300" fill="#ffffff"/>
+    <polygon points="118,136 138,124 138,300 118,300" fill="#ffffff"/>
+    <polygon points="366,124 386,136 386,300 366,300" fill="#ffffff"/>
+    <polygon points="36,205 52,196 52,300 36,300" fill="#ffffff"/>
+    <polygon points="452,196 468,205 468,300 452,300" fill="#ffffff"/>
+    <polygon points="0,256 242,116 242,140 0,280" fill="#ffffff"/>
+    <polygon points="262,116 504,256 504,280 262,140" fill="#ffffff"/>
+  </g>
+
+  <!-- Wordmark -->
+  <g transform="translate(575 0)" fill="#FFFFFF">
+    <text x="0" y="247" font-family="Montserrat, Arial, Helvetica, sans-serif" font-size="120" font-weight="800" letter-spacing="4">BODEX</text>
+    <text x="3" y="322" font-family="Montserrat, Arial, Helvetica, sans-serif" font-size="50" font-weight="600" letter-spacing="28">BULGARIA</text>
+  </g>
+</svg>
