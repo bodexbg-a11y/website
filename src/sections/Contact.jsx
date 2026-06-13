@@ -142,13 +142,18 @@ export default function Contact() {
             ))}
 
             {/* Partner */}
-            <div className="ct-partner">
+            <a
+              href="https://www.arcan-waterproofing.com/"
+              target="_blank" rel="noreferrer"
+              className="ct-partner"
+              aria-label="ARCAN Waterproofing — официален партньор"
+            >
               <img src="/arcan-logo-w-sub.png" alt="ARCAN Waterproofing" className="ct-partner__logo" />
               <div>
                 <div className="ct-partner__label"><T bg="Официален партньор" en="Official Partner" /></div>
                 <div className="ct-partner__name">ARCAN Waterproofing</div>
               </div>
-            </div>
+            </a>
           </div>
 
           {/* RIGHT form */}

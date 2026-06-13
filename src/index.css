@@ -4442,3 +4442,16 @@ body:not(.light-theme) .ct-form textarea { background:rgba(255,255,255,.04) !imp
   .ft-brand { flex-direction: column; grid-column: 1/-1; }
   .ft-bottom { justify-content: center; }
 }
+
+/* ── Footer: center logo, no left drift ── */
+.ft-brand { align-items: flex-start; }
+.ft-logo  { display: block; height: 44px; width: auto; max-width: 200px; }
+
+/* ── Contact: ARCAN partner as clickable link ── */
+a.ct-partner {
+  display: flex; text-decoration: none;
+  cursor: pointer;
+  transition: opacity 160ms, transform 160ms;
+}
+a.ct-partner:hover { opacity: .85; transform: translateY(-1px); }
+a.ct-partner:hover .ct-partner__name { color: var(--blue-200); }

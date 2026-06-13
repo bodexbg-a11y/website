@@ -20,15 +20,7 @@ export default function Footer() {
                 en="B2B supplier of injection systems and structural reinforcement contractor."
               />
             </p>
-            <a
-              href="https://www.arcan-waterproofing.com/"
-              target="_blank" rel="noreferrer"
-              className="ft-arcan"
-              aria-label="ARCAN Waterproofing — official partner"
-            >
-              <span className="ft-arcan__label"><T bg="Официален партньор" en="Official partner" /></span>
-              <span className="ft-arcan__name">ARCAN Waterproofing</span>
-            </a>
+
           </div>
 
           {/* Services */}
