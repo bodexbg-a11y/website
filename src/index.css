@@ -2709,3 +2709,55 @@ body:not(.light-theme) .proc-step__num { color: var(--blue-300); }
   .proc-step:first-child { border-top: none; }
   .proc-photos { grid-template-columns: 1fr 1fr; }
 }
+
+/* ── Process patch: brighter icons, hide numbers ── */
+
+/* Убираем номер из кружка иконки */
+.proc-step__num { display: none; }
+
+/* Кружок иконки — насыщенный синий */
+.proc-step__circle {
+  background: var(--blue-50) !important;
+  border: 2px solid var(--primary) !important;
+  color: var(--primary) !important;
+}
+body:not(.light-theme) .proc-step__circle {
+  background: rgba(36,82,164,0.18) !important;
+  border-color: var(--blue-300) !important;
+  color: var(--blue-200) !important;
+}
+.proc-step:hover .proc-step__circle {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: #fff !important;
+}
+
+/* Номер шага под иконкой — маленький и синий */
+.proc-step__title {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: var(--text) !important;
+}
+/* Добавляем номер через pseudo перед заголовком */
+.proc-step__title::before {
+  content: attr(data-n) " ";
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px !important;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: 0.12em;
+  margin-bottom: 4px;
+}
+body:not(.light-theme) .proc-step__title::before { color: var(--blue-300); }
+
+/* Весь блок шагов — чуть более насыщенный фон */
+.proc-steps {
+  background: var(--bg-surface) !important;
+  box-shadow: 0 2px 16px rgba(11,28,62,0.07) !important;
+}
+body:not(.light-theme) .proc-steps { box-shadow: 0 4px 24px rgba(0,0,0,0.25) !important; }
+
+/* Hover шага — лёгкий синий фон */
+.proc-step:hover { background: var(--blue-50) !important; }
+body:not(.light-theme) .proc-step:hover { background: rgba(36,82,164,0.08) !important; }
