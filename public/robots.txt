@@ -1,16 +1,25 @@
+# robots.txt — BODEX Bulgaria
+# https://bodexbg.com
+
 User-agent: *
 Allow: /
+
+# Disallow admin and internal paths
 Disallow: /admin/
+Disallow: /api/
 Disallow: /*.json$
 Disallow: /*?*sort=
 Disallow: /*?*filter=
 
-# Google
+# Googlebot
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 0
+
+# Bingbot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
 
 # Sitemap
-Sitemap: https://bodexbulgaria.com/sitemap.xml
-
-# Crawl delay
-Crawl-delay: 1
+Sitemap: https://bodexbg.com/sitemap.xml
