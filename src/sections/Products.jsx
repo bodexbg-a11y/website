@@ -361,12 +361,20 @@ export default function Products() {
                       />
                     </div>
                   )}
-                  <a href="#contact" className="pcard__cta" aria-label={`Запитване за ${name}`}>
+                  <button
+                    type="button"
+                    className="pcard__cta"
+                    aria-label={`Запитване за ${name}`}
+                    onClick={() => {
+                      window.dispatchEvent(new CustomEvent('addProductEnquiry', { detail: { name, cat: p.cat, badge: p.badge } }));
+                      setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior:'smooth', block:'start' }), 80);
+                    }}
+                  >
                     <T bg="Запитване" en="Enquire" />
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
                     </svg>
-                  </a>
+                  </button>
                 </div>
               </article>
             );
