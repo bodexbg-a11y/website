@@ -57,6 +57,7 @@ export default function Hero() {
         <div ref={frontBgRef} className="hero-bg bg-front" aria-hidden="true" />
       </div>
 
+      <div className="hero-glow-parallax" aria-hidden="true" />
       <div className="hero-pattern" />
 
       <div className="container">

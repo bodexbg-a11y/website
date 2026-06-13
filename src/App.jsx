@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useAnimations } from './hooks/useAnimations';
 import { LangProvider } from './context/LangContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -7,6 +8,7 @@ import HomePage from './pages/HomePage';
 import ProjectsPage from './pages/ProjectsPage';
 
 export default function App() {
+  useAnimations();
   return (
     <LangProvider>
       <BrowserRouter>

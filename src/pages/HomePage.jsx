@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useReveal } from '../hooks/useReveal';
 import { updatePageMeta } from '../utils/seo';
 import { T } from '../context/LangContext';
 import Hero from '../sections/Hero';
@@ -148,7 +147,6 @@ export default function HomePage() {
     );
   }, []);
 
-  useReveal();
 
   return (
     <>

@@ -3050,3 +3050,380 @@ body:not(.light-theme) .srv-mini-stat__num { color: var(--blue-300); }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) { .srv-grid { grid-template-columns: 1fr; } }
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLL ANIMATIONS — ui-ux-pro-max §7
+   Duration 150-300ms base, stagger ×80ms, ease-out cubic
+   Spatial continuity: elements move in direction of natural flow
+   prefers-reduced-motion: respected globally
+═══════════════════════════════════════════════════════════════ */
+
+/* ── BASE: all [data-reveal] elements start hidden ── */
+[data-reveal] {
+  opacity: 0;
+  will-change: opacity, transform;
+  transition:
+    opacity   500ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    clip-path 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ── FADE UP (default) ── */
+[data-reveal],
+[data-reveal="fade-up"] {
+  transform: translateY(28px);
+}
+[data-reveal].revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── SLIDE FROM LEFT ── */
+[data-reveal="slide-left"] {
+  transform: translateX(-40px);
+}
+[data-reveal="slide-left"].revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── SLIDE FROM RIGHT ── */
+[data-reveal="slide-right"] {
+  transform: translateX(40px);
+}
+[data-reveal="slide-right"].revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── SCALE UP ── */
+[data-reveal="scale"] {
+  transform: scale(0.92) translateY(16px);
+}
+[data-reveal="scale"].revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── CLIP-PATH (headline wipe) ── */
+[data-reveal="clip"] {
+  opacity: 1;
+  clip-path: inset(0 100% 0 0);
+  transform: none;
+}
+[data-reveal="clip"].revealed {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* ── Stagger delays ── */
+[data-d="1"] { transition-delay:  80ms !important; }
+[data-d="2"] { transition-delay: 160ms !important; }
+[data-d="3"] { transition-delay: 240ms !important; }
+[data-d="4"] { transition-delay: 320ms !important; }
+[data-d="5"] { transition-delay: 400ms !important; }
+[data-d="6"] { transition-delay: 480ms !important; }
+
+/* ── Respect reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+}
+
+/* ══════════════════════════════════
+   PARALLAX HERO GLOW
+══════════════════════════════════ */
+.hero-glow-parallax {
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(36,82,164,0.12) 0%, transparent 65%);
+  top: -100px; right: -100px;
+  pointer-events: none;
+  transition: transform 0.1s linear;
+  will-change: transform;
+}
+
+/* ══════════════════════════════════
+   HOVER MICRO-INTERACTIONS
+══════════════════════════════════ */
+
+/* Cards: lift + shadow */
+.pcard, .srv-card, .why-card, .sector-big, .sector-sm,
+.proc-photo, .sol-item, .trust-band__item {
+  will-change: transform;
+}
+
+/* Nav links: underline slide */
+.nav-links a {
+  transition: color 150ms ease;
+}
+
+/* Buttons: subtle scale */
+.btn {
+  transition:
+    background 180ms ease,
+    transform   180ms cubic-bezier(0.34,1.56,0.64,1),
+    box-shadow  180ms ease,
+    color       150ms ease !important;
+}
+.btn:active { transform: scale(0.97) !important; }
+
+/* Category cards: icon bounce on hover */
+.cat-card:hover .cat-card__icon {
+  animation: iconBounce 280ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes iconBounce {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+/* Product card CTA arrow wiggle */
+.pcard:hover .pcard__cta svg {
+  animation: arrowWiggle 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes arrowWiggle {
+  0%   { transform: translateX(0); }
+  40%  { transform: translateX(5px); }
+  70%  { transform: translateX(2px); }
+  100% { transform: translateX(4px); }
+}
+
+/* Solutions list item: slide accent border */
+.sol-item { position: relative; }
+.sol-item::after {
+  content: '';
+  position: absolute; left: 0; top: 4px; bottom: 4px;
+  width: 3px; border-radius: 99px;
+  background: var(--primary);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.sol-item--active::after,
+.sol-item:hover::after { transform: scaleY(1); }
+
+/* Stats strip: count-up glow on enter */
+.stats-strip__item.revealed .stats-strip__num {
+  animation: numGlow 600ms ease forwards;
+}
+@keyframes numGlow {
+  0%   { text-shadow: none; }
+  50%  { text-shadow: 0 0 20px rgba(255,255,255,0.4); }
+  100% { text-shadow: none; }
+}
+
+/* Why stat cards: shimmer */
+.why-stat {
+  position: relative; overflow: hidden;
+}
+.why-stat::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  transform: skewX(-20deg);
+  transition: left 0s;
+}
+.why-stat:hover::after {
+  left: 150%;
+  transition: left 500ms ease;
+}
+
+/* Eyebrow line grow */
+.eyebrow {
+  transition: color 200ms;
+}
+.eyebrow::before {
+  transition: width 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 100ms;
+  width: 0;
+}
+[data-reveal].revealed .eyebrow::before,
+.eyebrow::before {
+  width: 18px;
+}
+/* Reset for standalone eyebrows */
+.eyebrow::before { width: 18px; }
+
+/* ══════════════════════════════════
+   PAGE LOAD — Hero entrance
+══════════════════════════════════ */
+.hero-badge {
+  animation: heroBadgeIn 600ms 100ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.hero-title {
+  animation: heroTitleIn 700ms 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+.hero-desc {
+  animation: heroDescIn 600ms 380ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+.hero-ctas {
+  animation: heroDescIn 600ms 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+.hero-stats {
+  animation: heroDescIn 600ms 620ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+.hero-panel {
+  animation: heroPanelIn 800ms 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes heroBadgeIn {
+  from { opacity: 0; transform: translateY(-12px) scale(0.92); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes heroTitleIn {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes heroDescIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes heroPanelIn {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── Reduced motion: kill all entrance anims ── */
+@media (prefers-reduced-motion: reduce) {
+  .hero-badge, .hero-title, .hero-desc,
+  .hero-ctas, .hero-stats, .hero-panel,
+  .stats-strip__num, .why-stat::after,
+  .cat-card__icon, .pcard__cta svg {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ══════════════════════════════════
+   NAVBAR SCROLL SHADOW
+══════════════════════════════════ */
+#header.scrolled {
+  box-shadow:
+    0 1px 0 var(--border),
+    0 4px 20px rgba(11,28,62,0.10) !important;
+}
+body:not(.light-theme) #header.scrolled {
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.05),
+    0 8px 32px rgba(0,0,0,0.35) !important;
+}
+
+/* ══════════════════════════════════
+   STATS STRIP — counter reveal
+══════════════════════════════════ */
+.stats-strip__item {
+  transition: opacity 400ms ease, transform 400ms cubic-bezier(0.25,0.46,0.45,0.94);
+  opacity: 0;
+  transform: translateY(16px);
+}
+.stats-strip__item.revealed {
+  opacity: 1;
+  transform: none;
+}
+.stats-strip__item:nth-child(1) { transition-delay:  0ms; }
+.stats-strip__item:nth-child(2) { transition-delay: 60ms; }
+.stats-strip__item:nth-child(3) { transition-delay:120ms; }
+.stats-strip__item:nth-child(4) { transition-delay:180ms; }
+.stats-strip__item:nth-child(5) { transition-delay:240ms; }
+.stats-strip__item:nth-child(6) { transition-delay:300ms; }
+
+/* Why stats stagger */
+.why-stat {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 400ms ease, transform 400ms cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.why-stat.revealed { opacity: 1; transform: none; }
+.why-stat:nth-child(1){transition-delay:  0ms}
+.why-stat:nth-child(2){transition-delay: 60ms}
+.why-stat:nth-child(3){transition-delay:120ms}
+.why-stat:nth-child(4){transition-delay:180ms}
+.why-stat:nth-child(5){transition-delay:240ms}
+
+/* Why cards stagger */
+.why-card {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 500ms ease, transform 500ms cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 220ms, border-color 220ms;
+}
+.why-card.revealed { opacity: 1; transform: none; }
+.why-card:nth-child(1){transition-delay:  0ms}
+.why-card:nth-child(2){transition-delay: 80ms}
+.why-card:nth-child(3){transition-delay:160ms}
+.why-card:nth-child(4){transition-delay:240ms}
+.why-card:nth-child(5){transition-delay:320ms}
+
+/* Sector mosaic stagger */
+.sector-big {
+  opacity: 0; transform: translateX(-24px);
+  transition: opacity 550ms ease, transform 550ms cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 220ms;
+}
+.sector-big.revealed { opacity: 1; transform: none; }
+.sector-sm {
+  opacity: 0; transform: translateY(20px) scale(0.97);
+  transition: opacity 450ms ease, transform 450ms cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 220ms;
+}
+.sector-sm.revealed { opacity: 1; transform: none; }
+.sector-sm:nth-child(1){transition-delay: 80ms}
+.sector-sm:nth-child(2){transition-delay:160ms}
+.sector-sm:nth-child(3){transition-delay:240ms}
+.sector-sm:nth-child(4){transition-delay:320ms}
+
+/* Process steps stagger */
+.proc-step {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 380ms ease, transform 380ms cubic-bezier(0.25,0.46,0.45,0.94), background 180ms;
+}
+.proc-step.revealed { opacity: 1; transform: none; }
+.proc-step:nth-child(1){transition-delay:  0ms}
+.proc-step:nth-child(2){transition-delay: 80ms}
+.proc-step:nth-child(3){transition-delay:160ms}
+.proc-step:nth-child(4){transition-delay:240ms}
+.proc-step:nth-child(5){transition-delay:320ms}
+
+/* Process photos stagger */
+.proc-photo {
+  opacity: 0; transform: translateY(20px) scale(0.98);
+  transition: opacity 450ms ease, transform 450ms cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 220ms, border-color 220ms;
+}
+.proc-photo.revealed { opacity: 1; transform: none; }
+.proc-photo:nth-child(1){transition-delay:  0ms}
+.proc-photo:nth-child(2){transition-delay: 80ms}
+.proc-photo:nth-child(3){transition-delay:160ms}
+.proc-photo:nth-child(4){transition-delay:240ms}
+
+/* Service cards */
+.srv-card {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 500ms ease, transform 500ms cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 220ms, border-color 220ms, outline 150ms;
+}
+.srv-card.revealed { opacity: 1; transform: none; }
+.srv-card:nth-child(2) { transition-delay: 120ms; }
+
+/* Trust band items */
+.trust-band__item {
+  opacity: 0; transform: translateY(16px);
+}
+.trust-band__item.revealed { opacity: 1; transform: none; }
+
+/* Sol items */
+.sol-item {
+  opacity: 0; transform: translateX(-12px);
+  transition: opacity 320ms ease, transform 320ms ease, background 140ms, border-color 140ms;
+}
+.sol-item.revealed { opacity: 1; transform: none; }
+
+/* ── Reduced motion: kill all these too ── */
+@media (prefers-reduced-motion: reduce) {
+  .stats-strip__item, .why-stat, .why-card,
+  .sector-big, .sector-sm, .proc-step, .proc-photo,
+  .srv-card, .trust-band__item, .sol-item {
+    opacity: 1 !important; transform: none !important;
+    transition: none !important;
+  }
+}
