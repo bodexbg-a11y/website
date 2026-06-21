@@ -78,25 +78,41 @@ const projStats = [
     num: '3',
     labelBg: 'Мащабни инфраструктурни обекта',
     labelEn: 'Large infrastructure projects',
-    icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3547b8" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>,
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+      </svg>
+    ),
   },
   {
     num: '15+',
     labelBg: 'Години на инжекционен опит',
     labelEn: 'Years of injection experience',
-    icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3547b8" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+      </svg>
+    ),
   },
   {
     num: '100%',
     labelBg: 'Успешни спирания на течове',
     labelEn: 'Successful leak stops',
-    icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3547b8" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>,
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    ),
   },
   {
     num: 'ARCAN',
     labelBg: 'Сертифицирани немски материали',
     labelEn: 'Certified German materials',
-    icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3547b8" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+    ),
   },
 ];
 
@@ -120,43 +136,80 @@ export default function ProjectsPage() {
           <div className="breadcrumb">
             <Link to="/"><T bg="Начало" en="Home" /></Link>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M5 3l4 4-4 4" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" strokeLinecap="round"/>
+              <path d="M5 3l4 4-4 4" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
             <span><T bg="Проекти" en="Projects" /></span>
           </div>
-          <h1 className="h1">
-            <T bg={<>Нашите <span className="accent-light">Проекти</span></>} en={<>Our <span className="accent-light">Projects</span></>} />
+
+          <h1 className="h1" style={{ color: '#fff', maxWidth: 700 }}>
+            <T
+              bg={<>Нашите <span style={{ color: 'var(--blue-300)' }}>Проекти</span></>}
+              en={<>Our <span style={{ color: 'var(--blue-300)' }}>Projects</span></>}
+            />
           </h1>
-          <p className="lead" style={{ color: 'rgba(255,255,255,0.75)', maxWidth: 580, marginTop: 20 }}>
+          <p style={{ fontSize: 17, color: 'rgba(255,255,255,0.65)', maxWidth: 560, marginTop: 16, lineHeight: 1.7 }}>
             <T
               bg="Реален опит на обекти от инфраструктурен мащаб — язовирни стени, хидротехнически тунели и енергийни съоръжения."
               en="Real-world experience on infrastructure-scale objects — dam walls, hydrotechnical tunnels and energy facilities."
             />
           </p>
+
+          <div className="proj-stats">
+            {projStats.map((s) => (
+              <div className="proj-stat" key={s.num}>
+                <div className="proj-stat-icon">{s.icon}</div>
+                <div>
+                  <div className="proj-stat-num">{s.num}</div>
+                  <div className="proj-stat-label"><T bg={s.labelBg} en={s.labelEn} /></div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* PROJECT CARDS */}
-      <section className="section" style={{ background: 'var(--light-bg)' }}>
+      <section className="projects-section">
         <div className="container">
           {projects.map((p) => (
-            <div className="project-card" data-reveal key={p.num}>
-              <div className="project-num">{p.num}</div>
+            <div className="project-card" data-reveal key={p.num} style={{ marginBottom: 24 }}>
               {p.photos ? (
                 <div className="project-photo-2col">
                   {p.photos.map((src, i) => <img key={i} src={src} alt="" />)}
                 </div>
               ) : (
-                <div style={{ height: 200, background: 'linear-gradient(135deg,#0f1a5e,#2235a8)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <svg width="80" height="80" viewBox="0 0 56 56" opacity="0.3">
-                    <path d="M6 40 Q6 22 28 22 Q50 22 50 40" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round"/>
-                    <line x1="6" y1="40" x2="50" y2="40" stroke="#fff" strokeWidth="2.5" strokeLinecap="round"/>
-                    <line x1="28" y1="22" x2="28" y2="40" stroke="#fff" strokeWidth="1.5" strokeDasharray="3,3"/>
+                <div style={{
+                  height: 200,
+                  background: 'linear-gradient(135deg, var(--bg-dark) 0%, var(--blue-800) 100%)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden'
+                }}>
+                  {/* subtle grid */}
+                  <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.07 }}>
+                    <defs>
+                      <pattern id={`grid-${p.num}`} width="32" height="32" patternUnits="userSpaceOnUse">
+                        <path d="M 32 0 L 0 0 0 32" fill="none" stroke="white" strokeWidth="1"/>
+                      </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill={`url(#grid-${p.num})`}/>
                   </svg>
+                  <svg width="56" height="56" viewBox="0 0 56 56" fill="none" style={{ position: 'relative', zIndex: 1 }}>
+                    <path d="M6 40 Q6 22 28 22 Q50 22 50 40" stroke="rgba(91,143,238,0.5)" strokeWidth="2" strokeLinecap="round"/>
+                    <line x1="6" y1="40" x2="50" y2="40" stroke="rgba(91,143,238,0.5)" strokeWidth="2" strokeLinecap="round"/>
+                    <line x1="28" y1="22" x2="28" y2="40" stroke="rgba(91,143,238,0.3)" strokeWidth="1.5" strokeDasharray="3,3"/>
+                    <circle cx="28" cy="22" r="3" fill="rgba(91,143,238,0.6)"/>
+                  </svg>
+                  <span style={{
+                    position: 'absolute', bottom: 12, right: 16,
+                    fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.08em',
+                    color: 'rgba(91,143,238,0.4)', textTransform: 'uppercase'
+                  }}>Снимка липсва</span>
                 </div>
               )}
+
               <div className="project-content">
-                <div className="project-tags">
+                <div className="project-num"><T bg={`ПРОЕКТ ${p.num}`} en={`PROJECT ${p.num}`} /></div>
+                <div className="project-tags" style={{ marginTop: 8 }}>
                   {p.tags.map((t) => (
                     <span key={t.label} className={`ptag${t.done ? ' ptag-done' : ''}`}>{t.label}</span>
                   ))}
@@ -164,17 +217,18 @@ export default function ProjectsPage() {
                 <div className="project-title">
                   <T bg={p.titleBg} en={p.titleEn} />
                 </div>
+
                 <div className="project-prs">
                   <div className="pr-block pr-problem">
-                    <div className="pr-label"><strong><T bg="Проблем" en="Problem" /></strong></div>
+                    <div className="pr-label"><T bg="Проблем" en="Problem" /></div>
                     <p><T bg={p.problem.bg} en={p.problem.en} /></p>
                   </div>
                   <div className="pr-block pr-solution">
-                    <div className="pr-label"><strong><T bg="Решение" en="Solution" /></strong></div>
+                    <div className="pr-label"><T bg="Решение" en="Solution" /></div>
                     <p><T bg={p.solution.bg} en={p.solution.en} /></p>
                   </div>
                   <div className="pr-block pr-result">
-                    <div className="pr-label"><strong><T bg="Резултат" en="Result" /></strong></div>
+                    <div className="pr-label"><T bg="Резултат" en="Result" /></div>
                     <p><T bg={p.result.bg} en={p.result.en} /></p>
                   </div>
                 </div>
@@ -182,30 +236,34 @@ export default function ProjectsPage() {
             </div>
           ))}
 
-          {/* PROJ STATS */}
-          <div className="proj-stats">
+          {/* STATS GRID */}
+          <div className="proj-stats-grid">
             {projStats.map((s) => (
-              <div className="proj-stat" key={s.num}>
-                <div className="proj-stat-icon">{s.icon}</div>
-                <div className="proj-stat-num">{s.num}</div>
-                <div className="proj-stat-label"><T bg={s.labelBg} en={s.labelEn} /></div>
+              <div className="proj-stat-card" key={s.num}>
+                <div className="proj-stat-card-icon">{s.icon}</div>
+                <div className="proj-stat-card-num">{s.num}</div>
+                <div className="proj-stat-card-label"><T bg={s.labelBg} en={s.labelEn} /></div>
               </div>
             ))}
           </div>
 
           {/* CTA BAND */}
-          <div className="cta-band">
-            <div className="cta-band-text">
-              <h2><T bg="Имате подобен проект?" en="Have a similar project?" /></h2>
-              <p><T bg="Свържете се с нас за консултация и оферта." en="Contact us for consultation and quote." /></p>
-            </div>
-            <div className="cta-band-actions">
-              <Link to="/#contact" className="btn btn-white btn-lg">
-                <T bg="Изпратете Запитване" en="Send Enquiry" />
-              </Link>
-              <Link to="/#products" className="btn btn-outline btn-lg">
-                <T bg="Нашите Продукти" en="Our Products" />
-              </Link>
+          <div className="cta-band" style={{ marginTop: 64, borderRadius: 'var(--r-xl)' }}>
+            <div className="container">
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32, flexWrap: 'wrap' }}>
+                <div className="cta-band-text">
+                  <h2><T bg="Имате подобен проект?" en="Have a similar project?" /></h2>
+                  <p><T bg="Свържете се с нас за консултация и оферта." en="Contact us for consultation and quote." /></p>
+                </div>
+                <div className="cta-band-actions">
+                  <Link to="/#contact" className="btn btn-white btn-lg">
+                    <T bg="Изпратете Запитване" en="Send Enquiry" />
+                  </Link>
+                  <Link to="/#products" className="btn btn-outline-white btn-lg">
+                    <T bg="Нашите Продукти" en="Our Products" />
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
