@@ -78,25 +78,25 @@ const projStats = [
     num: '3',
     labelBg: 'Мащабни инфраструктурни обекта',
     labelEn: 'Large infrastructure projects',
-    icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3547b8" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>,
+    icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>,
   },
   {
     num: '15+',
     labelBg: 'Години на инжекционен опит',
     labelEn: 'Years of injection experience',
-    icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3547b8" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
+    icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
   },
   {
     num: '100%',
     labelBg: 'Успешни спирания на течове',
     labelEn: 'Successful leak stops',
-    icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3547b8" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>,
+    icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>,
   },
   {
     num: 'ARCAN',
     labelBg: 'Сертифицирани немски материали',
     labelEn: 'Certified German materials',
-    icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3547b8" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+    icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
   },
 ];
 
@@ -147,12 +147,17 @@ export default function ProjectsPage() {
                   {p.photos.map((src, i) => <img key={i} src={src} alt="" />)}
                 </div>
               ) : (
-                <div style={{ height: 200, background: 'linear-gradient(135deg,#0f1a5e,#2235a8)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <svg width="80" height="80" viewBox="0 0 56 56" opacity="0.3">
-                    <path d="M6 40 Q6 22 28 22 Q50 22 50 40" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round"/>
-                    <line x1="6" y1="40" x2="50" y2="40" stroke="#fff" strokeWidth="2.5" strokeLinecap="round"/>
-                    <line x1="28" y1="22" x2="28" y2="40" stroke="#fff" strokeWidth="1.5" strokeDasharray="3,3"/>
+                <div style={{ height: 220, background: 'linear-gradient(135deg,#08090d,#0e1018)', display: 'flex', alignItems: 'center', justifyContent: 'center', borderBottom: '1px solid rgba(255,255,255,0.06)', position: 'relative', overflow: 'hidden' }}>
+                  <svg width="120" height="180" viewBox="0 0 120 180" fill="none">
+                    <line x1="0" y1="60" x2="120" y2="60" stroke="rgba(255,255,255,0.05)" strokeWidth="1"/>
+                    <line x1="0" y1="120" x2="120" y2="120" stroke="rgba(255,255,255,0.05)" strokeWidth="1"/>
+                    <line x1="40" y1="0" x2="40" y2="180" stroke="rgba(255,255,255,0.05)" strokeWidth="1"/>
+                    <line x1="80" y1="0" x2="80" y2="180" stroke="rgba(255,255,255,0.05)" strokeWidth="1"/>
+                    <polyline points="58,0 62,45 54,80 65,115 58,150 61,180" fill="none" stroke="#f59e0b" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" opacity="0.7"/>
+                    <circle cx="62" cy="45" r="5" fill="#1a3fa8" stroke="#f59e0b" strokeWidth="1.5"/>
+                    <circle cx="65" cy="115" r="5" fill="#1a3fa8" stroke="#f59e0b" strokeWidth="1.5"/>
                   </svg>
+                  <span style={{position:'absolute',bottom:12,right:16,fontFamily:'"DM Mono",monospace',fontSize:'0.6rem',letterSpacing:'0.1em',color:'rgba(245,158,11,0.5)',textTransform:'uppercase'}}>Photo not available</span>
                 </div>
               )}
               <div className="project-content">
