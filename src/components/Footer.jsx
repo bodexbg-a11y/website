@@ -49,7 +49,7 @@ export default function Footer() {
           <div className="ft-col">
             <h5 className="ft-col__title"><T bg="Контакти" en="Contact" /></h5>
             <ul className="ft-links">
-              <li><a href="tel:+359899809607">+359 89 980 9607</a></li>
+              <li><a href="tel:+359879618059">+359 879 618 059</a></li>
               <li><a href="mailto:bodexbg@gmail.com">bodexbg@gmail.com</a></li>
               <li><a href="/#contact"><T bg="Изпрати запитване" en="Send enquiry" /></a></li>
               <li><a href="/projects"><T bg="Проекти" en="Projects" /></a></li>

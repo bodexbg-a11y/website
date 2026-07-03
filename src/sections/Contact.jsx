@@ -119,7 +119,7 @@ export default function Contact() {
           {/* LEFT info */}
           <div className="ct-info">
             {[
-              { icon:'phone', labelBg:'Телефон', labelEn:'Phone', value:'+359 89 980 9607', href:'tel:+35989980960' },
+              { icon:'phone', labelBg:'Телефон', labelEn:'Phone', value:'+359 879 618 059', href:'tel:+359879618059' },
               { icon:'mail',  labelBg:'Email',   labelEn:'Email',  value:'bodexbg@gmail.com', href:'mailto:bodexbg@gmail.com' },
               { icon:'clock', labelBg:'Работно Време', labelEn:'Hours', valueBg:'Пон–Пет, 09:00–18:00', valueEn:'Mon–Fri, 09:00–18:00' },
               { icon:'map',   labelBg:'Офис', labelEn:'Office', valueBg:'София, България', valueEn:'Sofia, Bulgaria' },
