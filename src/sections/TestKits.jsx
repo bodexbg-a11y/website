@@ -11,7 +11,6 @@ const kits = [
     descEn: 'Two canisters for a first trial — foam reaction, pump flow, crack behaviour. Not for a full project.',
     items: [
       { nameBg: 'HydroBloc 510-2 — микропяна', nameEn: 'HydroBloc 510-2 — microfoam', qty: '2 × 10 kg' },
-      { nameBg: 'Пакери PK-6', nameEn: 'Packers PK-6', qty: '100 бр.' },
       { nameBg: 'Техническа инструкция PDF', nameEn: 'Technical instruction PDF', qty: '✓' },
       { nameBg: 'Консултация по приложение', nameEn: 'Application consultation', qty: '15 мин.' },
     ],
@@ -35,7 +34,6 @@ const kits = [
       { nameBg: 'HydroBloc 510-2 — микропяна', nameEn: 'HydroBloc 510-2 — microfoam', qty: '2 × 10 kg' },
       { nameBg: 'HydroBloc PU 500 A+B — набъбваща смола', nameEn: 'HydroBloc PU 500 A+B — swelling resin', qty: '1 комплект ~21 kg' },
       { nameBg: 'HydroSolv 520 — почистващ разтворител', nameEn: 'HydroSolv 520 — cleaner', qty: '1 × 10 kg' },
-      { nameBg: 'Пакери PK-6', nameEn: 'Packers PK-6', qty: '100 бр.' },
       { nameBg: 'Техническа консултация + подбор', nameEn: 'Technical consultation + selection', qty: '✓' },
     ],
     color: '#059669', light: '#ECFDF5', border: '#A7F3D0',
@@ -62,7 +60,6 @@ const kits = [
       { nameBg: 'HydroBloc 510-2 — микропяна', nameEn: 'HydroBloc 510-2 — microfoam', qty: '4 × 10 kg' },
       { nameBg: 'HydroBloc PU 500 A+B — набъбваща смола', nameEn: 'HydroBloc PU 500 A+B — swelling resin', qty: '2 комплекта ~42 kg' },
       { nameBg: 'HydroSolv 520 — почистващ разтворител', nameEn: 'HydroSolv 520 — cleaner', qty: '2 × 10 kg' },
-      { nameBg: 'Пакери PK-6', nameEn: 'Packers PK-6', qty: '200 бр.' },
       { nameBg: 'Техническа консултация', nameEn: 'Technical consultation', qty: '30–45 мин.' },
       { nameBg: 'Препоръка за конкретния обект', nameEn: 'Site-specific recommendation', qty: '✓' },
       { nameBg: 'Отстъпка за следваща поръчка', nameEn: 'Discount on next order', qty: '5–10%' },
