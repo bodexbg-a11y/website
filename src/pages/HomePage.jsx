@@ -9,6 +9,7 @@ import Solutions from '../sections/Solutions';
 import Sectors from '../sections/Sectors';
 import Process from '../sections/Process';
 import Contact from '../sections/Contact';
+import TestKits from '../sections/TestKits';
 
 /* ── Inline accent blocks — не требуют отдельных файлов ── */
 
@@ -159,6 +160,7 @@ export default function HomePage() {
       <Sectors />
       <Process />
       <TrustBand />
+      <TestKits />
       <Contact />
     </>
   );
