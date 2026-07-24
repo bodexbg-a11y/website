@@ -4804,3 +4804,20 @@ body:not(.light-theme) .tk-delivery-note { background: rgba(36,82,164,.08); bord
   font-family: var(--font-mono); font-size: 9px; font-weight: 500;
   letter-spacing: .08em; text-transform: uppercase; color: var(--dim);
 }
+
+/* ── TestKits: flexible materials note ── */
+.tk-flex-note {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 14px 18px; border-radius: 12px; margin-bottom: 20px;
+  background: linear-gradient(135deg, var(--blue-50) 0%, #fff 100%);
+  border: 1.5px solid var(--primary);
+  font-family: var(--font-b); font-size: 14px; font-weight: 500;
+  color: var(--primary); line-height: 1.55;
+}
+body:not(.light-theme) .tk-flex-note {
+  background: rgba(36,82,164,.10);
+  border-color: rgba(36,82,164,.35);
+  color: var(--blue-200);
+}
+.tk-flex-note svg { flex-shrink: 0; margin-top: 1px; color: var(--primary); }
+body:not(.light-theme) .tk-flex-note svg { color: var(--blue-300); }

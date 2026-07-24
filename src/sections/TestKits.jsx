@@ -108,6 +108,20 @@ export default function TestKits() {
           </p>
         </div>
 
+        {/* Flexible materials note */}
+        <div className="tk-flex-note">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+          <span>
+            <T
+              bg="В тестовия комплект могат да бъдат включени всякакви материали по ваш избор. Материалите се уточняват с мениджъра при запитване."
+              en="Any materials of your choice can be included in the test kit. Materials are confirmed with the manager upon enquiry."
+            />
+          </span>
+        </div>
+
         <div className="tk-grid">
           {kits.map((k, i) => (
             <div
