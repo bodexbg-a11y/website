@@ -4777,3 +4777,30 @@ body:not(.light-theme) .tk-delivery-note { background: rgba(36,82,164,.08); bord
 .tk-notes {
   display: flex; flex-direction: column; gap: 8px;
 }
+
+/* ── TestKits: canister count pill inside card ── */
+.tk-cans-pill {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 8px 14px; border-radius: 12px;
+  background: var(--bg, var(--blue-50));
+  border: 1.5px solid var(--bdr, var(--blue-100));
+}
+.tk-cans-pill__num {
+  font-family: var(--font-h); font-size: 28px; font-weight: 800;
+  color: var(--c, var(--primary)); line-height: 1; letter-spacing: -0.02em;
+}
+.tk-cans-pill__lbl {
+  font-family: var(--font-mono); font-size: 9px; font-weight: 500;
+  letter-spacing: .10em; text-transform: uppercase; color: var(--dim);
+  margin-top: 2px;
+}
+/* Restore price display */
+.tk-price { display: flex; flex-direction: column; gap: 2px; }
+.tk-price__num {
+  font-family: var(--font-h); font-size: 28px; font-weight: 800;
+  color: var(--text); letter-spacing: -0.03em; line-height: 1;
+}
+.tk-price__vat {
+  font-family: var(--font-mono); font-size: 9px; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--dim);
+}
