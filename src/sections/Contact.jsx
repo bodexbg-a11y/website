@@ -69,21 +69,24 @@ export default function Contact() {
       data.selected_products = enquiredProducts.map(p => p.name).join(', ');
     }
 
-    /* POST to our Vercel serverless function — CRM key stays server-side */
-    try {
-      await fetch('/api/submit-lead', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify(data),
-      });
-    } catch (err) {
-      /* If serverless fails, fallback directly to Formspree so lead is never lost */
-      await fetch(FORMSPREE_URL, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body:    JSON.stringify(data),
-      }).catch(() => {});
-    }
+    /* Map to CRM fields — sent via Formspree which webhooks to CRM server-side */
+    const payload = {
+      ...data,
+      /* CRM field names */
+      company_name:  data.company      || '',
+      contact_name:  data.contact      || '',
+      city:          data.site_address || '',
+      object_type:   data.object_type  || data.service_type || '',
+      timing:        data.delivery_date || '',
+      executor:      data.form_type === 'services' ? 'Трябва ми изпълнител' : 'Търся материали',
+      source:        'bodexbg.com',
+    };
+
+    await fetch(FORMSPREE_URL, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body:    JSON.stringify(payload),
+    }).catch(() => {});
 
     setSubmitted(true);
   }
