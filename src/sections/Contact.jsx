@@ -69,44 +69,21 @@ export default function Contact() {
       data.selected_products = enquiredProducts.map(p => p.name).join(', ');
     }
 
-    /* ── CRM payload — map form fields to CRM schema ── */
-    const crmPayload = {
-      company_name:  data.company      || '',
-      contact_name:  data.contact      || '',
-      phone:         data.phone        || '',
-      email:         data.email        || '',
-      city:          data.site_address || '',
-      object_type:   data.object_type  || data.service_type || '',
-      timing:        data.delivery_date || '',
-      executor:      data.form_type === 'services' ? 'Трябва ми изпълнител' : 'Търся материали',
-      // Extra context
-      material_type:     data.material_type     || '',
-      selected_products: data.selected_products || '',
-      description:       data.description       || '',
-      source:            'bodexbg.com',
-    };
-
-    /* Send to CRM and Formspree in parallel */
-    const CRM_URL = 'https://virtual-office-f48m.onrender.com/api/website-leads/webhook';
-    const CRM_KEY = '78bf5a9e3b2c86b80a3b45012b90eb8bb636734584bd6a5f';
-
-    await Promise.allSettled([
-      /* 1. CRM */
-      fetch(CRM_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Webhook-Key': CRM_KEY,
-        },
-        body: JSON.stringify(crmPayload),
-      }),
-      /* 2. Formspree (email backup) */
-      fetch(FORMSPREE_URL, {
-        method: 'POST',
+    /* POST to our Vercel serverless function — CRM key stays server-side */
+    try {
+      await fetch('/api/submit-lead', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(data),
+      });
+    } catch (err) {
+      /* If serverless fails, fallback directly to Formspree so lead is never lost */
+      await fetch(FORMSPREE_URL, {
+        method:  'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(data),
-      }),
-    ]);
+        body:    JSON.stringify(data),
+      }).catch(() => {});
+    }
 
     setSubmitted(true);
   }
