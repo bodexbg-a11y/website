@@ -88,6 +88,13 @@ export default function Contact() {
       body:    JSON.stringify(payload),
     }).catch(() => {});
 
+    /* Google Ads conversion tracking */
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'conversion', {
+        send_to: 'AW-18352580541/_NuZCJa5xeIcEL3PmK9E',
+      });
+    }
+
     setSubmitted(true);
   }
 
