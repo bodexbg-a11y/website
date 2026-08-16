@@ -91,7 +91,9 @@ export default function Contact() {
     /* Google Ads conversion tracking */
     if (typeof window.gtag === 'function') {
       window.gtag('event', 'conversion', {
-        send_to: 'AW-18352580541/_NuZCJa5xeIcEL3PmK9E',
+        send_to:        'AW-18352580541/_NuZCJa5xeIcEL3PmK9E',
+        transaction_id: '',
+        event_callback: function() {},
       });
     }
 
